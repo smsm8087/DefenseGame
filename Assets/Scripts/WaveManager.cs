@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 
@@ -6,6 +5,7 @@ public class WaveManager : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
+    public Transform mapCenter;
     public float waveInterval = 10f;
     public int enemiesPerWave = 5;
 
@@ -30,6 +30,15 @@ public class WaveManager : MonoBehaviour
     void SpawnEnemy()
     {
         int spawnIndex = Random.Range(0, spawnPoints.Length);
-        Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, Quaternion.identity);
+        
+        Vector3 mapCenterPosition = mapCenter != null ? mapCenter.position : Vector3.zero;
+        
+    
+        EnemyMovement enemyMovement = enemy.GetComponent<EnemyMovement>();
+        if (enemyMovement != null)
+        {
+            enemyMovement.SetTarget(mapCenterPosition);
+        }
     }
 }
