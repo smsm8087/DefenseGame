@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GemHealthSystem : MonoBehaviour
@@ -13,21 +14,16 @@ public class GemHealthSystem : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        
-        // HP 바를 자동으로 찾기
-        if (hpBar == null)
-        {
-            hpBar = GetComponentInChildren<HPBar>();
-        }
-        
+    }
+
+    private void Update()
+    {
         UpdateHPBar();
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth = Mathf.Max(0, currentHealth - amount);
-        UpdateHPBar();
-        
         if (currentHealth <= 0)
         {
             Die();
