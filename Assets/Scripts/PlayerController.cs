@@ -1,12 +1,19 @@
 
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpforce = 10f;
-
+    
     private bool isJumping = false;
+    Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -18,6 +25,12 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = InputManager.GetMoveInput();
         MovementHelper.Move(transform, moveInput, moveSpeed);
+        SpriteRenderer sr =  gameObject.GetComponent<SpriteRenderer>();
+        if (sr && Mathf.Abs(moveInput) > 0)
+        {
+            sr.flipX = moveInput > 0;
+        }
+        animator.SetFloat("isRunning", Mathf.Abs(moveInput) );
     }
     void Jump()
     {
@@ -29,6 +42,7 @@ public class PlayerController : MonoBehaviour
                 MovementHelper.Jump(transform, jumpforce);
             }
         }
+        animator.SetBool("isJumping", isJumping);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
