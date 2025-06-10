@@ -5,20 +5,40 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpforce = 10f;
+
+    private bool isJumping = false;
+
     void Update()
     {
         Move();
+        Jump();
     }
 
     void Move()
     {
         float moveInput = InputManager.GetMoveInput();
         MovementHelper.Move(transform, moveInput, moveSpeed);
+    }
+    void Jump()
+    {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MovementHelper.Jump(transform, jumpforce);
+            if (!isJumping)
+            {
+                isJumping = true;
+                MovementHelper.Jump(transform, jumpforce);
+            }
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isJumping = false;
+        }
+    }
+
 }
 
 public static class MovementHelper

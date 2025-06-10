@@ -6,9 +6,11 @@ public class EnemyMovement : MonoBehaviour
     
     private Vector3 targetPosition;
     private bool hasTarget = false;
+    private Rigidbody2D rb2D;
 
     void Start()
     {
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -27,16 +29,7 @@ public class EnemyMovement : MonoBehaviour
     void MoveTowardsTarget()
     {
         Vector2 direction = (targetPosition - transform.position).normalized;
-        
-        if (Vector2.Distance(transform.position, targetPosition) < 0.5f)
-        {
-            hasTarget = false;
-            GameManager.Instance.gem.TakeDamage(5);
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
-        }
+        if (rb2D == null) return;
+        rb2D.linearVelocityX = direction.x * moveSpeed;
     }
 }

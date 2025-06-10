@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    public WaveManager waveManager;
     public GemHealthSystem gem;
     public bool isGameOver = false;
 
@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        waveManager.StartWaveLoop();
     }
 
     public void GameOver()
