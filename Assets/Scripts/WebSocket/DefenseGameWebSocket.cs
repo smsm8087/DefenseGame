@@ -11,7 +11,20 @@ public class DefenseGameWebSocket : MonoBehaviour
     async void Start()
     {
         Instance = this;
-        websocket = new WebSocket("ws://59.12.167.192:5215/ws");
+        // 설정 불러오기
+        var config = Resources.Load<ServerConfig>("ServerConfig");
+        if (config == null)
+        {
+            Debug.LogError("ServerConfig.asset이 Resources 폴더에 없습니다!");
+            return;
+        }
+
+        string ip = config.GetServerIP();
+        int port = config.port;
+
+        string url = $"ws://{ip}:{port}/ws";
+        
+        websocket = new WebSocket(url);
 
         websocket.OnOpen += () =>
         {
