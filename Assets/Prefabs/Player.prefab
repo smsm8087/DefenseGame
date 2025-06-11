@@ -101,7 +101,7 @@ Animator:
   m_GameObject: {fileID: 6323616739901478146}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: -5794220641340488997, guid: 975fbda8ff50d9648ac88743e038e94c, type: 3}
+  m_Controller: {fileID: 9100000, guid: 601bb6fb3b4728f408652afc67c203f2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -128,8 +128,10 @@ MonoBehaviour:
   playerGUID: 
   moveSpeed: 5
   jumpForce: 10
+  needMove: 0
   needMoveTargetPos: {x: 0, y: 0, z: 0}
   lerpSpeed: 10
+  jumpAnimationDuration: 1.58
 --- !u!50 &-7494265202619478441
 Rigidbody2D:
   serializedVersion: 5
