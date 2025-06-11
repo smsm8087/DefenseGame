@@ -44,13 +44,17 @@ public class NetworkManger : MonoBehaviour
             var pid = netMsg.playerId;
             if (!players.ContainsKey(pid))
             {
-                var go = Instantiate(playerPrefab);
-                players[pid] = go;
-                CameraFollow.Instance.setTarget(go.transform);
-            }
-            if (string.IsNullOrEmpty(GameManager.Instance.myGUID) || GameManager.Instance.myGUID == null)
-            {
-                GameManager.Instance.myGUID = pid;
+                var playerObj = Instantiate(playerPrefab);
+                //guid 할당
+                players[pid] = playerObj;
+                PlayerController playerCtrl = playerObj.GetComponent<PlayerController>();
+                playerCtrl.playerGUID = pid;
+                
+                if (string.IsNullOrEmpty(GameManager.Instance.myGUID) || GameManager.Instance.myGUID == null)
+                {
+                    GameManager.Instance.myGUID = pid;
+                    CameraFollow.Instance.setTarget(playerObj.transform);
+                }
             }
         }
         else if (netMsg.type == "move")
