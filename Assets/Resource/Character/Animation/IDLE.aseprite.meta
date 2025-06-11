@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Frame_0
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,8 +133,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 43
-      height: 68
+      width: 66
+      height: 104
     spriteID: c4455d0eb7a607345ad66f4cd468b1b0
     spriteBone: []
     spriteOutline: []
@@ -146,16 +146,16 @@ ScriptedImporter:
     uvTransform: {x: 4, y: 4}
   - name: Frame_1
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
-      y: 156
-      width: 43
-      height: 67
+      y: 228
+      width: 66
+      height: 103
     spriteID: 9333f5d5672351247b3f1e7b973092eb
     spriteBone: []
     spriteOutline: []
@@ -164,19 +164,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 156}
+    uvTransform: {x: 4, y: 228}
   - name: Frame_2
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 55
-      y: 79
-      width: 43
-      height: 66
+      x: 78
+      y: 4
+      width: 66
+      height: 102
     spriteID: 2c9c2cf1c8694f142a7dbd22da85f5bc
     spriteBone: []
     spriteOutline: []
@@ -185,19 +185,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 55, y: 79}
+    uvTransform: {x: 78, y: 4}
   - name: Frame_3
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 55
-      y: 153
-      width: 43
-      height: 66
+      x: 78
+      y: 224
+      width: 66
+      height: 100
     spriteID: 9e12798c97d48b64a9d429026751052b
     spriteBone: []
     spriteOutline: []
@@ -206,19 +206,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 55, y: 153}
+    uvTransform: {x: 78, y: 224}
   - name: Frame_4
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 106
-      y: 4
-      width: 43
-      height: 66
+      x: 78
+      y: 114
+      width: 66
+      height: 102
     spriteID: 46fcbaea19c2a5549b3d88cec1162466
     spriteBone: []
     spriteOutline: []
@@ -227,19 +227,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 106, y: 4}
+    uvTransform: {x: 78, y: 114}
   - name: Frame_5
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
-      x: 55
-      y: 4
-      width: 43
-      height: 67
+      x: 4
+      y: 339
+      width: 66
+      height: 103
     spriteID: b6849d8c5d70a1f47b3dd363d9c26d38
     spriteBone: []
     spriteOutline: []
@@ -248,19 +248,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 55, y: 4}
+    uvTransform: {x: 4, y: 339}
   - name: Frame_6
     originalName: 
-    pivot: {x: 0.4883721, y: 0}
+    pivot: {x: 0.46969697, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
-      y: 80
-      width: 43
-      height: 68
+      y: 116
+      width: 66
+      height: 104
     spriteID: 67602551dcbd610408b73238c442d506
     spriteBone: []
     spriteOutline: []
@@ -269,7 +269,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 80}
+    uvTransform: {x: 4, y: 116}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -288,64 +288,64 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 68
+        width: 66
+        height: 104
       spriteId: c4455d0eb7a607345ad66f4cd468b1b0
     - name: Frame_1
       frameIndex: 1
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 67
+        width: 66
+        height: 103
       spriteId: 9333f5d5672351247b3f1e7b973092eb
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 66
+        width: 66
+        height: 102
       spriteId: 2c9c2cf1c8694f142a7dbd22da85f5bc
     - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 66
+        width: 66
+        height: 100
       spriteId: 9e12798c97d48b64a9d429026751052b
     - name: Frame_4
       frameIndex: 4
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 66
+        width: 66
+        height: 102
       spriteId: 46fcbaea19c2a5549b3d88cec1162466
     - name: Frame_5
       frameIndex: 5
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 67
+        width: 66
+        height: 103
       spriteId: b6849d8c5d70a1f47b3dd363d9c26d38
     - name: Frame_6
       frameIndex: 6
       additiveSortOrder: 0
       cellRect:
-        x: 4
+        x: 19
         y: 0
-        width: 43
-        height: 68
+        width: 66
+        height: 104
       spriteId: 67602551dcbd610408b73238c442d506
     linkedCells: []
     parentIndex: -1
@@ -365,5 +365,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 50, y: 70}
-  previousTextureSize: {x: 256, y: 256}
+  canvasSize: {x: 100, y: 105}
+  previousTextureSize: {x: 256, y: 512}
