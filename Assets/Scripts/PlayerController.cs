@@ -11,25 +11,28 @@ public class PlayerController : MonoBehaviour
     public bool needMove = false;
     public Vector3 needMoveTargetPos;
     public float lerpSpeed = 10f;
+    public float jumpAnimationDuration = 1.58f;
 
-    private Rigidbody2D rb;
-    private bool isGrounded = true;
-    private SpriteRenderer sr;
-    private Animator animator;
+    private Rigidbody2D _rb;
+    private bool _isGrounded = true;
+    private SpriteRenderer _sr;
+    private Animator _animator;
+    private bool _isJumping = false;
+    private Coroutine _jumpAnimationCoroutine;
     
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody2D>();
+        _sr = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         if (GameManager.Instance.myGUID == null) return;
         if (playerGUID != GameManager.Instance.myGUID) return;
-
+    
         HandleInput();
     }
 
@@ -38,24 +41,28 @@ public class PlayerController : MonoBehaviour
         float moveInput = InputManager.GetMoveInput();
 
         // 이동
-        MovementHelper.Move(rb, moveInput, moveSpeed);
+        MovementHelper.Move(_rb, moveInput, moveSpeed);
 
         // 방향 플립
-        if (sr && Mathf.Abs(moveInput) > 0.01f)
-            sr.flipX = moveInput > 0;
+        if (_sr && Mathf.Abs(moveInput) > 0.01f)
+            _sr.flipX = moveInput > 0;
 
         // 점프
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            MovementHelper.Jump(rb, jumpForce);
-            isGrounded = false;
+            Debug.Log("Jump input detected!"); // 디버깅
+            MovementHelper.Jump(_rb, jumpForce);
+            _isGrounded = false;
+            
+            // 점프 애니메이션 시작
+            StartJumpAnimation();
         }
 
         // 애니메이터
-        if (animator)
+        if (_animator)
         {
-            animator.SetFloat("isRunning", Mathf.Abs(moveInput));
-            animator.SetBool("isJumping", !isGrounded);
+            _animator.SetFloat("isRunning", Mathf.Abs(moveInput));
+            _animator.SetBool("isJumping", _isJumping);
         }
 
         // 서버 전송 (매 프레임 or 일정 간격 추천)
@@ -70,11 +77,65 @@ public class PlayerController : MonoBehaviour
         NetworkManger.Instance.SendMsg(moveMsg);
     }
 
+    private void StartJumpAnimation()
+    {
+        if (_jumpAnimationCoroutine != null)
+        {
+            StopCoroutine(_jumpAnimationCoroutine);
+        }
+        
+        _jumpAnimationCoroutine = StartCoroutine(PlayJumpAnimation());
+    }
+
+    private IEnumerator PlayJumpAnimation()
+    {
+        _isJumping = true;
+    
+        if (_animator != null && _animator.runtimeAnimatorController != null)
+        {
+            // 현재 애니메이션 상태 확인
+            AnimatorStateInfo currentState = _animator.GetCurrentAnimatorStateInfo(0);
+        
+            // 애니메이션 재생 (여러 방법 시도)
+            try
+            {
+                // 이름으로 재생
+                _animator.Play("jump_side", 0, 0f);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Animation play error: " + e.Message);
+            }
+        
+            // 1프레임 대기 후 상태 확인
+            yield return null;
+        }
+        else
+        {
+            Debug.LogError("Animator or Controller is null!");
+        }
+    
+        yield return new WaitForSeconds(jumpAnimationDuration);
+    
+        if (_isGrounded)
+        {
+            _isJumping = false;
+        }
+    
+        _jumpAnimationCoroutine = null;
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            _isGrounded = true;
+            
+            // 점프 애니메이션이 완료되었거나 땅에 닿았을 때 점프 상태 해제
+            if (_jumpAnimationCoroutine == null)
+            {
+                _isJumping = false;
+            }
         }
     }
 
@@ -82,7 +143,8 @@ public class PlayerController : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            _isGrounded = false;
+            Debug.Log("Left ground"); // 디버깅
         }
     }
 }
@@ -103,6 +165,7 @@ public static class MovementHelper
         rb.linearVelocity = velocity;
     }
 }
+
 public static class InputManager
 {
     public static float GetMoveInput()
@@ -110,8 +173,9 @@ public static class InputManager
 #if UNITY_EDITOR || UNITY_STANDALONE
         return Input.GetAxisRaw("Horizontal");
 #elif UNITY_ANDROID || UNITY_IOS
+        return 0f;
 #else
-        return Vector2.zero;
+        return 0f;
 #endif
     }
 }
