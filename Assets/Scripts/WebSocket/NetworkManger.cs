@@ -65,7 +65,14 @@ public class NetworkManger : MonoBehaviour
             
             if (players.ContainsKey(pid))
             {
-                players[pid].transform.position = new Vector3(netMsg.x, netMsg.y, 0);
+                Vector3 prevPos = players[pid].transform.position;
+                Vector3 targetPos = new Vector3(netMsg.x, netMsg.y, 0);
+                players[pid].transform.position = Vector3.Lerp(transform.position, targetPos, 3f * Time.deltaTime);
+                float dx = targetPos.x - prevPos.x;
+                if (Mathf.Abs(dx) > 0.01f)
+                {
+                    players[pid].GetComponent<SpriteRenderer>().flipX = dx > 0;
+                }
             }
         }
         else if (netMsg.type == "player_leave")
