@@ -60,6 +60,9 @@ public class NetworkManger : MonoBehaviour
         else if (netMsg.type == "move")
         {
             var pid = netMsg.playerId;
+            //내플레이어 이동은 내컴퓨터에서만 함. 서버에서 받는건 다른캐릭터들의 좌표
+            if (GameManager.Instance.myGUID == pid) return;
+            
             if (players.ContainsKey(pid))
             {
                 players[pid].transform.position = new Vector3(netMsg.x, netMsg.y, 0);
