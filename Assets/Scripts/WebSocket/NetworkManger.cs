@@ -67,7 +67,8 @@ public class NetworkManger : MonoBehaviour
             {
                 Vector3 prevPos = players[pid].transform.position;
                 Vector3 targetPos = new Vector3(netMsg.x, netMsg.y, 0);
-                players[pid].transform.position = Vector3.Lerp(transform.position, targetPos, 3f * Time.deltaTime);
+                
+                players[pid].transform.position = targetPos;
                 float dx = targetPos.x - prevPos.x;
                 if (Mathf.Abs(dx) > 0.01f)
                 {
