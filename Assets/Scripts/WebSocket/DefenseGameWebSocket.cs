@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class DefenseGameWebSocket : MonoBehaviour
 {
-    WebSocket websocket;
-    public TMP_InputField inputField;
-    public Button sendButton;
+    public static DefenseGameWebSocket Instance { get; private set; }
+    public WebSocket websocket { get; private set; }
     async void Start()
     {
+        Instance = this;
         websocket = new WebSocket("ws://59.12.167.192:5215/ws");
 
         websocket.OnOpen += () =>
@@ -31,32 +31,13 @@ public class DefenseGameWebSocket : MonoBehaviour
         websocket.OnMessage += (bytes) =>
         {
             var msg = Encoding.UTF8.GetString(bytes);
-            Debug.Log("서버로부터 메시지: " + msg);
+            NetworkManger.Instance.HandleMessage(msg);
         };
-        sendButton.onClick.AddListener(SendInputText);
         await websocket.Connect();
     }
 
-    public async void SendInputText()
+    void Update()
     {
-        if (websocket.State == WebSocketState.Open)
-        {
-            string msg = inputField.text;
-            if (!string.IsNullOrEmpty(msg))
-            {
-                await websocket.SendText(msg);
-                inputField.text = ""; // 전송 후 입력창 비움
-            }
-        }
-        else
-        {
-            Debug.Log("서버에 연결되어 있지 않음");
-        }
-    }
-
-    private void Update()
-    {
-        // 필수! 메인스레드에서 이벤트 처리
         websocket?.DispatchMessageQueue();
     }
 

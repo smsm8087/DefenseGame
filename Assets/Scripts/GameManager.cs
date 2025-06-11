@@ -1,4 +1,5 @@
 
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,10 +8,12 @@ public class GameManager : MonoBehaviour
     public WaveManager waveManager;
     public GemHealthSystem gem;
     public bool isGameOver = false;
-
+    public string myGUID {get; set;}
     void Awake()
     {
-        Instance = this;
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
