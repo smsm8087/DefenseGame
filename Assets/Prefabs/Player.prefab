@@ -127,7 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGUID: 
   moveSpeed: 5
-  jumpforce: 10
+  jumpForce: 10
+  needMoveTargetPos: {x: 0, y: 0, z: 0}
+  lerpSpeed: 10
 --- !u!50 &-7494265202619478441
 Rigidbody2D:
   serializedVersion: 5

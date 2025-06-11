@@ -7,107 +7,111 @@ public class PlayerController : MonoBehaviour
 {
     public string playerGUID;
     public float moveSpeed = 5f;
-    
-    private bool isJumping = false;
-    Animator animator;
+    public float jumpForce = 10f;
+    public bool needMove = false;
+    public Vector3 needMoveTargetPos;
+    public float lerpSpeed = 10f;
 
-    private void Awake()
+    private Rigidbody2D rb;
+    private bool isGrounded = true;
+    private SpriteRenderer sr;
+    private Animator animator;
+    
+
+    void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        Move();
-        //Jump();
-    }
-
-    void Move()
-    {
         if (GameManager.Instance.myGUID == null) return;
         if (playerGUID != GameManager.Instance.myGUID) return;
-        
-        float moveInput = InputManager.GetMoveInput();
-        Vector3 prevPos = transform.position;
-        MovementHelper.Move(transform, moveInput, moveSpeed);
-        Vector3 nextPos = transform.position;
 
-        SpriteRenderer sr =  gameObject.GetComponent<SpriteRenderer>();
-        if (sr && Mathf.Abs(moveInput) > 0)
+        HandleInput();
+        if (needMove)
         {
-            sr.flipX = moveInput > 0;
+            MovePositionOterPlayer();
         }
-        //server
-        if (prevPos.x == nextPos.x) return;
+    }
+
+    public void MovePositionOterPlayer()
+    {
+        if ((transform.position - needMoveTargetPos).sqrMagnitude > 0.0001f)
+        {
+            transform.position = Vector3.Lerp(transform.position, needMoveTargetPos, lerpSpeed * Time.deltaTime);
+        }
+    }
+    void HandleInput()
+    {
+        float moveInput = InputManager.GetMoveInput();
+
+        // 이동
+        MovementHelper.Move(rb, moveInput, moveSpeed);
+
+        // 방향 플립
+        if (sr && Mathf.Abs(moveInput) > 0.01f)
+            sr.flipX = moveInput > 0;
+
+        // 점프
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            MovementHelper.Jump(rb, jumpForce);
+            isGrounded = false;
+        }
+
+        // 애니메이터
+        if (animator)
+        {
+            animator.SetFloat("isRunning", Mathf.Abs(moveInput));
+            animator.SetBool("isJumping", !isGrounded);
+        }
+
+        // 서버 전송 (매 프레임 or 일정 간격 추천)
+        var pos = transform.position;
         var moveMsg = new NetMsg
         {
             type = "move",
             playerId = GameManager.Instance.myGUID,
-            x = nextPos.x,
-            y = nextPos.y
+            x = pos.x,
+            y = pos.y
         };
         NetworkManger.Instance.SendMsg(moveMsg);
     }
-    void Jump()
+
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        if (GameManager.Instance.myGUID == null) return;
-        if (playerGUID != GameManager.Instance.myGUID) return;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (col.gameObject.CompareTag("Ground"))
         {
-            if (!isJumping)
-            {
-                Vector3 prevPos = transform.position;
-                isJumping = true;
-                MovementHelper.Jump(transform);
-                Vector3 nextPos = transform.position;
-                if (prevPos.y == nextPos.y) return;
-                
-                //server
-                var moveMsg = new NetMsg
-                {
-                    type = "move",
-                    playerId = GameManager.Instance.myGUID,
-                    x = nextPos.x,
-                    y = nextPos.y
-                };
-                NetworkManger.Instance.SendMsg(moveMsg);
-            }
+            isGrounded = true;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Ground"))
         {
-            isJumping = false;
+            isGrounded = false;
         }
     }
 }
 
 public static class MovementHelper
 {
-    static float jumpVelocity = 5f;
-    static float gravity = 18f; 
-    public static void Move(Transform target, float direction, float speed)
+    public static void Move(Rigidbody2D rb, float direction, float speed)
     {
-        Vector3 pos = target.position;
-        pos.x += direction * speed * Time.deltaTime;
-        target.position = pos;
+        Vector2 velocity = rb.linearVelocity;
+        velocity.x = direction * speed;
+        rb.linearVelocity = velocity;
     }
 
-    public static void Jump(Transform target)
+    public static void Jump(Rigidbody2D rb, float jumpForce)
     {
-        // y속도 적용
-        Vector3 pos = target.transform.position;
-        pos.y += jumpVelocity * Time.deltaTime;
-        jumpVelocity -= gravity * Time.deltaTime;
-
-        // 바닥 도달 체크 (y <= 0 예시)
-        if (pos.y <= 0f)
-        {
-            pos.y = 0f;
-        }
-        target.transform.position = pos;
+        Vector2 velocity = rb.linearVelocity;
+        velocity.y = jumpForce;
+        rb.linearVelocity = velocity;
     }
 }
 public static class InputManager
