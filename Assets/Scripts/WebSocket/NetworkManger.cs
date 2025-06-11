@@ -67,18 +67,12 @@ public class NetworkManger : MonoBehaviour
             {
                 Vector3 prevPos = players[pid].transform.position;
                 Vector3 targetPos = new Vector3(netMsg.x, netMsg.y, 0);
-                
+                players[pid].transform.position = targetPos;
                 var pc = players[pid].GetComponent<PlayerController>();
-                if (pc != null)
+                float dx = targetPos.x - prevPos.x;
+                if (Mathf.Abs(dx) > 0.01f)
                 {
-                    pc.needMoveTargetPos = targetPos;
-                    pc.needMove = true;
-
-                    float dx = targetPos.x - prevPos.x;
-                    if (Mathf.Abs(dx) > 0.01f)
-                    {
-                        players[pid].GetComponent<SpriteRenderer>().flipX = dx > 0;
-                    }
+                    players[pid].GetComponent<SpriteRenderer>().flipX = dx > 0;
                 }
             }
         }

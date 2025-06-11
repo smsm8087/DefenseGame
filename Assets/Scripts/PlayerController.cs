@@ -31,19 +31,8 @@ public class PlayerController : MonoBehaviour
         if (playerGUID != GameManager.Instance.myGUID) return;
 
         HandleInput();
-        if (needMove)
-        {
-            MovePositionOterPlayer();
-        }
     }
 
-    public void MovePositionOterPlayer()
-    {
-        if ((transform.position - needMoveTargetPos).sqrMagnitude > 0.0001f)
-        {
-            transform.position = Vector3.Lerp(transform.position, needMoveTargetPos, lerpSpeed * Time.deltaTime);
-        }
-    }
     void HandleInput()
     {
         float moveInput = InputManager.GetMoveInput();
