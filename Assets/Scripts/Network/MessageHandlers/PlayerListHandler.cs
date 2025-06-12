@@ -24,7 +24,11 @@ public class PlayerListHandler : INetworkMessageHandler
             if (pid == NetworkManager.Instance.MyGUID) continue;
             var playerObj = GameObject.Instantiate(playerPrefab);
             players[pid] = playerObj;
-            playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
+            NetworkCharacterFollower playerFollower = playerObj.GetComponent<NetworkCharacterFollower>();
+            if (playerFollower)
+            {
+                playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
+            }
         }
     }
 }

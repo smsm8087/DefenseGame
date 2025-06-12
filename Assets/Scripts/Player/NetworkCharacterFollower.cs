@@ -20,6 +20,7 @@ public class NetworkCharacterFollower : MonoBehaviour
 
     public void SetTargetPosition(Vector3 newPos)
     {
+        firstSync = false;
         float dx = newPos.x - transform.position.x;
 
         if (Mathf.Abs(dx) > 0.01f)
@@ -49,12 +50,7 @@ public class NetworkCharacterFollower : MonoBehaviour
 
     private void Update()
     {
-        if (firstSync)
-        {
-            transform.position = targetPosition;
-            firstSync = false;
-        }
-        else
+        if (!firstSync)
         {
             transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
         }
