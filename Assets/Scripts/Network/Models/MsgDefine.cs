@@ -5,9 +5,11 @@ public class NetMsg
 {
     public string type;
     public string playerId;
+    public string enemyId;
     public List<string> players;
     public float x;
     public float y;
     public bool isJumping;
     public bool isRunning;
+    public int wave;
 }

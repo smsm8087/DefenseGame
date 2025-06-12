@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour,  IGameStateProvider
         if (waveManager != null)
         {
             waveManager.Initialize(this);
-            waveManager.StartWaveLoop();
         }
         gemHealthSystem.OnDeath += TriggerGameOver;
     }

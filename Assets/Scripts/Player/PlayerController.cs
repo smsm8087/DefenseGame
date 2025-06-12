@@ -38,8 +38,6 @@ public class PlayerController : MonoBehaviour
         //매 프레임마다 다른플레이어에게 내 좌표 전송
         
         var pos = transform.position;
-        if ((_lastSentPosition - pos).sqrMagnitude < 0.001f)
-            return;
 
         _lastSentPosition = pos;
 

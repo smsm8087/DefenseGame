@@ -513,8 +513,6 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 305420806}
   - {fileID: 271967806}
-  waveInterval: 10
-  enemiesPerWave: 10
   crystal: {fileID: 491611648}
 --- !u!4 &561100122
 Transform:
@@ -1570,6 +1568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
+  waveManager: {fileID: 561100121}
 --- !u!4 &1845874392
 Transform:
   m_ObjectHideFlags: 0

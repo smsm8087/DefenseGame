@@ -10,7 +10,10 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager Instance;
     public GameObject playerPrefab;
     
+    [SerializeField] private WaveManager waveManager;
+    
     private Dictionary<string, GameObject> players = new();
+    private Dictionary<string, GameObject> enemies = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
     public string MyGUID { get; private set; }
     void Awake()
@@ -39,6 +42,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerMoveHandler(players));
         AddHandler(new PlayerListHandler(playerPrefab, players));
         AddHandler(new PlayerLeaveHandler(players));
+        AddHandler(new SpawnEnemyHandler(enemies,waveManager));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
