@@ -9,7 +9,6 @@ public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager Instance;
     public GameObject playerPrefab;
-    public GameObject networkPlayerPrefab;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
@@ -36,9 +35,10 @@ public class NetworkManager : MonoBehaviour
     private void RegisterHandlers()
     {
         //서버 리시브 처리 부분.
-        AddHandler(new PlayerJoinHandler(playerPrefab, players, this));
+        AddHandler(new PlayerJoinHandler(playerPrefab,players, this));
         AddHandler(new PlayerMoveHandler(players));
-        AddHandler(new PlayerListHandler(playerPrefab,networkPlayerPrefab, players));
+        AddHandler(new PlayerListHandler(playerPrefab, players));
+        AddHandler(new PlayerLeaveHandler(players));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

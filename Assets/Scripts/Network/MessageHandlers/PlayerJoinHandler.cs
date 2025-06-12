@@ -24,16 +24,21 @@ public class PlayerJoinHandler : INetworkMessageHandler
         if (!players.ContainsKey(pid))
         {
             var playerObj = GameObject.Instantiate(playerPrefab);
-            players[pid] = playerObj;
-
-            var playerCtrl = playerObj.GetComponent<PlayerController>();
-            playerCtrl.playerGUID = pid;
-
+            
             if (string.IsNullOrEmpty(networkManager.MyGUID))
             {
                 //내 캐릭터 생성.
                 networkManager.SetMyGUID(pid); 
                 CameraFollow.Instance.setTarget(playerObj.transform);
+                PlayerController playerController = playerObj.GetComponent<PlayerController>();
+                playerController.enabled = true;
+                playerController.playerGUID = pid;
+                playerObj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+            }
+            else
+            {
+                players[pid] = playerObj;
+                playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
             }
         }
     }

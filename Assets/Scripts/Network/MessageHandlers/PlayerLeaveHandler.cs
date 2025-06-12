@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PlayerMoveHandler : INetworkMessageHandler
+public class PlayerLeaveHandler : MonoBehaviour, INetworkMessageHandler
 {
     private readonly Dictionary<string, GameObject> players;
-    public string Type => "move";
+    public string Type => "player_leave";
 
-    public PlayerMoveHandler(Dictionary<string, GameObject> players)
+    public PlayerLeaveHandler(Dictionary<string, GameObject> players)
     {
         this.players = players;
     }
@@ -14,18 +14,10 @@ public class PlayerMoveHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         string pid = msg.playerId;
-        //내 플레이어는 이걸 할 필요가 없음.
-        if (pid == NetworkManager.Instance.MyGUID) return;
-        
-        if (!players.ContainsKey(pid)) return;
-        
-        var playerObj = players[pid];
-        var follower = playerObj.GetComponent<NetworkCharacterFollower>();
-        if (follower != null)
+        if (players.ContainsKey(pid))
         {
-            follower.SetTargetPosition(new Vector3(msg.x, msg.y, 0));
-            follower.SetJumping(msg.isJumping);
-            follower.SetRunning(msg.isRunning);
+            Destroy(players[pid]);
+            players.Remove(pid);
         }
     }
 }

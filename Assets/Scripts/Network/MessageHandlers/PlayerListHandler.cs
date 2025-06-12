@@ -3,16 +3,14 @@ using System.Collections.Generic;
 
 public class PlayerListHandler : INetworkMessageHandler
 {
-    private readonly GameObject localPlayerPrefab;
-    private readonly GameObject remotePlayerPrefab;
+    private readonly GameObject playerPrefab;
     private readonly Dictionary<string, GameObject> players;
 
     public string Type => "player_list";
 
-    public PlayerListHandler(GameObject localPrefab, GameObject remotePrefab, Dictionary<string, GameObject> players)
+    public PlayerListHandler(GameObject playerPrefab, Dictionary<string, GameObject> players)
     {
-        this.localPlayerPrefab = localPrefab;
-        this.remotePlayerPrefab = remotePrefab;
+        this.playerPrefab = playerPrefab;
         this.players = players;
     }
 
@@ -23,13 +21,10 @@ public class PlayerListHandler : INetworkMessageHandler
          foreach (string pid in msg.players)
         {
             if (players.ContainsKey(pid)) continue;
-
-            GameObject prefabToUse = (pid == NetworkManager.Instance.MyGUID)
-                ? localPlayerPrefab
-                : remotePlayerPrefab;
-
-            var playerObj = GameObject.Instantiate(prefabToUse);
+            if (pid == NetworkManager.Instance.MyGUID) continue;
+            var playerObj = GameObject.Instantiate(playerPrefab);
             players[pid] = playerObj;
+            playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
         }
     }
 }

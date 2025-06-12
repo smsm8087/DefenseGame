@@ -9,6 +9,7 @@ public class NetworkCharacterFollower : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private bool lastFacingRight = true;
+    private bool firstSync = true;
 
     private void Awake()
     {
@@ -48,6 +49,14 @@ public class NetworkCharacterFollower : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
+        if (firstSync)
+        {
+            transform.position = targetPosition;
+            firstSync = false;
+        }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
+        }
     }
 }
