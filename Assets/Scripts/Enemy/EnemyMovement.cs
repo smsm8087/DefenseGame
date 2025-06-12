@@ -31,5 +31,6 @@ public class EnemyMovement : MonoBehaviour
         Vector2 direction = (targetPosition - transform.position).normalized;
         if (rb2D == null) return;
         rb2D.linearVelocityX = direction.x * moveSpeed;
+        GetComponent<SpriteRenderer>().flipX = direction.x < 0;
     }
 }
