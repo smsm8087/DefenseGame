@@ -13,9 +13,16 @@ public class EnemySyncHandler : INetworkMessageHandler
 
     public void Handle(NetMsg msg)
     {
-        var pid = msg.enemyId;
-        if (!Enemies.ContainsKey(pid)) return;
-        var enemyObj =  Enemies[pid];
-        enemyObj.GetComponent<EnemyMovement>().SyncFromServer(msg.x, msg.y);
+        List<EnemySyncPacket> enemies = msg.enemies;
+        foreach (var enemySyncPacket in enemies)
+        {
+            var pid = enemySyncPacket.enemyId;
+            if (!Enemies.ContainsKey(pid)) continue;
+            var enemyObj =  Enemies[pid];
+            if (!enemyObj) continue;
+            EnemyMovement em = enemyObj.GetComponent<EnemyMovement>();
+            if (!em) continue;
+            enemyObj.GetComponent<EnemyMovement>().SyncFromServer(enemySyncPacket.x);
+        }
     }
 }

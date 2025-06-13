@@ -16,6 +16,10 @@ public class NetMsg
     //enemy
     public float spawnPosX;
     public float spawnPosY;
-    public float targetPosX;
-    public float targetPosY;
+    public List<EnemySyncPacket> enemies;
+}
+public class EnemySyncPacket
+{
+    public string enemyId { get; set; }
+    public float x { get; set; }
 }
