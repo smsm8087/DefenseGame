@@ -58,6 +58,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));
+        AddHandler(new EnemyDieHandler(enemies));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

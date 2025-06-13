@@ -17,6 +17,7 @@ public class NetMsg
     public float spawnPosX;
     public float spawnPosY;
     public List<EnemySyncPacket> enemies;
+    public List<string> deadEnemyIds;
 }
 public class EnemySyncPacket
 {
