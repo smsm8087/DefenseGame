@@ -20,7 +20,7 @@ public class SpawnEnemyHandler : INetworkMessageHandler
         var pid = msg.enemyId;
         if (!Enemies.ContainsKey(pid))
         {
-            var enemy = waveManager.SpawnEnemy(msg.spawnPosX,msg.spawnPosY, msg.targetPosX, msg.targetPosY);
+            var enemy = waveManager.SpawnEnemy(pid, msg.spawnPosX,msg.spawnPosY);
             Enemies[pid] = enemy;
         }
     }

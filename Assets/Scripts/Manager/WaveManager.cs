@@ -17,16 +17,15 @@ public class WaveManager : MonoBehaviour
     {
         gameStateProvider = provider;
     }
-    public GameObject SpawnEnemy(float spawnPosX, float spawnPosY, float targetPosX, float targetPosY)
+    public GameObject SpawnEnemy(string guid, float spawnPosX, float spawnPosY)
     {
         if (gameStateProvider.IsGameOver()) return null;
         
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0);
-        Vector3 targetPos = new Vector3(targetPosX, targetPosY, 0);
         
         var enemy = Instantiate(enemyPrefab, spawnPos , Quaternion.identity);
         var movement = enemy.GetComponent<EnemyMovement>();
-        movement?.SetTarget(targetPos);
+        movement?.setEnemy(guid);
         return enemy;
     }
 }

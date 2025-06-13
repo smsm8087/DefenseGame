@@ -22,7 +22,6 @@ public class GemHealthSystem : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             TakeDamage(5);
-            Destroy(other.gameObject);
         }
     }
 

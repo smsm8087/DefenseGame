@@ -39,6 +39,13 @@ public class NetworkManager : MonoBehaviour
         Destroy(players[guid]);
         players.Remove(guid);
     }
+
+    public void RemoveEnemy(string guid)
+    {
+        if (!enemies.ContainsKey(guid)) return;
+        Destroy(enemies[guid]);
+        enemies.Remove(guid);
+    }
     
     private Dictionary<string, INetworkMessageHandler> _handlers;
 
@@ -51,6 +58,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));
+        AddHandler(new EnemyDieHandler(enemies));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

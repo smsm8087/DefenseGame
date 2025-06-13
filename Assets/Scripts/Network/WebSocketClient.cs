@@ -55,7 +55,6 @@ public class WebSocketClient : MonoBehaviour
         websocket.OnMessage += (bytes) =>
         {
             string message = System.Text.Encoding.UTF8.GetString(bytes);
-            Debug.Log("WebSocket message received: " + message);
             OnMessageReceived?.Invoke(message);
         };
 
