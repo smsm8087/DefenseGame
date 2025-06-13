@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 58bdee3380509dd4eaf4a542290424c4
+guid: b6fff70caccbe6a4c9db00517d039f7b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,9 +123,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: PANCAKE
+  - name: BACKGROUND
     originalName: 
-    pivot: {x: 0.5, y: -0.014492754}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,9 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 85
-      height: 69
-    spriteID: 2df921ddad8a5824c87584b607dfaed3
+      width: 640
+      height: 360
+    spriteID: a88453800e4d30f4c96a62b7db7d2bc7
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -148,25 +148,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1471919355
+      value0: 2482455102
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: PANCAKE
+    name: BACKGROUND
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: PANCAKE
+    - name: BACKGROUND
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 1
-        width: 85
-        height: 69
-      spriteId: 2df921ddad8a5824c87584b607dfaed3
+        y: 0
+        width: 640
+        height: 360
+      spriteId: a88453800e4d30f4c96a62b7db7d2bc7
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -185,5 +185,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 85, y: 75}
-  previousTextureSize: {x: 128, y: 128}
+  canvasSize: {x: 640, y: 360}
+  previousTextureSize: {x: 1024, y: 512}
