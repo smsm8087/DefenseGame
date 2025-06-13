@@ -32,6 +32,13 @@ public class NetworkManager : MonoBehaviour
     {
         MyGUID = guid;
     }
+
+    public void RemovePlayer(string guid)
+    {
+        if (!players.ContainsKey(guid)) return;
+        Destroy(players[guid]);
+        players.Remove(guid);
+    }
     
     private Dictionary<string, INetworkMessageHandler> _handlers;
 
@@ -41,8 +48,9 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerJoinHandler(playerPrefab,players, this));
         AddHandler(new PlayerMoveHandler(players));
         AddHandler(new PlayerListHandler(playerPrefab, players));
-        AddHandler(new PlayerLeaveHandler(players));
+        AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
+        AddHandler(new EnemySyncHandler(enemies));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

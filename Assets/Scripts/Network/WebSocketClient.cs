@@ -9,8 +9,6 @@ public class WebSocketClient : MonoBehaviour
 
     public event Action<string> OnMessageReceived;
 
-    [SerializeField] private string serverUri = "ws://localhost:8080/ws"; // 서버 주소
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

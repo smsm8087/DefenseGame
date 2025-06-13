@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 public class SpawnEnemyHandler : INetworkMessageHandler
 {
-    private readonly Dictionary<string, GameObject> Enemies = new Dictionary<string, GameObject>();
+    private readonly Dictionary<string, GameObject> Enemies = new ();
     private readonly WaveManager waveManager;
 
     public string Type => "spawn_enemy";
@@ -20,7 +20,7 @@ public class SpawnEnemyHandler : INetworkMessageHandler
         var pid = msg.enemyId;
         if (!Enemies.ContainsKey(pid))
         {
-            var enemy = waveManager.SpawnEnemy(msg.wave,msg.enemyId);
+            var enemy = waveManager.SpawnEnemy(msg.spawnPosX,msg.spawnPosY, msg.targetPosX, msg.targetPosY);
             Enemies[pid] = enemy;
         }
     }

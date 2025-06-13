@@ -10,9 +10,6 @@ public class WaveManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private Transform crystal;
-    private int wave;
-    private string enemyId;
 
     private IGameStateProvider gameStateProvider;
 
@@ -20,16 +17,16 @@ public class WaveManager : MonoBehaviour
     {
         gameStateProvider = provider;
     }
-    public GameObject SpawnEnemy(int wave, string enemyId)
+    public GameObject SpawnEnemy(float spawnPosX, float spawnPosY, float targetPosX, float targetPosY)
     {
         if (gameStateProvider.IsGameOver()) return null;
-        this.wave = wave;
-        this.enemyId = enemyId;
         
-        int index = UnityEngine.Random.Range(0, spawnPoints.Length);
-        var enemy = Instantiate(enemyPrefab, spawnPoints[index].position, Quaternion.identity);
+        Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0);
+        Vector3 targetPos = new Vector3(targetPosX, targetPosY, 0);
+        
+        var enemy = Instantiate(enemyPrefab, spawnPos , Quaternion.identity);
         var movement = enemy.GetComponent<EnemyMovement>();
-        movement?.SetTarget(crystal.position);
+        movement?.SetTarget(targetPos);
         return enemy;
     }
 }
