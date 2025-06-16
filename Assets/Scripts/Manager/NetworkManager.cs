@@ -18,7 +18,7 @@ public class NetworkManager : MonoBehaviour
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
-    
+    private event Action onGameOver;
     public string MyGUID { get; private set; }
     void Awake()
     {
@@ -31,6 +31,16 @@ public class NetworkManager : MonoBehaviour
         
         RegisterHandlers();
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
+    }
+
+    public void SetOnGamveOverAction(Action onGameOver)
+    {
+        this.onGameOver += onGameOver;
+    }
+
+    public void TriggerGameOver()
+    {
+        this.onGameOver?.Invoke();
     }
     public void SetMyGUID(string guid)
     {
@@ -50,7 +60,22 @@ public class NetworkManager : MonoBehaviour
         Destroy(enemies[guid]);
         enemies.Remove(guid);
     }
-    
+
+    public void RemoveAllEnemies()
+    {
+        foreach (var enemyData in enemies)
+        {
+            GameObject enemyObj = enemyData.Value;
+            Destroy(enemyObj);
+        }
+        enemies.Clear();
+    }
+
+    public void ResetHp()
+    {
+        //임시 초기화
+        sharedHpManager.UpdateHPBar(100,100);
+    }
     private Dictionary<string, INetworkMessageHandler> _handlers;
 
     private void RegisterHandlers()
@@ -65,6 +90,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemyDieHandler(enemies));
         AddHandler(new SharedHpUpdateHandler(sharedHpManager));
         AddHandler(new CountDownHandler(centerText));
+        AddHandler(new GameOverHandler(centerText));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
