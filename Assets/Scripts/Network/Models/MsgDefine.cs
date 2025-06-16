@@ -18,6 +18,8 @@ public class NetMsg
     public float spawnPosY;
     public List<EnemySyncPacket> enemies;
     public List<string> deadEnemyIds;
+    public float currentHp;
+    public float maxHp;
 }
 public class EnemySyncPacket
 {

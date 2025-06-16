@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour,  IGameStateProvider
     public static GameManager Instance { get; private set; }
 
     [SerializeField] private WaveManager waveManager;
-    [SerializeField] private GemHealthSystem gemHealthSystem;
+    [SerializeField] private SharedHpManager sharedHpManager;
 
     public bool IsGameOver { get; private set; }
     bool IGameStateProvider.IsGameOver() => IsGameOver;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour,  IGameStateProvider
         {
             waveManager.Initialize(this);
         }
-        gemHealthSystem.OnDeath += TriggerGameOver;
+        sharedHpManager.OnDeath += TriggerGameOver;
     }
 
     public void TriggerGameOver()

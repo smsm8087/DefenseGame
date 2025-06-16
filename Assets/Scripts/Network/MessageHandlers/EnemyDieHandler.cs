@@ -19,11 +19,7 @@ public class EnemyDieHandler : INetworkMessageHandler
         foreach (var deadEnemyId in deadEnemyIds)
         {
             var pid = deadEnemyId;
-            if (!Enemies.ContainsKey(pid)) continue;
-            var enemyObj =  Enemies[pid];
-            if (enemyObj == null) continue;
-            GameObject.Destroy(enemyObj);
-            Enemies.Remove(pid);
+            NetworkManager.Instance.RemoveEnemy(pid);
         }
     }
 }

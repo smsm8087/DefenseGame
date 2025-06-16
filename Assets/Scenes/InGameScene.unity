@@ -505,7 +505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f76524d7277286640802ba084290d9a7, type: 3}
+  m_Sprite: {fileID: 7095162513593846947, guid: 83cc11aeacba22a4d8e72c455eac97bd, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveManager: {fileID: 561100121}
-  gemHealthSystem: {fileID: 491611646}
+  sharedHpManager: {fileID: 491611646}
 --- !u!4 &1187352996
 Transform:
   m_ObjectHideFlags: 0
@@ -1035,7 +1035,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1330993466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1499,6 +1499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
   waveManager: {fileID: 561100121}
+  sharedHpManager: {fileID: 491611646}
 --- !u!4 &1845874392
 Transform:
   m_ObjectHideFlags: 0
@@ -1658,7 +1659,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 66c8937d1a465984eacc2412388c2399, type: 3}
+  m_Sprite: {fileID: -4408122995622204960, guid: 5f0c99ec77c82d545b7d9ffa72146f9a, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
