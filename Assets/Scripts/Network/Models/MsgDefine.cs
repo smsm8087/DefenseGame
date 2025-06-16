@@ -23,7 +23,7 @@ public class NetMsg
     public float currentHp;
     public float maxHp;
     public int countDown;
-    public string startMessage;
+    public string message;
 }
 public class EnemySyncPacket
 {

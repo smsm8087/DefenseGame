@@ -4,12 +4,12 @@ using UnityEngine.UI;
 namespace UI
 {
     
-    public class CountDownText : MonoBehaviour
+    public class CenterText : MonoBehaviour
     {
-        Text countdownText;
+        Text centerText;
         private void Awake()
         {
-            countdownText = GetComponent<Text>();
+            centerText = GetComponent<Text>();
         }
 
         public void UpdateText(int count, string start_msg)
@@ -18,11 +18,11 @@ namespace UI
             
             if (count > 0)
             {
-                countdownText.text = count.ToString();
+                centerText.text = count.ToString();
             }
             else if (!string.IsNullOrEmpty(start_msg))
             {
-                countdownText.text = start_msg;
+                centerText.text = start_msg;
             }
         }
     }

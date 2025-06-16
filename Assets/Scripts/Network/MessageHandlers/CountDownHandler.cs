@@ -5,14 +5,14 @@ using UI;
 public class CountDownHandler : INetworkMessageHandler
 {
     public string Type => "countdown";
-    private CountDownText countdownText;
-    public CountDownHandler(CountDownText countdownText)
+    private CenterText centerText;
+    public CountDownHandler(CenterText centerText)
     {
-        this.countdownText =  countdownText;
+        this.centerText =  centerText;
     }
     public void Handle(NetMsg msg)
     {
         //단순 카운트다운용 메시지 핸들러
-        this.countdownText.UpdateText(msg.countDown, msg.startMessage);
+        centerText.UpdateText(msg.countDown, msg.message);
     }
 }

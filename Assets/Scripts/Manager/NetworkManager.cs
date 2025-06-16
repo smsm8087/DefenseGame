@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
     
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private SharedHpManager sharedHpManager;
-    [SerializeField] private CountDownText countDownText;
+    [SerializeField] private CenterText centerText;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
@@ -64,7 +64,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemySyncHandler(enemies));
         AddHandler(new EnemyDieHandler(enemies));
         AddHandler(new SharedHpUpdateHandler(sharedHpManager));
-        AddHandler(new CountDownHandler(countDownText));
+        AddHandler(new CountDownHandler(centerText));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

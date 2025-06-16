@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 549031557}
   - component: {fileID: 549031559}
   m_Layer: 5
-  m_Name: CountDown
+  m_Name: CenterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1593,7 +1593,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
   waveManager: {fileID: 561100121}
   sharedHpManager: {fileID: 491611646}
-  countDownText: {fileID: 549031559}
+  centerText: {fileID: 549031559}
 --- !u!4 &1845874392
 Transform:
   m_ObjectHideFlags: 0
