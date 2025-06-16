@@ -29,6 +29,5 @@ public class GameManager : MonoBehaviour
     public void TriggerGameOver()
     {
         NetworkManager.Instance.RemoveAllEnemies();
-        NetworkManager.Instance.ResetHp();
     }
 }
