@@ -4,6 +4,7 @@ using System.Text;
 using NativeWebSocket;
 using UnityEngine;
 using Newtonsoft.Json;
+using UI;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class NetworkManager : MonoBehaviour
     
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private SharedHpManager sharedHpManager;
+    [SerializeField] private CountDownText countDownText;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
@@ -62,6 +64,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemySyncHandler(enemies));
         AddHandler(new EnemyDieHandler(enemies));
         AddHandler(new SharedHpUpdateHandler(sharedHpManager));
+        AddHandler(new CountDownHandler(countDownText));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
