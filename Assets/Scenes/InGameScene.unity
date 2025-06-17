@@ -809,6 +809,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003b7405b9b948e88f2940ca790edaea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emojiImage: {fileID: 262770650}
+  hp100Emoji: {fileID: -3839666718746205342, guid: 7cd147483b06c53438c6d6bd59432efc, type: 3}
+  hp50Emoji: {fileID: -9150935015904579868, guid: 4c8c4ecc164c4b34dbce7eea90fd4d0a, type: 3}
+  hp0Emoji: {fileID: 184918564713214074, guid: 48e50a2e4bdfc724784a0a2145b8d5b1, type: 3}
 --- !u!114 &599760219
 MonoBehaviour:
   m_ObjectHideFlags: 0
