@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _isGrounded = true;
     private bool _isRunning = false;
-    private bool _isAttack = false;
+    private bool _isAttacking = false;
     private SpriteRenderer _sr;
     private Animator _animator;
     private PlayerAttack _playerAttack;
@@ -58,20 +58,20 @@ public class PlayerController : MonoBehaviour
     {
         float moveInput = InputManager.GetMoveInput();
 
-        // 이동
-        if (!_isAttack)
+        if (!_isAttacking)
         {
+        	// 이동
             MovementHelper.Move(_rb, moveInput, moveSpeed);
-        }
-        // 방향 설정
-        _isRunning = Mathf.Abs(moveInput) > 0.01f; 
-        if (_isRunning)
-        {
-            isFacingRight = moveInput > 0;
-        }
-        if (_sr)
-        {
-            _sr.flipX = isFacingRight;
+			// 방향 설정
+        	_isRunning = Mathf.Abs(moveInput) > 0.01f; 
+        	if (_isRunning)
+        	{
+            	isFacingRight = moveInput > 0;
+        	}
+        	if (_sr)
+        	{
+            	_sr.flipX = isFacingRight;
+        	}
         }
         
         // 점프
@@ -82,29 +82,29 @@ public class PlayerController : MonoBehaviour
         }
 
         //공격
-        if (Input.GetKeyDown(KeyCode.Z) && !_isAttack)
+        if (Input.GetKeyDown(KeyCode.Z) && !_isAttacking)
         {
-            StartCoroutine(AttackCoroutin());
+            StartCoroutine(AttackCoroutine());
         }
         // 애니메이터
         if (_animator)
         {
             _animator.SetFloat("isRunning", _isRunning ? 1.0f : 0.0f);
             _animator.SetBool("isJumping", !_isGrounded);
-            _animator.SetBool("isAttack", _isAttack);
+            _animator.SetBool("isAttacking", _isAttacking);
         }
     }
     //temp
-    public IEnumerator AttackCoroutin()
+    public IEnumerator AttackCoroutine()
     {
-        _isAttack = true;
+        _isAttacking = true;
         _playerAttack.Attack();
         var clips = _animator.runtimeAnimatorController.animationClips;
         var clip = clips.FirstOrDefault(clip => clip.name == "ATTACK_Clip");
         float duration = clip.length;
         Debug.Log("공격모션 시간 : " + duration);
         yield return new WaitForSeconds(duration);
-        _isAttack = false;
+        _isAttacking = false;
     }
     
 

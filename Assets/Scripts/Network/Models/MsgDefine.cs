@@ -12,6 +12,7 @@ public class NetMsg
     public float y;
     public bool isJumping;
     public bool isRunning;
+    public bool isAttacking;
     public int wave;
     //enemy
     public float spawnPosX;

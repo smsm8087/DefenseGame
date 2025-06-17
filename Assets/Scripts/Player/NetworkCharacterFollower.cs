@@ -31,6 +31,13 @@ public class NetworkCharacterFollower : MonoBehaviour
         spriteRenderer.flipX = lastFacingRight;
         targetPosition = newPos;
     }
+    public void SetAttacking(bool isAttacking)
+    {
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", isAttacking);
+        }
+    }
 
     public void SetJumping(bool isJumping)
     {
