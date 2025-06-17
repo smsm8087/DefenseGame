@@ -26,6 +26,7 @@ public class PlayerMoveHandler : INetworkMessageHandler
             follower.SetTargetPosition(new Vector3(msg.x, msg.y, 0));
             follower.SetJumping(msg.isJumping);
             follower.SetRunning(msg.isRunning);
+            follower.SetAttacking(msg.isAttacking);
         }
     }
 }

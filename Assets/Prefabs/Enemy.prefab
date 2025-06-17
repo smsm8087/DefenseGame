@@ -161,7 +161,7 @@ BoxCollider2D:
   m_Offset: {x: 0.0004931092, y: 0.6617399}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: -0.0925926}
+    pivot: {x: 0.48958334, y: 0}
     oldSize: {x: 0.48, y: 0.54}
     newSize: {x: 9, y: 6}
     adaptiveTilingThreshold: 0.5
@@ -178,9 +178,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5628018141983903104}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e84403a8c1545034c926dc49de66eb29, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1624068cfef9c9b40b08caca6070874a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67628ec41e7e49619b19a0b6e530adf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  guid: 
 --- !u!50 &784490478509906143
 Rigidbody2D:
   serializedVersion: 5
@@ -275,8 +275,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7339498287387865478, guid: b9294dfff705cb94fb57d8c6822de593, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 6948622099849559301, guid: 817f8dceb9650a340a8068e66668e05e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
