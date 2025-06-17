@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c8c4ecc164c4b34dbce7eea90fd4d0a
+guid: ffa5ac800836ec24699319e81aa7d623
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,9 +123,51 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: hp50emoji
+  - name: Frame_2
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.6666667, y: -0.175}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 138
+      width: 51
+      height: 80
+    spriteID: 365aa7274cccfe04ea3c94c1cb6b2016
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 138}
+  - name: Frame_3
+    originalName: 
+    pivot: {x: 0.44871795, y: -0.24074073}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 76
+      width: 78
+      height: 54
+    spriteID: 465c840bcad2c5d4eb97732736d1c4d4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 76}
+  - name: Frame_4
+    originalName: 
+    pivot: {x: 0.43037975, y: -0.0625}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,9 +175,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 64
+      width: 79
       height: 64
-    spriteID: f1af8ebcfb662ac459c961ef5d4cc30d
+    spriteID: a2fe07133626b2048860f1a69fd7d88a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -144,29 +186,107 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_0
+    originalName: 
+    pivot: {x: 0.7083333, y: -0.24074073}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 91
+      y: 66
+      width: 48
+      height: 54
+    spriteID: 9687a5bd7de328740b05ca280001a950
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 91, y: 66}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.75, y: -0.24074073}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 91
+      y: 4
+      width: 56
+      height: 54
+    spriteID: a52ab91763cf40548a135fdc87d22b12
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 91, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 35189701
+      value0: 3435045640
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: hp50emoji
+    name: DUST MONSTER ATTACK
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: hp50emoji
+    - name: Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 16
+        y: 14
+        width: 51
+        height: 80
+      spriteId: 365aa7274cccfe04ea3c94c1cb6b2016
+    - name: Frame_3
+      frameIndex: 3
+      additiveSortOrder: 0
+      cellRect:
+        x: 15
+        y: 13
+        width: 78
+        height: 54
+      spriteId: 465c840bcad2c5d4eb97732736d1c4d4
+    - name: Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 16
+        y: 4
+        width: 79
+        height: 64
+      spriteId: a2fe07133626b2048860f1a69fd7d88a
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      spriteId: f1af8ebcfb662ac459c961ef5d4cc30d
+        x: 16
+        y: 13
+        width: 48
+        height: 54
+      spriteId: 9687a5bd7de328740b05ca280001a950
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 8
+        y: 13
+        width: 56
+        height: 54
+      spriteId: a52ab91763cf40548a135fdc87d22b12
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -185,5 +305,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 64}
-  previousTextureSize: {x: 128, y: 128}
+  canvasSize: {x: 100, y: 100}
+  previousTextureSize: {x: 256, y: 256}
