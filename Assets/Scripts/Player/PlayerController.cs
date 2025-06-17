@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _isGrounded = true;
     private bool _isRunning = false;
+    private bool _isAttack = false;
     private SpriteRenderer _sr;
     private Animator _animator;
-    private Vector3 _lastSentPosition;
+    private PlayerAttack _playerAttack;
+    
 
     //flip 조절용
     private bool isFacingRight = false;
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     void Update()
@@ -39,8 +42,6 @@ public class PlayerController : MonoBehaviour
         
         var pos = transform.position;
 
-        _lastSentPosition = pos;
-
         var moveMsg = new NetMsg
         {
             type = "move",
@@ -48,8 +49,9 @@ public class PlayerController : MonoBehaviour
             x = pos.x,
             y = pos.y,
             isJumping = !_isGrounded,
-            isRunning = _isRunning,
+            isRunning = _isRunning
         };
+            
         NetworkManager.Instance.SendMsg(moveMsg);
     }
     void HandleInput()
@@ -57,8 +59,10 @@ public class PlayerController : MonoBehaviour
         float moveInput = InputManager.GetMoveInput();
 
         // 이동
-        MovementHelper.Move(_rb, moveInput, moveSpeed);
-
+        if (!_isAttack)
+        {
+            MovementHelper.Move(_rb, moveInput, moveSpeed);
+        }
         // 방향 설정
         _isRunning = Mathf.Abs(moveInput) > 0.01f; 
         if (_isRunning)
@@ -77,13 +81,32 @@ public class PlayerController : MonoBehaviour
             _isGrounded = false;
         }
 
+        //공격
+        if (Input.GetKeyDown(KeyCode.Z) && !_isAttack)
+        {
+            StartCoroutine(AttackCoroutin());
+        }
         // 애니메이터
         if (_animator)
         {
             _animator.SetFloat("isRunning", _isRunning ? 1.0f : 0.0f);
             _animator.SetBool("isJumping", !_isGrounded);
+            _animator.SetBool("isAttack", _isAttack);
         }
     }
+    //temp
+    public IEnumerator AttackCoroutin()
+    {
+        _isAttack = true;
+        _playerAttack.Attack();
+        var clips = _animator.runtimeAnimatorController.animationClips;
+        var clip = clips.FirstOrDefault(clip => clip.name == "ATTACK_Clip");
+        float duration = clip.length;
+        Debug.Log("공격모션 시간 : " + duration);
+        yield return new WaitForSeconds(duration);
+        _isAttack = false;
+    }
+    
 
     private void OnCollisionEnter2D(Collision2D col)
     {

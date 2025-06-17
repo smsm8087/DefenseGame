@@ -91,6 +91,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new SharedHpUpdateHandler(sharedHpManager));
         AddHandler(new CountDownHandler(centerText));
         AddHandler(new GameOverHandler(centerText));
+        AddHandler(new RestartHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)

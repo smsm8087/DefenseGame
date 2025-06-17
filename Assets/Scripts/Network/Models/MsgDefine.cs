@@ -24,6 +24,10 @@ public class NetMsg
     public float maxHp;
     public int countDown;
     public string message;
+    
+    
+    //cheat
+    public bool isCheat;
 }
 public class EnemySyncPacket
 {
