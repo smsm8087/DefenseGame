@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using System.Linq;
@@ -16,10 +15,10 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer _sr;
     private Animator _animator;
     private PlayerAttack _playerAttack;
-    
 
     //flip 조절용
     private bool isFacingRight = false;
+
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //내플레이어만 업데이트. 다른 플레이어는 네트워크 매니저에서 업데이트.
-        if (playerGUID != NetworkManager.Instance.MyGUID)  return;
+        if (playerGUID != NetworkManager.Instance.MyGUID) return;
         HandleInput();
         SendMoveToServer();
     }
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour
     void SendMoveToServer()
     {
         //매 프레임마다 다른플레이어에게 내 좌표 전송
-        
         var pos = transform.position;
 
         var moveMsg = new NetMsg
@@ -51,41 +49,43 @@ public class PlayerController : MonoBehaviour
             isJumping = !_isGrounded,
             isRunning = _isRunning
         };
-            
+
         NetworkManager.Instance.SendMsg(moveMsg);
     }
+
     void HandleInput()
     {
         float moveInput = InputManager.GetMoveInput();
 
         if (!_isAttacking)
         {
-        	// 이동
+            // 이동
             MovementHelper.Move(_rb, moveInput, moveSpeed);
-			// 방향 설정
-        	_isRunning = Mathf.Abs(moveInput) > 0.01f; 
-        	if (_isRunning)
-        	{
-            	isFacingRight = moveInput > 0;
-        	}
-        	if (_sr)
-        	{
-            	_sr.flipX = isFacingRight;
-        	}
+            // 방향 설정
+            _isRunning = Mathf.Abs(moveInput) > 0.01f;
+            if (_isRunning)
+            {
+                isFacingRight = moveInput > 0;
+            }
+            if (_sr)
+            {
+                _sr.flipX = isFacingRight;
+            }
         }
-        
+
         // 점프
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        if (InputManager.GetJumpInput() && _isGrounded)
         {
             MovementHelper.Jump(_rb, jumpForce);
             _isGrounded = false;
         }
 
         //공격
-        if (Input.GetKeyDown(KeyCode.Z) && !_isAttacking)
+        if (InputManager.GetAttackInput() && !_isAttacking)
         {
             StartCoroutine(AttackCoroutine());
         }
+
         // 애니메이터
         if (_animator)
         {
@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("isAttacking", _isAttacking);
         }
     }
+
     //temp
     public IEnumerator AttackCoroutine()
     {
@@ -106,7 +107,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         _isAttacking = false;
     }
-    
 
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -136,14 +136,41 @@ public static class MovementHelper
 
 public static class InputManager
 {
+    public static FixedJoystick joystick;
+    public static bool isJumpPressed = false;
+    public static bool isAttackPressed = false;
+
     public static float GetMoveInput()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
+        
+        if (joystick != null && Mathf.Abs(joystick.Horizontal) > 0.01f)
+        {
+            return joystick.Horizontal;
+        }
+
+        
         return Input.GetAxisRaw("Horizontal");
-#elif UNITY_ANDROID || UNITY_IOS
-        return 0f;
-#else
-        return 0f;
-#endif
+    }
+
+    public static bool GetJumpInput()
+    {
+        if (isJumpPressed)
+        {
+            isJumpPressed = false;
+            return true;
+        }
+
+        return Input.GetKeyDown(KeyCode.Space);
+    }
+
+    public static bool GetAttackInput()
+    {
+        if (isAttackPressed)
+        {
+            isAttackPressed = false;
+            return true;
+        }
+
+        return Input.GetKeyDown(KeyCode.Z);
     }
 }
