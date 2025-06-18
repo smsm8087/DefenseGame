@@ -4,21 +4,28 @@ using System.Collections.Generic;
 public class NetMsg
 {
     public string type;
+    public int wave;
+    
     public string playerId;
     public string enemyId;
     public List<string> players;
+
+    public string animation;
     //player
     public float x;
     public float y;
-    public bool isJumping;
-    public bool isRunning;
-    public bool isAttacking;
-    public int wave;
+    //히트박스 영역
+    public float attackBoxCenterX;
+    public float attackBoxCenterY;
+    public float attackBoxWidth;
+    public float attackBoxHeight;
+        
     //enemy
     public float spawnPosX;
     public float spawnPosY;
     public List<EnemySyncPacket> enemies;
     public List<string> deadEnemyIds;
+    public List<EnemyDamageInfo> damagedEnemies;
     
     //ui
     public float currentHp;
@@ -34,4 +41,11 @@ public class EnemySyncPacket
 {
     public string enemyId { get; set; }
     public float x { get; set; }
+}
+public class EnemyDamageInfo
+{
+    public string enemyId { get; set; }
+    public int currentHp { get; set; }
+    public int maxHp { get; set; }
+    public int damage { get; set; }
 }
