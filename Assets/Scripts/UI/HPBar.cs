@@ -41,8 +41,6 @@ public class HPBar : MonoBehaviour
         }
 
         hpImg.fillAmount = targetPercent; // 마지막 값 정확히 맞춤
-        // 이모지 표시
-        emojiImage.gameObject.SetActive(targetPercent > 0);
     }
     
     void UpdateEmoji(float healthPercent)
