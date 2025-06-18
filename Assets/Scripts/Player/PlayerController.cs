@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         attackState = new AttackState(this);
     
         // 처음에는 IdleState 로 시작
+        prevState = null;
         ChangeState(new IdleState(this));
     }
     void Update()
@@ -142,40 +143,13 @@ public static class MovementHelper
 public static class InputManager
 {
     public static FixedJoystick joystick;
-    public static bool isJumpPressed = false;
-    public static bool isAttackPressed = false;
 
     public static float GetMoveInput()
     {
-        
         if (joystick != null && Mathf.Abs(joystick.Horizontal) > 0.01f)
         {
             return joystick.Horizontal;
         }
-
-        
         return Input.GetAxisRaw("Horizontal");
-    }
-
-    public static bool GetJumpInput()
-    {
-        if (isJumpPressed)
-        {
-            isJumpPressed = false;
-            return true;
-        }
-
-        return Input.GetKeyDown(KeyCode.Space);
-    }
-
-    public static bool GetAttackInput()
-    {
-        if (isAttackPressed)
-        {
-            isAttackPressed = false;
-            return true;
-        }
-
-        return Input.GetKeyDown(KeyCode.Z);
     }
 }

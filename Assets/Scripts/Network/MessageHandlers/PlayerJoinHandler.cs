@@ -34,6 +34,9 @@ public class PlayerJoinHandler : INetworkMessageHandler
                 playerController.enabled = true;
                 playerController.playerGUID = pid;
                 playerObj.GetComponent<SpriteRenderer>().sortingOrder = 10;
+                
+                //mobile input에 등록
+                MobileInputUI.Instance.RegisterPlayer(playerController);
             }
             else
             {
