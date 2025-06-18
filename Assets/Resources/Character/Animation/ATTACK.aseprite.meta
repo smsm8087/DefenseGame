@@ -131,10 +131,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 104
+      x: 103
       y: 4
       width: 66
-      height: 106
+      height: 104
     spriteID: f124a688a8a306344a8b0b622c1eb417
     spriteBone: []
     spriteOutline: []
@@ -143,7 +143,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 104, y: 4}
+    uvTransform: {x: 103, y: 4}
   - name: Frame_1
     originalName: 
     pivot: {x: 0.28787878, y: 0}
@@ -152,10 +152,10 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 178
+      x: 177
       y: 4
       width: 66
-      height: 105
+      height: 103
     spriteID: f737defc4bbd9a34b9697d6fabec7c84
     spriteBone: []
     spriteOutline: []
@@ -164,10 +164,10 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 178, y: 4}
+    uvTransform: {x: 177, y: 4}
   - name: Frame_2
     originalName: 
-    pivot: {x: 0.5326087, y: 0}
+    pivot: {x: 0.52747256, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -175,8 +175,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 92
-      height: 102
+      width: 91
+      height: 100
     spriteID: d5861366eda854e4c9d3e7eb74e5f69f
     spriteBone: []
     spriteOutline: []
@@ -207,7 +207,7 @@ ScriptedImporter:
         x: 32
         y: 0
         width: 66
-        height: 106
+        height: 104
       spriteId: f124a688a8a306344a8b0b622c1eb417
     - name: Frame_1
       frameIndex: 1
@@ -216,16 +216,16 @@ ScriptedImporter:
         x: 31
         y: 0
         width: 66
-        height: 105
+        height: 103
       spriteId: f737defc4bbd9a34b9697d6fabec7c84
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
       cellRect:
-        x: 1
+        x: 2
         y: 0
-        width: 92
-        height: 102
+        width: 91
+        height: 100
       spriteId: d5861366eda854e4c9d3e7eb74e5f69f
     linkedCells: []
     parentIndex: -1
