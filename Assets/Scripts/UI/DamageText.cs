@@ -41,10 +41,10 @@ namespace UI
                 // 위치 이동
                 transform.localPosition = Vector3.Lerp(startPos, targetPos, t);
 
-                // // 알파 조절
-                // Color c = originalColor;
-                // c.a = Mathf.Lerp(1f, 0f, t);
-                // damageText.color = c;
+                // 알파 조절
+                Color c = originalColor;
+                c.a = Mathf.Lerp(1f, 0f, t * 0.5f);
+                damageText.color = c;
 
                 yield return null;
             }
