@@ -288,7 +288,6 @@ GameObject:
   - component: {fileID: 464500389}
   - component: {fileID: 464500392}
   - component: {fileID: 464500391}
-  - component: {fileID: 464500390}
   m_Layer: 5
   m_Name: Health Bar Back
   m_TagString: Untagged
@@ -315,22 +314,6 @@ RectTransform:
   m_AnchoredPosition: {x: 60.18524, y: 408.031}
   m_SizeDelta: {x: 286.7, y: 26.1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &464500390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464500388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003b7405b9b948e88f2940ca790edaea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emojiImage: {fileID: 262770650}
-  hp100Emoji: {fileID: -3839666718746205342, guid: 7cd147483b06c53438c6d6bd59432efc, type: 3}
-  hp50Emoji: {fileID: -9150935015904579868, guid: 4c8c4ecc164c4b34dbce7eea90fd4d0a, type: 3}
-  hp0Emoji: {fileID: 184918564713214074, guid: 48e50a2e4bdfc724784a0a2145b8d5b1, type: 3}
 --- !u!114 &464500391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1535,7 +1518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.3428711, g: 0.4973497, b: 0.6320754, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1544,7 +1527,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 70
+    m_FontSize: 52
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2101,6 +2084,7 @@ MonoBehaviour:
   waveManager: {fileID: 561100121}
   sharedHpManager: {fileID: 491611646}
   centerText: {fileID: 549031559}
+  DamageTextPrefab: {fileID: 6224278285089542279, guid: face83d47adf43743adf59030ced7397, type: 3}
 --- !u!4 &1845874392
 Transform:
   m_ObjectHideFlags: 0

@@ -9,33 +9,70 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
 
-    private Rigidbody2D _rb;
-    private bool _isGrounded = true;
-    private bool _isRunning = false;
-    private bool _isAttacking = false;
-    private SpriteRenderer _sr;
-    private Animator _animator;
-    private PlayerAttack _playerAttack;
+    public Rigidbody2D _rb;
+    public SpriteRenderer _sr;
+    public Animator _animator;
     
-
-    //flip 조절용
-    private bool isFacingRight = false;
+    public bool _isGrounded = true;
+    
+    //공격판정
+    public Transform attackRangeTransform;
+    public BoxCollider2D attackRangeCollider;
+    
+    //FSM
+    private PlayerState currentState;
+    private PlayerState prevState;
+    public  IdleState idleState;
+    public  MoveState moveState;
+    public  JumpState jumpState;
+    public  AttackState attackState;
+    
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _playerAttack = GetComponent<PlayerAttack>();
     }
-
+    private void Start()
+    {
+        idleState = new IdleState(this);
+        moveState = new MoveState(this);
+        jumpState = new JumpState(this);
+        attackState = new AttackState(this);
+    
+        // 처음에는 IdleState 로 시작
+        ChangeState(new IdleState(this));
+    }
     void Update()
     {
         //내플레이어만 업데이트. 다른 플레이어는 네트워크 매니저에서 업데이트.
         if (playerGUID != NetworkManager.Instance.MyGUID)  return;
-        HandleInput();
         SendMoveToServer();
+        currentState?.Update();
     }
+    public void ChangeState(PlayerState newState)
+    {
+        // 기존 상태 Exit 호출
+        currentState?.Exit();
 
+        prevState =  currentState;
+        // 새 상태로 변경
+        currentState = newState;
+
+        // 새 상태 Enter 호출
+        currentState.Enter();
+    }
+    public void SendAnimationMessage(string animation)
+    {
+        var animationMsg = new NetMsg
+        {
+            type = "player_animation",
+            playerId = NetworkManager.Instance.MyGUID,
+            animation = animation
+        };
+            
+        NetworkManager.Instance.SendMsg(animationMsg);
+    }
     void SendMoveToServer()
     {
         //매 프레임마다 다른플레이어에게 내 좌표 전송
@@ -48,66 +85,36 @@ public class PlayerController : MonoBehaviour
             playerId = NetworkManager.Instance.MyGUID,
             x = pos.x,
             y = pos.y,
-            isJumping = !_isGrounded,
-            isRunning = _isRunning
         };
             
         NetworkManager.Instance.SendMsg(moveMsg);
     }
-    void HandleInput()
+    public void SendAttackRequest()
     {
-        float moveInput = InputManager.GetMoveInput();
-
-        if (!_isAttacking)
-        {
-        	// 이동
-            MovementHelper.Move(_rb, moveInput, moveSpeed);
-			// 방향 설정
-        	_isRunning = Mathf.Abs(moveInput) > 0.01f; 
-        	if (_isRunning)
-        	{
-            	isFacingRight = moveInput > 0;
-        	}
-        	if (_sr)
-        	{
-            	_sr.flipX = isFacingRight;
-        	}
-        }
+        Vector2 centerWorldPos = attackRangeTransform.position;
+        Vector3 lossyScale = attackRangeTransform.lossyScale;
+        Vector2 size = attackRangeCollider.size;
         
-        // 점프
-        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
+        var attackMsg = new NetMsg
         {
-            MovementHelper.Jump(_rb, jumpForce);
-            _isGrounded = false;
-        }
+            type = "player_attack",
+            playerId = NetworkManager.Instance.MyGUID,
+            attackBoxCenterX = centerWorldPos.x,
+            attackBoxCenterY = centerWorldPos.y,
+            attackBoxWidth = size.x * lossyScale.x,
+            attackBoxHeight = size.y * lossyScale.y
+        };
 
-        //공격
-        if (Input.GetKeyDown(KeyCode.Z) && !_isAttacking)
-        {
-            StartCoroutine(AttackCoroutine());
-        }
-        // 애니메이터
-        if (_animator)
-        {
-            _animator.SetFloat("isRunning", _isRunning ? 1.0f : 0.0f);
-            _animator.SetBool("isJumping", !_isGrounded);
-            _animator.SetBool("isAttacking", _isAttacking);
-        }
+        NetworkManager.Instance.SendMsg(attackMsg);
     }
-    //temp
-    public IEnumerator AttackCoroutine()
+    public PlayerState GetCurrentState()
     {
-        _isAttacking = true;
-        _playerAttack.Attack();
-        var clips = _animator.runtimeAnimatorController.animationClips;
-        var clip = clips.FirstOrDefault(clip => clip.name == "ATTACK_Clip");
-        float duration = clip.length;
-        Debug.Log("공격모션 시간 : " + duration);
-        yield return new WaitForSeconds(duration);
-        _isAttacking = false;
+        return currentState;
     }
-    
-
+    public PlayerState GetPrevState()
+    {
+        return prevState;
+    }
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.contacts[0].normal.y > 0.5f)

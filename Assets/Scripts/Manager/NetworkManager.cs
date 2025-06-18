@@ -14,6 +14,7 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private SharedHpManager sharedHpManager;
     [SerializeField] private CenterText centerText;
+    [SerializeField] private GameObject DamageTextPrefab;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
@@ -92,6 +93,8 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new CountDownHandler(centerText));
         AddHandler(new GameOverHandler(centerText));
         AddHandler(new RestartHandler());
+        AddHandler(new PlayerAnimationHandler(players));
+        AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

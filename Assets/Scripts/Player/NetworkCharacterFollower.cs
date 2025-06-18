@@ -7,14 +7,12 @@ public class NetworkCharacterFollower : MonoBehaviour
 
     private Vector3 targetPosition;
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
     private bool lastFacingRight = true;
     private bool firstSync = true;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
         targetPosition = transform.position;
     }
 
@@ -31,30 +29,6 @@ public class NetworkCharacterFollower : MonoBehaviour
         spriteRenderer.flipX = lastFacingRight;
         targetPosition = newPos;
     }
-    public void SetAttacking(bool isAttacking)
-    {
-        if (animator != null)
-        {
-            animator.SetBool("isAttacking", isAttacking);
-        }
-    }
-
-    public void SetJumping(bool isJumping)
-    {
-        if (animator != null)
-        {
-            animator.SetBool("isJumping", isJumping);
-        }
-    }
-
-    public void SetRunning(bool isRunning)
-    {
-        if (animator != null)
-        {
-            animator.SetFloat("isRunning", isRunning ? 1f : 0f);
-        }
-    }
-
     private void Update()
     {
         if (!firstSync)
