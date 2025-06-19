@@ -8,30 +8,37 @@ namespace UI
     public class DamageText : MonoBehaviour
     {
         private Text damageText;
+        private RectTransform rectTransform;
 
         public void Awake()
         {
             damageText = GetComponent<Text>();
+            rectTransform = GetComponent<RectTransform>();
         }
 
         public void Init(int damage)
         {
+            // 텍스트 설정
             damageText.text = damage.ToString();
             damageText.gameObject.SetActive(true);
+            
+            
+            Debug.Log($"DamageText initialized: {damage}, color: {damageText.color}");
 
-            // 간단한 애니메이션: 위로 이동 + 페이드 아웃
-            Vector3 targetPos = transform.localPosition + new Vector3(0, 0.3f, 0); // Y로 위로 띄우기
+            // UI 좌표계에서 위로 이동할 목표 위치
+            Vector3 targetPos = rectTransform.localPosition + new Vector3(0, 50f, 0);
 
             StartCoroutine(PlayDamageAnim(targetPos));
         }
 
         private IEnumerator PlayDamageAnim(Vector3 targetPos)
         {
-            Vector3 startPos = transform.localPosition;
-            float duration = 0.5f;
+            Vector3 startPos = rectTransform.localPosition;
+            float duration = 0.5f; 
             float elapsed = 0f;
             
             Color originalColor = damageText.color;
+            Debug.Log($"Animation started from {startPos} to {targetPos}");
 
             while (elapsed < duration)
             {
@@ -39,9 +46,9 @@ namespace UI
                 float t = elapsed / duration;
 
                 // 위치 이동
-                transform.localPosition = Vector3.Lerp(startPos, targetPos, t);
+                rectTransform.localPosition = Vector3.Lerp(startPos, targetPos, t);
 
-                // 알파 조절
+                // 알파 조절 
                 Color c = originalColor;
                 c.a = Mathf.Lerp(1f, 0f, t * 0.5f);
                 damageText.color = c;
@@ -49,6 +56,7 @@ namespace UI
                 yield return null;
             }
 
+            Debug.Log("DamageText animation completed, destroying object");
             Destroy(gameObject);
         }
     }

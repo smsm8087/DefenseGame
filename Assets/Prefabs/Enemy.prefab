@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 7467242376557863861}
   - component: {fileID: 3295946089776411135}
   - component: {fileID: 7493553930699079897}
-  - component: {fileID: 3575095919668838153}
+  - component: {fileID: 3184833038636937756}
   m_Layer: 5
   m_Name: Health Bar Fill
   m_TagString: Untagged
@@ -616,7 +616,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3575095919668838153
+--- !u!114 &3184833038636937756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -625,10 +625,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8088727153186179922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003b7405b9b948e88f2940ca790edaea, type: 3}
+  m_Script: {fileID: 11500000, guid: e01df6fea5224867a619fdd9f702a480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emojiImage: {fileID: 0}
-  hp100Emoji: {fileID: 0}
-  hp50Emoji: {fileID: 0}
-  hp0Emoji: {fileID: 0}
+  visibilityDuration: 3
