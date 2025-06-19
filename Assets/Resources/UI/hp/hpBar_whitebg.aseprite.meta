@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: hpBar_whitebg
     originalName: 
-    pivot: {x: 0.4950495, y: -0.6666667}
+    pivot: {x: 0.49514565, y: -0.6666667}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,7 +133,7 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 101
+      width: 103
       height: 12
     spriteID: 61cbbde0cd0c711449735b6b8c37a532
     spriteBone: []
@@ -162,9 +162,9 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
+        x: 4
         y: 8
-        width: 101
+        width: 103
         height: 12
       spriteId: 61cbbde0cd0c711449735b6b8c37a532
     linkedCells: []
