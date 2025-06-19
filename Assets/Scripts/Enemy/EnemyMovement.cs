@@ -58,6 +58,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void changeState(EnemyState newState)
     {
+        if (state == newState) return;
         state = newState;
         switch (newState)
         {
