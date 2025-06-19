@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using System.Linq;
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
         attackState = new AttackState(this);
     
         // 처음에는 IdleState 로 시작
+        prevState = null;
         ChangeState(new IdleState(this));
     }
     void Update()
@@ -76,7 +76,6 @@ public class PlayerController : MonoBehaviour
     void SendMoveToServer()
     {
         //매 프레임마다 다른플레이어에게 내 좌표 전송
-        
         var pos = transform.position;
 
         var moveMsg = new NetMsg
@@ -86,7 +85,7 @@ public class PlayerController : MonoBehaviour
             x = pos.x,
             y = pos.y,
         };
-            
+
         NetworkManager.Instance.SendMsg(moveMsg);
     }
     public void SendAttackRequest()
@@ -143,14 +142,14 @@ public static class MovementHelper
 
 public static class InputManager
 {
+    public static FixedJoystick joystick;
+
     public static float GetMoveInput()
     {
-#if UNITY_EDITOR || UNITY_STANDALONE
+        if (joystick != null && Mathf.Abs(joystick.Horizontal) > 0.01f)
+        {
+            return joystick.Horizontal;
+        }
         return Input.GetAxisRaw("Horizontal");
-#elif UNITY_ANDROID || UNITY_IOS
-        return 0f;
-#else
-        return 0f;
-#endif
     }
 }

@@ -75,13 +75,16 @@ public class WebSocketClient : MonoBehaviour
 
     public async void Send(string message)
     {
-        if (websocket.State == WebSocketState.Open)
+        if (websocket != null && websocket.State == WebSocketState.Open)
         {
-            await websocket.SendText(message);
-        }
-        else
-        {
-            Debug.LogWarning("WebSocket not connected.");
+            if (websocket.State == WebSocketState.Open)
+            {
+                await websocket.SendText(message);
+            }
+            else
+            {
+                Debug.LogWarning("WebSocket not connected.");
+            }    
         }
     }
 }
