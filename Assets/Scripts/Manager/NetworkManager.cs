@@ -9,7 +9,7 @@ using UI;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager Instance;
-    public GameObject playerPrefab;
+    public List<GameObject> playerPrefabs;
     
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private SharedHpManager sharedHpManager;
@@ -82,9 +82,9 @@ public class NetworkManager : MonoBehaviour
     private void RegisterHandlers()
     {
         //서버 리시브 처리 부분.
-        AddHandler(new PlayerJoinHandler(playerPrefab,players, this));
+        AddHandler(new PlayerJoinHandler(playerPrefabs,players, this));
         AddHandler(new PlayerMoveHandler(players));
-        AddHandler(new PlayerListHandler(playerPrefab, players));
+        AddHandler(new PlayerListHandler(playerPrefabs[0], players));
         AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));

@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 public class PlayerJoinHandler : INetworkMessageHandler
 {
-    private readonly GameObject playerPrefab;
+    private readonly List<GameObject> playerPrefabs;
     private readonly Dictionary<string, GameObject> players;
     private readonly NetworkManager networkManager;
 
     public string Type => "player_join";
 
     public PlayerJoinHandler(
-        GameObject playerPrefab,
+        List<GameObject> playerPrefabs,
         Dictionary<string, GameObject> players,
         NetworkManager networkManager)
     {
-        this.playerPrefab = playerPrefab;
+        this.playerPrefabs = playerPrefabs;
         this.players = players;
         this.networkManager = networkManager;
     }
@@ -23,7 +23,8 @@ public class PlayerJoinHandler : INetworkMessageHandler
         var pid = msg.playerId;
         if (!players.ContainsKey(pid))
         {
-            var playerObj = GameObject.Instantiate(playerPrefab);
+            var rand = Random.Range(0, playerPrefabs.Count);
+            var playerObj = GameObject.Instantiate(playerPrefabs[rand]);
             
             if (string.IsNullOrEmpty(networkManager.MyGUID))
             {
