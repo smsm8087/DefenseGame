@@ -2699,7 +2699,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a3f7bee13c4d759f04cb14ad728e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
+  playerPrefabs:
+  - {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
+  - {fileID: 6323616739901478146, guid: 0a0bea37e6e2e904f9421bf5d0aa9a19, type: 3}
   waveManager: {fileID: 561100121}
   sharedHpManager: {fileID: 491611646}
   centerText: {fileID: 549031559}
