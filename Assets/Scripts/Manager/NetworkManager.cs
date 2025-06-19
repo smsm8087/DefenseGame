@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NativeWebSocket;
+using NativeWebSocket.MessageHandlers;
 using UnityEngine;
 using Newtonsoft.Json;
 using UI;
@@ -55,10 +56,10 @@ public class NetworkManager : MonoBehaviour
         players.Remove(guid);
     }
 
-    public void RemoveEnemy(string guid)
+    public void RemoveEnemy(string guid, float delayTime = 1f)
     {
         if (!enemies.ContainsKey(guid)) return;
-        Destroy(enemies[guid]);
+        Destroy(enemies[guid], delayTime);
         enemies.Remove(guid);
     }
 
@@ -95,6 +96,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RestartHandler());
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
+        AddHandler(new EnemyAttackHandler(enemies));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
