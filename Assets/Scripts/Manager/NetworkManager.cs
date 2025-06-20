@@ -85,7 +85,7 @@ public class NetworkManager : MonoBehaviour
         //서버 리시브 처리 부분.
         AddHandler(new PlayerJoinHandler(playerPrefabs,players, this));
         AddHandler(new PlayerMoveHandler(players));
-        AddHandler(new PlayerListHandler(playerPrefabs[0], players));
+        AddHandler(new PlayerListHandler(playerPrefabs, players));
         AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));
