@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UI;
-using UnityEditor;
+using UnityEngine.UI;
 
 public class EnemyDamagedHandler : INetworkMessageHandler
 {
@@ -33,19 +33,10 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                     var enemyHpBar = hpBarFill.GetComponent<EnemyHPBar>();
                     if (enemyHpBar != null)
                     {
-                        Debug.Log("Found EnemyHPBar, updating HP");
                         enemyHpBar.UpdateHP(damagedEnemy.currentHp, damagedEnemy.maxHp);
                     }
-                    else
-                    {
-                        Debug.LogError("EnemyHPBar component not found on Health Bar Fill!");
-                    }
+                    
                 }
-                else
-                {
-                    Debug.LogError("Health Bar Fill not found!");
-                }
-                
                 // 메인 캔버스 찾기
                 Canvas mainCanvas = GameObject.Find("Canvas")?.GetComponent<Canvas>();
                 if (mainCanvas != null)
@@ -71,7 +62,6 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                     
                     // 메인 캔버스에 직접 생성
                     var dmgTextObj = GameObject.Instantiate(DamageTextPrefab, mainCanvas.transform);
-                    Debug.Log($"Created damage text in main canvas at world pos: {worldPos}");
                     
                     // 몬스터 위치에 맞게 설정
                     var rectTransform = dmgTextObj.GetComponent<RectTransform>();
@@ -79,37 +69,13 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                     {
                         rectTransform.localPosition = new Vector3(canvasPos.x, canvasPos.y, 0f);
                         rectTransform.sizeDelta = new Vector2(200, 100);
-                        Debug.Log($"Set position to ({canvasPos.x}, {canvasPos.y}, 0)");
                     }
-                    
-                    // Text 컴포넌트 강제 설정
-                    var textComponent = dmgTextObj.GetComponent<UnityEngine.UI.Text>();
-                    if (textComponent != null)
-                    {
-                        textComponent.text = damagedEnemy.damage.ToString();
-                        textComponent.alignment = TextAnchor.MiddleCenter;
-                        Debug.Log($"Forced text settings: text='{textComponent.text}', size={textComponent.fontSize}, color=red");
-                    }
-                    else
-                    {
-                        Debug.LogError("Text component not found on damage text prefab!");
-                    }
-                    
                     // DamageText 스크립트 초기화
                     var dmgText = dmgTextObj.GetComponent<DamageText>();
                     if (dmgText != null)
                     {
-                        Debug.Log("Initializing DamageText script");
                         dmgText.Init(damagedEnemy.damage);
                     }
-                    else
-                    {
-                        Debug.LogWarning("DamageText script not found, but text should still be visible");
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Main Canvas not found!");
                 }
             }
         }

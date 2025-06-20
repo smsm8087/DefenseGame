@@ -1,5 +1,6 @@
 ﻿using UI;
 using System;
+using UnityEngine;
 
 public class GameOverHandler : INetworkMessageHandler
 {
@@ -14,6 +15,7 @@ public class GameOverHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         centerText.UpdateText(-1, msg.message);
-        NetworkManager.Instance.TriggerGameOver();
+        Time.timeScale = 0f;
+        //NetworkManager.Instance.TriggerGameOver();
     }
 }
