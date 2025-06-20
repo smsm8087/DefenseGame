@@ -8,7 +8,8 @@ public class NetMsg
     
     public string playerId;
     public string enemyId;
-    public List<string> players;
+    public List<PlayerInfo> players; // List<string> -> List<PlayerInfo>로 변경
+    public string jobType;
 
     public string animation;
     //player
@@ -33,15 +34,23 @@ public class NetMsg
     public int countDown;
     public string message;
     
-    
     //cheat
     public bool isCheat;
 }
+
+[System.Serializable]
+public class PlayerInfo
+{
+    public string playerId;
+    public string jobType;
+}
+
 public class EnemySyncPacket
 {
     public string enemyId { get; set; }
     public float x { get; set; }
 }
+
 public class EnemyDamageInfo
 {
     public string enemyId { get; set; }
