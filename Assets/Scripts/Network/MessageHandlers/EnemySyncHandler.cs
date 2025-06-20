@@ -20,9 +20,9 @@ public class EnemySyncHandler : INetworkMessageHandler
             if (!Enemies.ContainsKey(pid)) continue;
             var enemyObj =  Enemies[pid];
             if (!enemyObj) continue;
-            EnemyMovement em = enemyObj.GetComponent<EnemyMovement>();
-            if (!em) continue;
-            enemyObj.GetComponent<EnemyMovement>().SyncFromServer(enemySyncPacket.x);
+            EnemyController enemyController = enemyObj.GetComponent<EnemyController>();
+            if (!enemyController) continue;
+            enemyController.SyncFromServer(enemySyncPacket.x);
         }
     }
 }

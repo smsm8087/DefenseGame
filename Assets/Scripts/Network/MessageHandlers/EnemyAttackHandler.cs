@@ -18,8 +18,8 @@ namespace NativeWebSocket.MessageHandlers
         {
             var pid = msg.enemyId;
             if (!Enemies.ContainsKey(pid)) return;
-            EnemyMovement enemyMovement = Enemies[pid].GetComponent<EnemyMovement>();
-            enemyMovement.changeState(EnemyState.Attack);
+            EnemyController enemyController = Enemies[pid].GetComponent<EnemyController>();
+            enemyController.ChangeStateByEnum(EnemyState.Attack);
         }
     }
 }

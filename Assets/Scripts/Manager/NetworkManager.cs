@@ -56,10 +56,10 @@ public class NetworkManager : MonoBehaviour
         players.Remove(guid);
     }
 
-    public void RemoveEnemy(string guid, float delayTime = 1f)
+    public void RemoveEnemy(string guid)
     {
         if (!enemies.ContainsKey(guid)) return;
-        Destroy(enemies[guid], delayTime);
+        Destroy(enemies[guid]);
         enemies.Remove(guid);
     }
 

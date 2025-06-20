@@ -19,8 +19,8 @@ public class EnemyDieHandler : INetworkMessageHandler
         foreach (var deadEnemyId in deadEnemyIds)
         {
             var pid = deadEnemyId;
-            var enemyMovement = Enemies[pid].GetComponent<EnemyMovement>();
-            enemyMovement.changeState(EnemyState.Dead);
+            var enemyController = Enemies[pid].GetComponent<EnemyController>();
+            enemyController.ChangeStateByEnum(EnemyState.Dead);
         }
     }
 }

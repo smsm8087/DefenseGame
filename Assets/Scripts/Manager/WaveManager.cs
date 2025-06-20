@@ -13,8 +13,8 @@ public class WaveManager : MonoBehaviour
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0);
         
         var enemy = Instantiate(enemyPrefab, spawnPos , Quaternion.identity);
-        var movement = enemy.GetComponent<EnemyMovement>();
-        movement?.setEnemy(guid);
+        var movement = enemy.GetComponent<EnemyController>();
+        movement?.SetGuid(guid);
         return enemy;
     }
 }
