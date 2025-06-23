@@ -59,7 +59,11 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                         null, // Overlay 모드
                         out canvasPos
                     );
-                    
+                    //random pos
+                    Vector3 newPos = canvasPos;
+                    int randomAddPos = Random.Range(-20, 20);
+                    newPos.x += randomAddPos;
+                    newPos.y += randomAddPos;
                     // 메인 캔버스에 직접 생성
                     var dmgTextObj = GameObject.Instantiate(DamageTextPrefab, mainCanvas.transform);
                     
@@ -67,7 +71,7 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                     var rectTransform = dmgTextObj.GetComponent<RectTransform>();
                     if (rectTransform != null)
                     {
-                        rectTransform.localPosition = new Vector3(canvasPos.x, canvasPos.y, 0f);
+                        rectTransform.localPosition = new Vector3(newPos.x, newPos.y, 0f);
                         rectTransform.sizeDelta = new Vector2(200, 100);
                     }
                     // DamageText 스크립트 초기화

@@ -88,8 +88,15 @@ public class PlayerController : MonoBehaviour
 
         NetworkManager.Instance.SendMsg(moveMsg);
     }
-    public void SendAttackRequest()
+    public void OnSendAttackRequest()
     {
+        Debug.Log($"player 공격 HIT!");
+        
+        // 공격 판정 타이밍 → 바로 보내기
+        Vector3 localPos = attackRangeTransform.localPosition;
+        localPos.x = Mathf.Abs(localPos.x) * (_sr.flipX ? 1f: -1f);
+        attackRangeTransform.localPosition = localPos;
+        
         Vector2 centerWorldPos = attackRangeTransform.position;
         Vector3 lossyScale = attackRangeTransform.lossyScale;
         Vector2 size = attackRangeCollider.size;

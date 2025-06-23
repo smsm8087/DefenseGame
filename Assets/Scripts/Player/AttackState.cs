@@ -11,13 +11,6 @@ public class AttackState : PlayerState
     {
         player._animator.Play("ATTACK_Clip");
         player.SendAnimationMessage("ATTACK_Clip");
-
-        // 공격 판정 타이밍 → 바로 보내기
-        Vector3 localPos = player.attackRangeTransform.localPosition;
-        localPos.x = Mathf.Abs(localPos.x) * (player._sr.flipX ? 1f: -1f);
-        player.attackRangeTransform.localPosition = localPos;
-        
-        player.SendAttackRequest();
     }
     public override void Update()
     {
