@@ -16,7 +16,6 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private SharedHpManager sharedHpManager;
     [SerializeField] private CenterText centerText;
     [SerializeField] private GameObject DamageTextPrefab;
-    [SerializeField] private OffscreenEnemyIndicator offscreenIndicator;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
@@ -35,14 +34,12 @@ public class NetworkManager : MonoBehaviour
         RegisterHandlers();
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
     }
-    
-    void Start()
+
+    public Dictionary<string, GameObject> GetEnemies()
     {
-        if (offscreenIndicator != null)
-        {
-            offscreenIndicator.SetEnemiesDictionary(enemies);
-        }
+        return  enemies;
     }
+    
 
     public void SetOnGamveOverAction(Action onGameOver)
     {
