@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
 guid: 23e7ce4d3842139438c620674585ae13
-=======
-guid: 35d427edee4a7ea4699547a7dfce234e
->>>>>>> Stashed changes
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -139,11 +135,7 @@ ScriptedImporter:
       y: 4
       width: 147
       height: 149
-<<<<<<< Updated upstream
-    spriteID: 7916fc17b3cf1de4785af26c6c5ae26a
-=======
-    spriteID: a320457829cfede45b085ee1de2e1f7a
->>>>>>> Stashed changes
+    spriteID: 5e60463506016c74cb24fb34aba8c998
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -164,11 +156,7 @@ ScriptedImporter:
       y: 161
       width: 147
       height: 149
-<<<<<<< Updated upstream
-    spriteID: ea1ebcfbb40ba294aa9094c92e56160c
-=======
-    spriteID: 9f4f61e63f82bbc43999abce81c76d8a
->>>>>>> Stashed changes
+    spriteID: 7e48c5683d58ed845bde3f9016a64bbc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -189,11 +177,7 @@ ScriptedImporter:
       y: 318
       width: 146
       height: 110
-<<<<<<< Updated upstream
-    spriteID: cf2542c2eb7a5324f9fd11cf45a0c929
-=======
-    spriteID: 4dd832977bffa1444975913c561d2dbf
->>>>>>> Stashed changes
+    spriteID: e894b694932c6ad4c90e63f6e7e6d36a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -202,6 +186,27 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 318}
+  - name: Frame_4
+    originalName: 
+    pivot: {x: 0.53424656, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 159
+      y: 4
+      width: 146
+      height: 110
+    spriteID: 6f977e17393358b43b06cb406615b8dc
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 159, y: 4}
   - name: Frame_0
     originalName: 
     pivot: {x: 0.07142856, y: 0}
@@ -211,14 +216,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 159
-      y: 4
+      y: 122
       width: 84
       height: 142
-<<<<<<< Updated upstream
-    spriteID: 3e9e163a305d9c14abaeabaa9284589f
-=======
-    spriteID: 8cfbe31a4c1ef164ca7925dfdb039c67
->>>>>>> Stashed changes
+    spriteID: a44264b5d5bf97b4faaf53ffe5159fd8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -226,7 +227,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 159, y: 4}
+    uvTransform: {x: 159, y: 122}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -249,11 +250,7 @@ ScriptedImporter:
         y: 0
         width: 147
         height: 149
-<<<<<<< Updated upstream
-      spriteId: 7916fc17b3cf1de4785af26c6c5ae26a
-=======
-      spriteId: a320457829cfede45b085ee1de2e1f7a
->>>>>>> Stashed changes
+      spriteId: 5e60463506016c74cb24fb34aba8c998
     - name: Frame_2
       frameIndex: 2
       additiveSortOrder: 0
@@ -262,11 +259,7 @@ ScriptedImporter:
         y: 0
         width: 147
         height: 149
-<<<<<<< Updated upstream
-      spriteId: ea1ebcfbb40ba294aa9094c92e56160c
-=======
-      spriteId: 9f4f61e63f82bbc43999abce81c76d8a
->>>>>>> Stashed changes
+      spriteId: 7e48c5683d58ed845bde3f9016a64bbc
     - name: Frame_3
       frameIndex: 3
       additiveSortOrder: 0
@@ -275,11 +268,16 @@ ScriptedImporter:
         y: 0
         width: 146
         height: 110
-<<<<<<< Updated upstream
-      spriteId: cf2542c2eb7a5324f9fd11cf45a0c929
-=======
-      spriteId: 4dd832977bffa1444975913c561d2dbf
->>>>>>> Stashed changes
+      spriteId: e894b694932c6ad4c90e63f6e7e6d36a
+    - name: Frame_4
+      frameIndex: 4
+      additiveSortOrder: 0
+      cellRect:
+        x: 2
+        y: 0
+        width: 146
+        height: 110
+      spriteId: 6f977e17393358b43b06cb406615b8dc
     - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
@@ -288,11 +286,7 @@ ScriptedImporter:
         y: 0
         width: 84
         height: 142
-<<<<<<< Updated upstream
-      spriteId: 3e9e163a305d9c14abaeabaa9284589f
-=======
-      spriteId: 8cfbe31a4c1ef164ca7925dfdb039c67
->>>>>>> Stashed changes
+      spriteId: a44264b5d5bf97b4faaf53ffe5159fd8
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -312,4 +306,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 160, y: 160}
-  previousTextureSize: {x: 256, y: 512}
+  previousTextureSize: {x: 512, y: 512}
