@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 using System.Linq;
 
 public class OffscreenEnemyIndicator : MonoBehaviour
@@ -17,14 +15,7 @@ public class OffscreenEnemyIndicator : MonoBehaviour
     public float screenPadding = 50f;
     
     private Camera mainCamera;
-    private Dictionary<string, GameObject> enemies;
     private float lastUpdateTime;
-    
-    // 외부에서 적 딕셔너리를 설정하는 메서드
-    public void SetEnemiesDictionary(Dictionary<string, GameObject> enemiesDict)
-    {
-        enemies = enemiesDict;
-    }
     
     void Start()
     {
@@ -45,6 +36,7 @@ public class OffscreenEnemyIndicator : MonoBehaviour
     
     void UpdateOffscreenIndicators()
     {
+        var enemies = NetworkManager.Instance.GetEnemies();
         if (enemies == null || mainCamera == null) return;
         
         int leftCount = 0;
@@ -92,37 +84,5 @@ public class OffscreenEnemyIndicator : MonoBehaviour
         {
             countText.text = count.ToString();
         }
-    }
-    
-    // 디버그용 - 현재 오프스크린 적 수를 반환
-    public (int left, int right) GetOffscreenEnemyCounts()
-    {
-        if (enemies == null) return (0, 0);
-        
-        int leftCount = 0;
-        int rightCount = 0;
-        
-        var activeEnemies = enemies.Values.Where(enemy => enemy != null && enemy.activeInHierarchy);
-        
-        foreach (var enemy in activeEnemies)
-        {
-            Vector3 screenPos = mainCamera.WorldToScreenPoint(enemy.transform.position);
-            
-            bool isOffscreen = screenPos.x < -screenPadding || 
-                              screenPos.x > Screen.width + screenPadding ||
-                              screenPos.y < -screenPadding || 
-                              screenPos.y > Screen.height + screenPadding ||
-                              screenPos.z < 0;
-            
-            if (isOffscreen)
-            {
-                if (screenPos.x < Screen.width * 0.5f)
-                    leftCount++;
-                else
-                    rightCount++;
-            }
-        }
-        
-        return (leftCount, rightCount);
     }
 }

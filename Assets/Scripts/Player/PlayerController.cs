@@ -90,6 +90,9 @@ public class PlayerController : MonoBehaviour
     }
     public void OnSendAttackRequest()
     {
+        //내캐릭터 일때만 공격메시지 전송
+        if (playerGUID != NetworkManager.Instance.MyGUID) return;
+        
         Debug.Log($"player 공격 HIT!");
         
         // 공격 판정 타이밍 → 바로 보내기
