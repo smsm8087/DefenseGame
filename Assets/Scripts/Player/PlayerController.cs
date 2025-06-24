@@ -90,6 +90,8 @@ public class PlayerController : MonoBehaviour
     }
     public void OnSendAttackRequest()
     {
+        Debug.Log($"[PlayerController] OnSendAttackRequest 호출됨 - 시간: {Time.time:F3}");
+
         //내캐릭터 일때만 공격메시지 전송
         if (playerGUID != NetworkManager.Instance.MyGUID) return;
         

@@ -36,13 +36,18 @@ public class NetMsg
     
     //cheat
     public bool isCheat;
+    
+    public PlayerInfo playerData { get; set; }
 }
 
 [System.Serializable]
 public class PlayerInfo
 {
-    public string playerId;
-    public string jobType;
+    public string id { get; set; }
+    public string job_type { get; set; }
+    public int hp { get; set; }
+    public float ult_gauge { get; set; }
+    public int attack_power { get; set; }
 }
 
 public class EnemySyncPacket

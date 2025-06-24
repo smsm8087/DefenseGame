@@ -4,46 +4,96 @@ public class AttackState : PlayerState
 {
     private float attackDuration = 0.5f;
     private float elapsedTime = 0f;
+    private bool hasProcessedAttack = false; // 공격 처리 여부 체크
 
     public AttackState(PlayerController player) : base(player) { }
 
     public override void Enter()
     {
+        Debug.Log($"[AttackState] Enter - 공격 상태 진입 시간: {Time.time:F3}");
+        
         player._animator.Play("ATTACK_Clip");
         player.SendAnimationMessage("ATTACK_Clip");
+        hasProcessedAttack = false; // 공격 상태 진입 시 초기화
+        elapsedTime = 0f; // 시간도 초기화
+        
+        // 공격 로직 실행
+        ProcessAttack();
     }
+
+    private void ProcessAttack()
+    {
+        if (hasProcessedAttack) 
+        {
+            Debug.Log("[AttackState] 이미 공격 처리됨, 스킵");
+            return;
+        }
+        
+        Debug.Log("[AttackState] 공격 처리 시작");
+        
+        // PlayerController의 기존 공격 메서드 호출
+        player.OnSendAttackRequest();
+        
+        hasProcessedAttack = true;
+        Debug.Log("[AttackState] 공격 처리 완료");
+    }
+
+    // 서버에서 공격 성공 응답을 받았을 때 호출될 메서드
+    public static void OnAttackSuccess()
+    {
+        // ProfileUI 찾아서 ULT 게이지 증가
+        var profileUI = Object.FindFirstObjectByType<ProfileUI>();
+        if (profileUI != null)
+        {
+            profileUI.OnMonsterAttackSuccess();
+            Debug.Log("[AttackState] 공격 성공! ULT 게이지 증가");
+        }
+        else
+        {
+            Debug.LogWarning("[AttackState] ProfileUI를 찾을 수 없습니다.");
+        }
+    }
+
     public override void Update()
     {
         elapsedTime += Time.deltaTime;
 
-        // 애니메이션 끝나면 IdleState 복귀
+        // 애니메이션 끝나면 이전 상태로 복귀
         if (elapsedTime >= attackDuration)
         {
-            player.ChangeState(player.GetPrevState());
-            elapsedTime = 0f;
+            Debug.Log($"[AttackState] 공격 완료, 이전 상태로 복귀 - 시간: {Time.time:F3}");
+            
+            // 이전 상태가 null이면 Idle로
+            PlayerState targetState = player.GetPrevState() ?? player.idleState;
+            player.ChangeState(targetState);
         }
+        
         // 디버그용 히트박스 시각화
-        var target = player.transform.Find("AttackRanageCollider");
-        BoxCollider2D box = target.GetComponent<BoxCollider2D>();
-        if (box != null)
-        {
-            Vector3 center = target.transform.position + (Vector3)box.offset;
-            Vector3 size = new Vector3(box.size.x * target.transform.lossyScale.x, box.size.y * target.transform.lossyScale.y, 1f);
+        DrawAttackBox();
+    }
 
-            Vector3 topLeft = center + new Vector3(-size.x / 2f, size.y / 2f, 0);
-            Vector3 topRight = center + new Vector3(size.x / 2f, size.y / 2f, 0);
-            Vector3 bottomLeft = center + new Vector3(-size.x / 2f, -size.y / 2f, 0);
-            Vector3 bottomRight = center + new Vector3(size.x / 2f, -size.y / 2f, 0);
+    private void DrawAttackBox()
+    {
+        if (player.attackRangeTransform == null || player.attackRangeCollider == null) return;
+        
+        Vector3 center = player.attackRangeTransform.position;
+        Vector3 lossyScale = player.attackRangeTransform.lossyScale;
+        Vector2 size = player.attackRangeCollider.size;
+        Vector3 worldSize = new Vector3(size.x * lossyScale.x, size.y * lossyScale.y, 1f);
 
-            Debug.DrawLine(topLeft, topRight, Color.red);
-            Debug.DrawLine(topRight, bottomRight, Color.red);
-            Debug.DrawLine(bottomRight, bottomLeft, Color.red);
-            Debug.DrawLine(bottomLeft, topLeft, Color.red);
-        }
+        Vector3 topLeft = center + new Vector3(-worldSize.x / 2f, worldSize.y / 2f, 0);
+        Vector3 topRight = center + new Vector3(worldSize.x / 2f, worldSize.y / 2f, 0);
+        Vector3 bottomLeft = center + new Vector3(-worldSize.x / 2f, -worldSize.y / 2f, 0);
+        Vector3 bottomRight = center + new Vector3(worldSize.x / 2f, -worldSize.y / 2f, 0);
+
+        Debug.DrawLine(topLeft, topRight, Color.red);
+        Debug.DrawLine(topRight, bottomRight, Color.red);
+        Debug.DrawLine(bottomRight, bottomLeft, Color.red);
+        Debug.DrawLine(bottomLeft, topLeft, Color.red);
     }
 
     public override void Exit()
     {
-        // 필요 시 처리
+        Debug.Log($"[AttackState] Exit - 공격 상태 종료 - 시간: {Time.time:F3}");
     }
 }

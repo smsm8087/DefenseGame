@@ -16,11 +16,11 @@ public class PlayerListHandler : INetworkMessageHandler
         this.playerPrefabs = playerPrefabs;
         this.players = players;
         
-        // 직업과 프리팹 인덱스 매핑 초기화 (PlayerJoinHandler와 동일)
+        // 직업과 프리팹 인덱스 매핑 초기화 
         jobToPrefabIndex = new Dictionary<string, int>
         {
-            {"Player", 0},     
-            {"Programmer", 1}
+            {"tank", 0},     
+            {"programmer", 1}
         };
     }
 
@@ -28,24 +28,52 @@ public class PlayerListHandler : INetworkMessageHandler
     {
         if (msg.players == null) return;
 
+        Debug.Log($"[PlayerListHandler] 플레이어 목록 처리 시작. 총 {msg.players.Count}명");
+
         foreach (var playerData in msg.players)
         {
-            string pid = playerData.playerId;
-            string jobType = playerData.jobType;
+            string pid = playerData.id; // .ToString() 제거
+            string jobType = playerData.job_type;
             
-            if (players.ContainsKey(pid)) continue;
-            if (pid == NetworkManager.Instance.MyGUID) continue;
+            Debug.Log($"[PlayerListHandler] 처리 중: PID={pid}, JobType={jobType}, MyGUID={NetworkManager.Instance.MyGUID}");
+            
+            // 잘못된 데이터 필터링
+            if (string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(jobType))
+            {
+                Debug.LogWarning($"[PlayerListHandler] 잘못된 플레이어 데이터 스킵: PID={pid}, JobType={jobType}");
+                continue;
+            }
+            
+            // 내 플레이어인 경우 ProfileUI에 직업 정보 전달만 하고 프리팹 생성하지 않음
+            if (pid == NetworkManager.Instance.MyGUID)
+            {
+                Debug.Log("[PlayerListHandler] 내 플레이어 감지 - ProfileUI 업데이트만 실행");
+                var profileUI = Object.FindFirstObjectByType<ProfileUI>();
+                if (profileUI != null && !string.IsNullOrEmpty(jobType))
+                {
+                    profileUI.SetJobType(jobType); // OnJobTypeReceived → SetJobType으로 변경
+                    Debug.Log($"[PlayerListHandler] 내 플레이어 직업 정보 전달: {jobType}");
+                }
+                continue; // 내 플레이어는 프리팹 생성하지 않음
+            }
+            
+            // 이미 존재하는 플레이어는 스킵
+            if (players.ContainsKey(pid))
+            {
+                Debug.Log($"[PlayerListHandler] 이미 존재하는 플레이어 스킵: {pid}");
+                continue;
+            }
             
             // 직업에 맞는 프리팹 선택
             int prefabIndex = 0; 
-            if (!string.IsNullOrEmpty(jobType) && jobToPrefabIndex.ContainsKey(jobType))
+            if (jobToPrefabIndex.ContainsKey(jobType))
             {
                 prefabIndex = jobToPrefabIndex[jobType];
-                Debug.Log($"기존 플레이어 {pid}의 직업 {jobType} 확인됨 (프리팹 인덱스: {prefabIndex})");
+                Debug.Log($"다른 플레이어 {pid}의 직업 {jobType} 확인됨 (프리팹 인덱스: {prefabIndex})");
             }
             else
             {
-                Debug.LogWarning($"플레이어 {pid}의 직업 정보 없음. 기본 프리팹 사용");
+                Debug.LogWarning($"알 수 없는 직업 타입: {jobType}. 기본 프리팹 사용");
             }
             
             var playerObj = GameObject.Instantiate(playerPrefabs[prefabIndex]);
@@ -56,6 +84,8 @@ public class PlayerListHandler : INetworkMessageHandler
             {
                 playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
             }
+            
+            Debug.Log($"[PlayerListHandler] 다른 플레이어 생성 완료: {pid}");
         }
     }
 }

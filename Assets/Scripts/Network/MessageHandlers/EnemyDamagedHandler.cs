@@ -26,7 +26,7 @@ public class EnemyDamagedHandler : INetworkMessageHandler
             {
                 Debug.Log($"Found enemy: {enemyObj.name}");
             
-                // HP바 업데이트 (기존 방식 그대로)
+                // HP바 업데이트
                 Transform hpBarFill = enemyObj.transform.Find("UICanvas/HpUI/Health Bar Fill");
                 if (hpBarFill != null)
                 {
