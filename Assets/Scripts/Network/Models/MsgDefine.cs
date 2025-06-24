@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DataModels;
 
 [System.Serializable]
 public class NetMsg
@@ -33,6 +34,10 @@ public class NetMsg
     public float maxHp;
     public int countDown;
     public string message;
+    
+    //settlementPhase
+    public int duration;
+    public List<CardData> cards;
     
     //cheat
     public bool isCheat;

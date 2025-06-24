@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using NativeWebSocket;
@@ -105,6 +105,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemyAttackHandler(enemies));
         AddHandler(new PlayerDataHandler());
         AddHandler(new AttackSuccessHandler());
+        AddHandler(new SettlementStartHandler(centerText));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
