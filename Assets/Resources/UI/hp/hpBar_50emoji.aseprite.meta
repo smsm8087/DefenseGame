@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
 guid: c67091694efaedd47a8c9fca113df006
-=======
-guid: c7bf18cebfe05c24a894ad6755913ffa
->>>>>>> Stashed changes
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: hpBar_50emoji
     originalName: 
-    pivot: {x: 0.5, y: -0.028985508}
+    pivot: {x: 0.49999997, y: -0.024999999}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,13 +133,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 326
-      height: 69
-<<<<<<< Updated upstream
-    spriteID: 085e465310640a14fa48bc643a42426b
-=======
-    spriteID: fb123faa16d304240b4e14e50e7aa49f
->>>>>>> Stashed changes
+      width: 40
+      height: 40
+    spriteID: 0f75a1b38e6740c4aa74db2dbe69f1ce
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -170,15 +162,11 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 2
-        y: 2
-        width: 326
-        height: 69
-<<<<<<< Updated upstream
-      spriteId: 085e465310640a14fa48bc643a42426b
-=======
-      spriteId: fb123faa16d304240b4e14e50e7aa49f
->>>>>>> Stashed changes
+        x: 1
+        y: 1
+        width: 40
+        height: 40
+      spriteId: 0f75a1b38e6740c4aa74db2dbe69f1ce
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -197,5 +185,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 330, y: 75}
-  previousTextureSize: {x: 512, y: 128}
+  canvasSize: {x: 42, y: 42}
+  previousTextureSize: {x: 64, y: 64}
