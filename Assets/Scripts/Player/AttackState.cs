@@ -17,19 +17,10 @@ public class AttackState : PlayerState
     }
 
     // 서버에서 공격 성공 응답을 받았을 때 호출될 메서드
-    public static void OnAttackSuccess()
+    public static void OnAttackSuccess(ProfileUI profileUI)
     {
         // ProfileUI 찾아서 ULT 게이지 증가
-        var profileUI = Object.FindFirstObjectByType<ProfileUI>();
-        if (profileUI != null)
-        {
-            profileUI.OnMonsterAttackSuccess();
-            Debug.Log("[AttackState] 공격 성공! ULT 게이지 증가");
-        }
-        else
-        {
-            Debug.LogWarning("[AttackState] ProfileUI를 찾을 수 없습니다.");
-        }
+        profileUI.OnMonsterAttackSuccess();
     }
 
     public override void Update()

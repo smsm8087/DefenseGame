@@ -1201,8 +1201,6 @@ MonoBehaviour:
   ultSlider: {fileID: 0}
   ultBG: {fileID: 0}
   nicknameText: {fileID: 0}
-  tankJobIcon: {fileID: 0}
-  programmerJobIcon: {fileID: 0}
 --- !u!1 &507570270
 GameObject:
   m_ObjectHideFlags: 0
@@ -4345,6 +4343,7 @@ MonoBehaviour:
   sharedHpManager: {fileID: 491611646}
   centerText: {fileID: 549031559}
   DamageTextPrefab: {fileID: 6224278285089542279, guid: face83d47adf43743adf59030ced7397, type: 3}
+  profileUI: {fileID: 498430517}
 --- !u!4 &1845874392
 Transform:
   m_ObjectHideFlags: 0

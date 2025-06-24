@@ -16,6 +16,7 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private SharedHpManager sharedHpManager;
     [SerializeField] private CenterText centerText;
     [SerializeField] private GameObject DamageTextPrefab;
+    [SerializeField] private ProfileUI profileUI;
     
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
@@ -103,8 +104,8 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
         AddHandler(new EnemyAttackHandler(enemies));
-        AddHandler(new PlayerDataHandler());
-        AddHandler(new AttackSuccessHandler());
+        AddHandler(new PlayerDataHandler(profileUI));
+        AddHandler(new AttackSuccessHandler(profileUI));
         AddHandler(new SettlementStartHandler(centerText));
     }
 

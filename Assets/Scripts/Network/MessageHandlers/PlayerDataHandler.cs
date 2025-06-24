@@ -5,6 +5,12 @@ public class PlayerDataHandler : INetworkMessageHandler
 {
     public string Type => "player_data_response";
 
+    private ProfileUI profileUI;
+    public PlayerDataHandler(ProfileUI profileUI)
+    {
+        this.profileUI = profileUI;
+    }
+
     public void Handle(NetMsg msg)
     {
         if (msg.playerData == null)
@@ -24,16 +30,7 @@ public class PlayerDataHandler : INetworkMessageHandler
         };
 
         // ProfileUI 찾아서 데이터 전달
-        var profileUI = Object.FindFirstObjectByType<ProfileUI>();
-        if (profileUI != null)
-        {
-            profileUI.OnPlayerDataReceived(playerData);
-        }
-        else
-        {
-            Debug.LogWarning("[PlayerDataHandler] ProfileUI를 찾을 수 없습니다.");
-        }
-
+        profileUI.OnPlayerDataReceived(playerData);
         Debug.Log($"[PlayerDataHandler] 플레이어 데이터 처리 완료 - ID: {playerData.id}, 직업: {playerData.job_type}, HP: {playerData.hp}, ULT 증가량: {playerData.ult_gauge}");
     }
 }
@@ -42,11 +39,15 @@ public class PlayerDataHandler : INetworkMessageHandler
 public class AttackSuccessHandler : INetworkMessageHandler
 {
     public string Type => "attack_success";
-
+    private ProfileUI profileUI;
+    public AttackSuccessHandler(ProfileUI profileUI)
+    {
+        this.profileUI = profileUI;
+    }
     public void Handle(NetMsg msg)
     {
         // 공격 성공 시 ULT 게이지 증가
-        AttackState.OnAttackSuccess();
+        AttackState.OnAttackSuccess(profileUI);
         Debug.Log("[AttackSuccessHandler] 공격 성공 메시지 처리 완료");
     }
 }
