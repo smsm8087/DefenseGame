@@ -6,9 +6,10 @@
         public string title { get; set; }
         public string type { get; set; }
         public string grade { get; set; }
-        public float gradeProbability { get; set; }
-        public float value { get; set; }
+        public int value { get; set; }
+        public int pct { get; set; }
     }
+
     public class PlayerData
     {
         public int id { get; set; }
