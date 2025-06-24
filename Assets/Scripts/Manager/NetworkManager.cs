@@ -103,6 +103,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
         AddHandler(new EnemyAttackHandler(enemies));
+        AddHandler(new SettlementStartHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)
