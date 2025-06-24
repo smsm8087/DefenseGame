@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using DataModels;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ProfileUI : MonoBehaviour
 {
@@ -59,20 +60,14 @@ public class ProfileUI : MonoBehaviour
     private void LoadPlayerDataFromTable()
     {
         // 기본값으로 Player 직업(ID=1) 데이터 로드
-        var playerTable = GameDataManager.Instance.GetTable<PlayerData>("player_data");
-        if (playerTable != null)
+        var playerData = GameDataManager.Instance.GetData<PlayerData>("player_data",1);
+        if (playerData != null)
         {
-            // ID 1: Player, ID 2: Programmer 등으로 설정되어 있다고 가정
-            var defaultPlayerData = GameDataManager.Instance.GetData<PlayerData>("player_data", 1);
-            if (defaultPlayerData != null)
-            {
-                SetJobType(defaultPlayerData.job_type);
-                UpdateHp(defaultPlayerData.hp, defaultPlayerData.hp);
-                UpdateUltGauge(0f, maxUlt); // 초기값은 항상 0
-                ultIncrement = defaultPlayerData.ult_gauge; // 테이블의 ult_gauge는 증가량
-                
-                Debug.Log($"[ProfileUI] 테이블에서 기본 데이터 로드: {defaultPlayerData.job_type}, HP: {defaultPlayerData.hp}, ULT 증가량: {ultIncrement}");
-            }
+            SetJobType(playerData.job_type);
+            UpdateHp(playerData.hp, playerData.hp);
+            UpdateUltGauge(0f, maxUlt); // 초기값은 항상 0
+            ultIncrement = playerData.ult_gauge; // 테이블의 ult_gauge는 증가량
+            Debug.Log($"[ProfileUI] 테이블에서 기본 데이터 로드: {playerData.job_type}, HP: {playerData.hp}, ULT 증가량: {ultIncrement}");
         }
     }
 

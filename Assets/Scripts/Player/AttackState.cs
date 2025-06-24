@@ -14,28 +14,6 @@ public class AttackState : PlayerState
         
         player._animator.Play("ATTACK_Clip");
         player.SendAnimationMessage("ATTACK_Clip");
-        hasProcessedAttack = false; // 공격 상태 진입 시 초기화
-        elapsedTime = 0f; // 시간도 초기화
-        
-        // 공격 로직 실행
-        ProcessAttack();
-    }
-
-    private void ProcessAttack()
-    {
-        if (hasProcessedAttack) 
-        {
-            Debug.Log("[AttackState] 이미 공격 처리됨, 스킵");
-            return;
-        }
-        
-        Debug.Log("[AttackState] 공격 처리 시작");
-        
-        // PlayerController의 기존 공격 메서드 호출
-        player.OnSendAttackRequest();
-        
-        hasProcessedAttack = true;
-        Debug.Log("[AttackState] 공격 처리 완료");
     }
 
     // 서버에서 공격 성공 응답을 받았을 때 호출될 메서드
@@ -66,6 +44,7 @@ public class AttackState : PlayerState
             // 이전 상태가 null이면 Idle로
             PlayerState targetState = player.GetPrevState() ?? player.idleState;
             player.ChangeState(targetState);
+            elapsedTime = 0f;
         }
         
         // 디버그용 히트박스 시각화
