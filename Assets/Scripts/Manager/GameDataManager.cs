@@ -12,13 +12,8 @@ public class GameDataManager
     public void LoadAllData()
     {
         //table 추가시에 여기다가 작업
-        _tableDict["card"] = CsvLoader.Load<CardData>("DataExcels/card_data");
-        Dictionary<int, CardData> dataDict = (Dictionary<int, CardData>)_tableDict["card"];
-        foreach (var cardData in dataDict.Values )
-        {
-            Debug.Log($"data 불러옴, {cardData.id} | {cardData.title}");
-        }
-        Debug.Log("<color=green>[GameDataManager] 모든 데이터 로드 완료!</color>");
+        _tableDict["card_data"] = CsvLoader.Load<CardData>("DataExcels/card_data");
+        _tableDict["player_data"] = CsvLoader.Load<PlayerData>("DataExcels/player_data");
     }
 
     public Dictionary<int, T> GetTable<T>(string tableName)

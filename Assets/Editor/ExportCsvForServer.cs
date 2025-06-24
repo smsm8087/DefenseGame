@@ -9,7 +9,7 @@ namespace Editor
         [MenuItem("Tools/Export CSV for Server")]
         public static void ExportCsv()
         {
-            string sourceFolder = "Assets/DataExcels/";
+            string sourceFolder = "Assets/Resources/DataExcels/";
 
             // GUI 로 서버 프로젝트 폴더 선택
             string destFolder = EditorUtility.OpenFolderPanel("서버 Data 폴더 선택", "", "");

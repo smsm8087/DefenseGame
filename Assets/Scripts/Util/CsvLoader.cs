@@ -56,10 +56,10 @@ public static class CsvLoader
                 }
             }
 
-            var keyField = Array.Find(fields, f => f.Name.Equals("CardId") || f.Name.Equals("Id"));
+            var keyField = Array.Find(fields, f => f.Name.Equals("id"));
             if (keyField == null)
             {
-                Debug.LogError($"[CsvLoader] 기본키(Id, CardId) 없음 - {typeof(T).Name}");
+                Debug.LogError($"[CsvLoader] 기본키(Id) 없음 - {typeof(T).Name}");
                 continue;
             }
 

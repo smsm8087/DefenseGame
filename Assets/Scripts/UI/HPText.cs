@@ -1,14 +1,15 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPText : MonoBehaviour
 {
-    Text hpText;
+    TextMeshPro hpText;
 
     private void Awake()
     {
-        hpText = GetComponent<Text>();
+        hpText = GetComponent<TextMeshPro>();
     }
 
     public void UpdateHP(float currentHP, float maxHP)
