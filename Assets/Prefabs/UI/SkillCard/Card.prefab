@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAD81\uADF9\uAE30\uAC8C\uC774\uC9C0\uC99D\uAC00\uB7C9\uC99D\uAC00  \n10%"
+  m_text: "\uAD81\uADF9\uAE30\uAC8C\uC774\uC9C0\uD68D\uB4DD\uB7C9\uC99D\uAC00  \n10%"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
   m_sharedMaterial: {fileID: 3047399304152153358, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
@@ -168,8 +168,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.25
-  m_fontSizeBase: 26.19
+  m_fontSize: 25.1
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 24.8
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 12.261475, y: 0, z: 11.495178, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
