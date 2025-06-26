@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class HPText : MonoBehaviour
 {
-    TextMeshPro hpText;
+    TextMeshProUGUI hpText;
 
     private void Awake()
     {
-        hpText = GetComponent<TextMeshPro>();
+        hpText = GetComponent<TextMeshProUGUI>();
     }
 
     public void UpdateHP(float currentHP, float maxHP)

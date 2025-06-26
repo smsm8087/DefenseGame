@@ -4,14 +4,9 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-    [Header("HP Bar")]
     Image hpImg;
     
-    [Header("HP Emoji")]
-    public Image emojiImage; 
-    public Sprite hp100Emoji; 
-    public Sprite hp50Emoji;  
-    public Sprite hp0Emoji;   
+    [SerializeField] private Image targetImg; 
     
     void Awake()
     {
@@ -24,7 +19,6 @@ public class HPBar : MonoBehaviour
         
         float healthPercent = Mathf.Clamp01(currentHP / maxHP);
         StartCoroutine(LerpHp(healthPercent));
-        UpdateEmoji(healthPercent * 100f);
     }
 
     public IEnumerator LerpHp(float targetPercent)
@@ -41,24 +35,5 @@ public class HPBar : MonoBehaviour
         }
 
         hpImg.fillAmount = targetPercent; // 마지막 값 정확히 맞춤
-    }
-    
-    void UpdateEmoji(float healthPercent)
-    {
-        if (!emojiImage) return;
-        
-        // HP 값에 따라 이모지 변경 
-        if (healthPercent > 66f) 
-        {
-            emojiImage.sprite = hp100Emoji;
-        }
-        else if (healthPercent > 33f)
-        {
-            emojiImage.sprite = hp50Emoji;
-        }
-        else 
-        {
-            emojiImage.sprite = hp0Emoji;
-        }
     }
 }
