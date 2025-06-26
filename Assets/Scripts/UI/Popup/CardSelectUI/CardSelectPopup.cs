@@ -1,26 +1,29 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using DataModels;
+using TMPro;
 
 public class CardSelectPopup : BasePopup
 {
     [SerializeField] private List<CardSlot> cardSlots;
     [SerializeField] private Button confirmButton;
-    [SerializeField] private Button cancelButton;
     [SerializeField] private Image timeBarImage;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI btnText;
 
     private int selectedCardId = 0;
-    private int remainTime = 0;
-    private int duration = 0;
+    private float duration = 0;
     private Dictionary<int, CardSlot> cardSlotMap = new();
 
-    private System.Action<int> onConfirmCallback;
+    private float currentFill = 1f;          
+    private float targetFill = 1f;           
+    private float lerpSpeed = 5f;   
 
-    public void Init(List<CardData> cardList, int duration, System.Action<int> onConfirm)
+    public void Init(List<CardData> cardList, float duration)
     {
-        onConfirmCallback = onConfirm;
-        this.duration = remainTime = duration;
+        this.duration = duration;
         for (int i = 0; i < cardList.Count; i++)
         {
             var slot = cardSlots[i];
@@ -30,9 +33,10 @@ public class CardSelectPopup : BasePopup
         }
 
         confirmButton?.onClick.AddListener(OnConfirmClicked);
-        cancelButton?.onClick.AddListener(OnCancelClicked);
         confirmButton.interactable = false;
-        timeBarImage.fillAmount = Mathf.Clamp01(remainTime / duration);
+        timeBarImage.fillAmount = Mathf.Clamp01(duration / duration);
+        titleText.text = TextManager.Instance.GetText("popup_title_select_card");
+        btnText.text = TextManager.Instance.GetText("btn_select");
     }
 
     private void OnCardClicked(int cardId)
@@ -50,12 +54,24 @@ public class CardSelectPopup : BasePopup
 
     private void OnConfirmClicked()
     {
-        onConfirmCallback?.Invoke(selectedCardId);
+        var msg = new NetMsg
+        {
+            type = "settlement_ready",
+            playerId = NetworkManager.Instance.MyGUID,
+            selectedCardId = selectedCardId
+        };
+
+        NetworkManager.Instance.SendMsg(msg);
         Close();
     }
-
-    private void OnCancelClicked()
+    public void UpdateTimer(float remainTime)
     {
-        Close();
+        targetFill = Mathf.Clamp01(remainTime / duration);
+    }
+
+    private void Update()
+    {
+        currentFill = Mathf.Lerp(currentFill, targetFill, Time.deltaTime * lerpSpeed);
+        timeBarImage.fillAmount = currentFill;
     }
 }

@@ -8,7 +8,6 @@ using TMPro;
 public class CardSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI cardNameText;
-    [SerializeField] private List<TextMeshProUGUI> cardGradeTexts;
     [SerializeField] private Image highlight;
     [SerializeField] private Image Icon;
     [SerializeField] private Image border;
@@ -96,8 +95,10 @@ public class CardSlot : MonoBehaviour
                 Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_ultgaugeup");
             break;
             case "add_criticaldmg":
+                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_criticaldamageup");
+                break;
             case "add_hp":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_criticalpercentageup");
+                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_healthicon");
             break;
         }
     }
@@ -111,7 +112,7 @@ public class CardSlot : MonoBehaviour
         switch (grade)
         {
             case "normal":
-                hex = "#c9c8d1";
+                hex = "#75757b";
                 border.sprite = Resources.Load<Sprite>(baseResourcePath + "NORMAL_SKILLCARD");
                 break;
             case "rare":
@@ -125,12 +126,6 @@ public class CardSlot : MonoBehaviour
         }
         if (ColorUtility.TryParseHtmlString(hex, out Color gradeColor))
         {
-            foreach (var text in cardGradeTexts)
-            {
-                text.color = gradeColor;
-                text.text = grade.ToUpper();
-            }
-
             cardNameText.text = $"{title}\n<color={hex}><size=50>{value.ToString()}%</color>";
         }
     }

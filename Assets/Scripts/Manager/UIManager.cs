@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     [SerializeField] private GameObject cardSelectPopupPrefab;
+    private CardSelectPopup cardSelectPopup;
 
     private void Awake()
     {
@@ -19,15 +20,17 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ShowCardSelectPopup(List<CardData> cards, int duration)
+    #region cardSelectPopup
+    public void ShowCardSelectPopup(List<CardData> cards, float duration)
     {
-        var popup = PopupManager.Instance.ShowPopup<CardSelectPopup>(cardSelectPopupPrefab);
-        popup.Init(cards, duration, OnCardSelected);
+        cardSelectPopup = PopupManager.Instance.ShowPopup<CardSelectPopup>(cardSelectPopupPrefab);
+        cardSelectPopup.Init(cards, duration);
     }
 
-    private void OnCardSelected(int selectedId)
+    public void UpdateSettlementTimer(float duration)
     {
-        Debug.Log($"[UIManager] 선택된 카드 ID: {selectedId}");
-        // 필요하면 서버에 선택 결과 전송
+        cardSelectPopup?.UpdateTimer(duration);
     }
+    #endregion
+    
 }

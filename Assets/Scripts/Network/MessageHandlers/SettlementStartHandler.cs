@@ -8,9 +8,9 @@ namespace NativeWebSocket.MessageHandlers
     public class SettlementStartHandler : INetworkMessageHandler
     {
         public string Type => "settlement_start";
-        private readonly System.Action<List<CardData>, int> onSettlementStart;
+        private readonly System.Action<List<CardData>, float> onSettlementStart;
 
-        public SettlementStartHandler(System.Action<List<CardData>, int> onSettlementStart)
+        public SettlementStartHandler(System.Action<List<CardData>, float> onSettlementStart)
         {
             this.onSettlementStart = onSettlementStart;
         }
@@ -18,7 +18,7 @@ namespace NativeWebSocket.MessageHandlers
         {
             if (NetworkManager.Instance.MyGUID != msg.playerId) return;
             List<CardData> cards = msg.cards;
-            int duration = msg.duration;
+            float duration = msg.duration;
             onSettlementStart?.Invoke(cards, duration);
         }
     }

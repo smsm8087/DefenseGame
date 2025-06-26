@@ -36,9 +36,11 @@ public class NetMsg
     public string message;
     
     //settlementPhase
-    public int duration;
+    public float duration;
     public List<CardData> cards;
-    
+    public int selectedCardId;
+
+    public bool isReady;
     //cheat
     public bool isCheat;
     

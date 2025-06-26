@@ -11,9 +11,11 @@ add_movespeed_title_legend,이동속도증가
 add_cri_damage_title_normal,치명타피해증가
 add_cri_damage_title_rare,치명타피해증가
 add_cri_damage_title_legend,치명타피해증가
-add_ultgauge_title_normal,궁극기게이지획득량증가
-add_ultgauge_title_rare,궁극기게이지획득량증가
-add_ultgauge_title_legend,궁극기게이지획득량증가
+add_ultgauge_title_normal,궁극기증가량
+add_ultgauge_title_rare,궁극기증가량
+add_ultgauge_title_legend,궁극기증가량
 add_hp_title_normal,체력증가
 add_hp_title_rare,체력증가
 add_hp_title_legend,체력증가
+btn_select,선택
+popup_title_select_card,카드를 선택해주세요

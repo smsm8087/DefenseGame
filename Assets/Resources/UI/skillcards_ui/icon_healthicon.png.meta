@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e7d4d436460020f4c928cfee0670cc13
+guid: d0ffb50fb616f8048b4ae0092b9d21e1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2647777095385058483
-    second: NORMAL_SKILLCARD_0
+      213: -3425637189954148226
+    second: icon_healthicon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NORMAL_SKILLCARD_0
+      name: icon_healthicon_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 0
-        width: 233
-        height: 319
+        x: 18
+        y: 18
+        width: 124
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3bc87de5d3bceb420800000000000000
-      internalID: 2647777095385058483
+      spriteID: e786a632021b570d0800000000000000
+      internalID: -3425637189954148226
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NORMAL_SKILLCARD_0: 2647777095385058483
+      icon_healthicon_0: -3425637189954148226
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
