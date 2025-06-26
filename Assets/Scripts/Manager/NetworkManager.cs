@@ -106,7 +106,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemyAttackHandler(enemies));
         AddHandler(new PlayerDataHandler(profileUI));
         AddHandler(new AttackSuccessHandler(profileUI));
-        AddHandler(new SettlementStartHandler(centerText));
+        AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

@@ -8,19 +8,18 @@ namespace NativeWebSocket.MessageHandlers
     public class SettlementStartHandler : INetworkMessageHandler
     {
         public string Type => "settlement_start";
-        CenterText textPrefab;
+        private readonly System.Action<List<CardData>, int> onSettlementStart;
 
-        public SettlementStartHandler(CenterText textPrefab)
+        public SettlementStartHandler(System.Action<List<CardData>, int> onSettlementStart)
         {
-            this.textPrefab =  textPrefab;
+            this.onSettlementStart = onSettlementStart;
         }
         public void Handle(NetMsg msg)
         {
             if (NetworkManager.Instance.MyGUID != msg.playerId) return;
             List<CardData> cards = msg.cards;
             int duration = msg.duration;
-            Debug.Log($"settlement_start playerid : {msg.playerId} | cards : {cards} | duration : {duration}");
-            textPrefab.startDurationAnimation(duration, msg.cards);
+            onSettlementStart?.Invoke(cards, duration);
         }
     }
 }

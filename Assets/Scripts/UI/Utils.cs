@@ -38,4 +38,8 @@ public static class Utils
         color.a = 1f;
         image.color = color;
     }
+    public static float EaseOutCubic(float t)
+    {
+        return 1f - Mathf.Pow(1f - t, 3);
+    }
 }
