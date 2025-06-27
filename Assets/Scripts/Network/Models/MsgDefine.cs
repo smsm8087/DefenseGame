@@ -16,6 +16,10 @@ public class NetMsg
     //player
     public float x;
     public float y;
+
+    public float currentUlt;
+
+    public float maxUlt;
     //히트박스 영역
     public float attackBoxCenterX;
     public float attackBoxCenterY;
@@ -44,7 +48,7 @@ public class NetMsg
     //cheat
     public bool isCheat;
     
-    public PlayerInfo playerData { get; set; }
+    public PlayerInfo playerInfo { get; set; }
 }
 
 [System.Serializable]
@@ -52,9 +56,9 @@ public class PlayerInfo
 {
     public string id { get; set; }
     public string job_type { get; set; }
-    public int hp { get; set; }
-    public float ult_gauge { get; set; }
-    public int attack_power { get; set; }
+    public int currentHp { get; set; }
+    public float currentUlt { get; set; }
+    public PlayerData playerBaseData { get; set; }
 }
 
 public class EnemySyncPacket

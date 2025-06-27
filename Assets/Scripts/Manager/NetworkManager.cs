@@ -90,7 +90,7 @@ public class NetworkManager : MonoBehaviour
     private void RegisterHandlers()
     {
         //서버 리시브 처리 부분.
-        AddHandler(new PlayerJoinHandler(playerPrefabs,players, this));
+        AddHandler(new PlayerJoinHandler(playerPrefabs,players, this,profileUI));
         AddHandler(new PlayerMoveHandler(players));
         AddHandler(new PlayerListHandler(playerPrefabs, players));
         AddHandler(new PlayerLeaveHandler());
@@ -104,10 +104,9 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
         AddHandler(new EnemyAttackHandler(enemies));
-        AddHandler(new PlayerDataHandler(profileUI));
-        AddHandler(new AttackSuccessHandler(profileUI));
         AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
         AddHandler(new SettlementTimerUpdateHandler(centerText));
+        AddHandler(new UpdateUltGaugeHandler(profileUI));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
