@@ -44,19 +44,6 @@ public class PlayerListHandler : INetworkMessageHandler
                 continue;
             }
             
-            // 내 플레이어인 경우 ProfileUI에 직업 정보 전달만 하고 프리팹 생성하지 않음
-            if (pid == NetworkManager.Instance.MyGUID)
-            {
-                Debug.Log("[PlayerListHandler] 내 플레이어 감지 - ProfileUI 업데이트만 실행");
-                var profileUI = Object.FindFirstObjectByType<ProfileUI>();
-                if (profileUI != null && !string.IsNullOrEmpty(jobType))
-                {
-                    profileUI.SetJobType(jobType); // OnJobTypeReceived → SetJobType으로 변경
-                    Debug.Log($"[PlayerListHandler] 내 플레이어 직업 정보 전달: {jobType}");
-                }
-                continue; // 내 플레이어는 프리팹 생성하지 않음
-            }
-            
             // 이미 존재하는 플레이어는 스킵
             if (players.ContainsKey(pid))
             {
@@ -69,7 +56,6 @@ public class PlayerListHandler : INetworkMessageHandler
             if (jobToPrefabIndex.ContainsKey(jobType))
             {
                 prefabIndex = jobToPrefabIndex[jobType];
-                Debug.Log($"다른 플레이어 {pid}의 직업 {jobType} 확인됨 (프리팹 인덱스: {prefabIndex})");
             }
             else
             {
