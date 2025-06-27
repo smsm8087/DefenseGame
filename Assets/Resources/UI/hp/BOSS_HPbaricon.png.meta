@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 1bbcd01d3d7ec0f4788bae535491f947
-=======
-guid: 8ab2524708818ca418e8854c3897d601
->>>>>>> origin/master
+guid: 4f47526af2cddcf4e91075333251c8c3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5614004520434587745
-    second: HPbar_icon_clippingmask_bg_0
+      213: -5602406963218262291
+    second: BOSS_HPbaricon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,46 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-<<<<<<< HEAD
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-=======
->>>>>>> origin/master
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HPbar_icon_clippingmask_bg_0
+      name: BOSS_HPbaricon_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 9
-        width: 103
-        height: 102
+        x: 8
+        y: 8
+        width: 105
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 168d0f7fd53f8ed40800000000000000
-      internalID: 5614004520434587745
+      spriteID: de6533ebc804042b0800000000000000
+      internalID: -5602406963218262291
       vertices: []
       indices: 
       edges: []
@@ -168,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HPbar_icon_clippingmask_bg_0: 5614004520434587745
+      BOSS_HPbaricon_0: -5602406963218262291
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
