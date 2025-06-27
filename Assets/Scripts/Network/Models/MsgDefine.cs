@@ -58,6 +58,7 @@ public class PlayerInfo
     public string job_type { get; set; }
     public int currentHp { get; set; }
     public float currentUlt { get; set; }
+    public float currentMoveSpeed { get; set; }
     public PlayerData playerBaseData { get; set; }
 }
 
@@ -73,4 +74,5 @@ public class EnemyDamageInfo
     public int currentHp { get; set; }
     public int maxHp { get; set; }
     public int damage { get; set; }
+    public bool isCritical { get; set; }
 }

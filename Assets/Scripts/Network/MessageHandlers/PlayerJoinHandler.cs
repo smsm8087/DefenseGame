@@ -60,6 +60,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
             PlayerController playerController = myPlayerObj.GetComponent<PlayerController>();
             playerController.enabled = true;
             playerController.playerGUID = pid;
+            playerController.setMoveSpeed(msg.playerInfo.currentMoveSpeed);
             myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 100;
         
             // 모바일 입력 등록

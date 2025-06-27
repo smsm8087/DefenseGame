@@ -14,7 +14,7 @@ public class MoveState : PlayerState
     {
         // 이동
         float moveInput = InputManager.GetMoveInput();
-        MovementHelper.Move(player._rb, moveInput, player.moveSpeed);
+        MovementHelper.Move(player._rb, moveInput, player.getMoveSpeed());
 
         // 방향 전환
         if (moveInput > 0)
