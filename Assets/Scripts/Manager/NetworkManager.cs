@@ -99,6 +99,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemyDieHandler(enemies));
         AddHandler(new SharedHpUpdateHandler(sharedHpManager));
         AddHandler(new CountDownHandler(centerText));
+        AddHandler(new WaveStartHandler(centerText));
         AddHandler(new GameOverHandler(centerText));
         AddHandler(new RestartHandler());
         AddHandler(new PlayerAnimationHandler(players));
