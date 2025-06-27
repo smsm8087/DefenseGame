@@ -23,7 +23,7 @@ public class CardSelectPopup : BasePopup
 
     private float currentFill = 1f;          
     private float targetFill = 1f;           
-    private float lerpSpeed = 5f;   
+    private float lerpSpeed = 5f;
 
     public void Init(List<CardData> cardList, float duration)
     {
@@ -68,6 +68,8 @@ public class CardSelectPopup : BasePopup
 
     private void OnConfirmClicked()
     {
+        if (ui_lock) return;
+        ui_lock = true;
         var msg = new NetMsg
         {
             type = "settlement_ready",

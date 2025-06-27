@@ -7,6 +7,7 @@ public abstract class BasePopup : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float fadeDuration = 0.3f;
 
+    public bool ui_lock { get; set; }
     public virtual void Open()
     {
         gameObject.SetActive(true);
