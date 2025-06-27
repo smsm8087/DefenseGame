@@ -5,7 +5,7 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     public string playerGUID;
-    public float moveSpeed = 5f;
+    private float moveSpeed = 5f;
     public float jumpForce = 10f;
 
     public Rigidbody2D _rb;
@@ -42,6 +42,16 @@ public class PlayerController : MonoBehaviour
         // 처음에는 IdleState 로 시작
         prevState = null;
         ChangeState(new IdleState(this));
+    }
+
+    public void setMoveSpeed(float speed)
+    {
+        this.moveSpeed = speed;
+    }
+
+    public float getMoveSpeed()
+    {
+        return this.moveSpeed;
     }
     void Update()
     {

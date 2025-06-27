@@ -58,6 +58,7 @@ public class PlayerInfo
     public string job_type { get; set; }
     public int currentHp { get; set; }
     public float currentUlt { get; set; }
+    public float currentMoveSpeed { get; set; }
     public PlayerData playerBaseData { get; set; }
 }
 
