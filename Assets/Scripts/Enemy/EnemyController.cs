@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Enemy;
 using UnityEngine;
 public enum EnemyState
@@ -88,6 +90,26 @@ public class EnemyController : MonoBehaviour
     public void OnDeadAction()
     {
         Debug.Log($"Enemy {guid} Dead");
+        StartFadeOut();
+    }
+    public void StartFadeOut()
+    {
+        StartCoroutine(FadeOutCoroutine());
+    }
+
+    private IEnumerator FadeOutCoroutine()
+    {
+        float elapsed = 0f;
+        Color color = spriteRenderer.color;
+        float duration = 0.5f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / duration);
+            spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
+        gameObject.SetActive(false); // 완전히 사라지면 비활성화
         NetworkManager.Instance.RemoveEnemy(guid);
     }
 }

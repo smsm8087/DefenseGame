@@ -40,6 +40,10 @@ public class NetworkManager : MonoBehaviour
     {
         return  enemies;
     }
+    public Dictionary<string, GameObject> GetPlayers()
+    {
+        return  players;
+    }
     
 
     public void SetOnGamveOverAction(Action onGameOver)
@@ -105,7 +109,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
         AddHandler(new EnemyAttackHandler(enemies));
         AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
-        AddHandler(new SettlementTimerUpdateHandler(centerText));
+        AddHandler(new SettlementTimerUpdateHandler());
         AddHandler(new UpdateUltGaugeHandler(profileUI));
         AddHandler(new UpdatePlayerDataHandler(players));
     }

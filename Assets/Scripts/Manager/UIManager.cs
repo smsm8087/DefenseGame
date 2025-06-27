@@ -31,6 +31,10 @@ public class UIManager : MonoBehaviour
     {
         cardSelectPopup?.UpdateTimer(duration);
     }
+    public void UpdateSettlementReadyCount(int readyCount)
+    {
+        cardSelectPopup?.setCheckSlot(readyCount);
+    }
     #endregion
     
 }

@@ -17,11 +17,8 @@ public class EnemyHPBar : MonoBehaviour
     void Awake()
     {
         hpImg = GetComponent<Image>();
-        Debug.Log($"EnemyHPBar Awake - {gameObject.name}");
-    
         // 시작할 때 체력바 숨기기
         SetVisibility(false);
-        Debug.Log($"HP Bar hidden for {gameObject.name}");
     }
     
     public void UpdateHP(float currentHP, float maxHP)
@@ -80,16 +77,5 @@ public class EnemyHPBar : MonoBehaviour
         }
 
         hpImg.fillAmount = targetPercent;
-    }
-
-    
-    // 몬스터가 죽을 때 호출 (체력바를 즉시 숨김)
-    public void OnEnemyDeath()
-    {
-        if (hideCoroutine != null)
-        {
-            StopCoroutine(hideCoroutine);
-        }
-        SetVisibility(false);
     }
 }

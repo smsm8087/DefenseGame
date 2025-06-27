@@ -12,6 +12,10 @@ public class CardSelectPopup : BasePopup
     [SerializeField] private Image timeBarImage;
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI btnText;
+    [SerializeField] private GameObject readyPrefab;
+    [SerializeField] private Transform readySlotTransform;
+    
+    private List<ReadyIcon> readySlots = new List<ReadyIcon>();
 
     private int selectedCardId = 0;
     private float duration = 0;
@@ -37,6 +41,16 @@ public class CardSelectPopup : BasePopup
         timeBarImage.fillAmount = Mathf.Clamp01(duration / duration);
         titleText.text = TextManager.Instance.GetText("popup_title_select_card");
         btnText.text = TextManager.Instance.GetText("btn_select");
+        
+        foreach (Transform child in readySlotTransform)
+            Destroy(child.gameObject);
+        int readySlotCount = NetworkManager.Instance.GetPlayers().Count;
+        
+        for(int i = 0; i < readySlotCount; i++)
+        {
+            var slot = Instantiate(readyPrefab, readySlotTransform);
+            readySlots.Add(slot.GetComponent<ReadyIcon>());
+        }
     }
 
     private void OnCardClicked(int cardId)
@@ -62,11 +76,29 @@ public class CardSelectPopup : BasePopup
         };
 
         NetworkManager.Instance.SendMsg(msg);
-        Close();
     }
     public void UpdateTimer(float remainTime)
     {
         targetFill = Mathf.Clamp01(remainTime / duration);
+    }
+
+    public void setCheckSlot(int readyCount)
+    {
+        if (readySlots.Count < readyCount) return;
+        foreach (var readySlot in readySlots)
+        {
+            readySlot.SetSelected(false);
+        }
+        
+        for (int i = 0; i < readyCount; i++)
+        {
+            readySlots[i].SetSelected(true);
+        }
+
+        if (readySlots.Count == readyCount)
+        {
+            Close();
+        }
     }
 
     private void Update()

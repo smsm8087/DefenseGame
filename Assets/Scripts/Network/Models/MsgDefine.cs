@@ -43,8 +43,7 @@ public class NetMsg
     public float duration;
     public List<CardData> cards;
     public int selectedCardId;
-
-    public bool isReady;
+    public int readyCount;
     //cheat
     public bool isCheat;
     
