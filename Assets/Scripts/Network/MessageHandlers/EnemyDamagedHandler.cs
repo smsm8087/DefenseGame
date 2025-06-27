@@ -78,7 +78,7 @@ public class EnemyDamagedHandler : INetworkMessageHandler
                     var dmgText = dmgTextObj.GetComponent<DamageText>();
                     if (dmgText != null)
                     {
-                        dmgText.Init(damagedEnemy.damage);
+                        dmgText.Init(damagedEnemy.damage, damagedEnemy.isCritical);
                     }
                 }
             }

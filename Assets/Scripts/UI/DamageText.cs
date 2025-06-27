@@ -16,12 +16,15 @@ namespace UI
             rectTransform = GetComponent<RectTransform>();
         }
 
-        public void Init(int damage)
+        public void Init(int damage, bool isCritical)
         {
             // 텍스트 설정
             damageText.text = damage.ToString();
             damageText.gameObject.SetActive(true);
-            
+            if (isCritical)
+            {
+                damageText.color = Color.red;
+            }
             
             Debug.Log($"DamageText initialized: {damage}, color: {damageText.color}");
 
