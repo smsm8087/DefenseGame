@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3129920474167462412, guid: 6fb326257d2cef541916d55ede215929, type: 3}
+  m_Sprite: {fileID: 3129920474167462412, guid: 11bebf008ff2f7946bf51d6efa7a8995, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1650,7 +1650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3104292782015897593, guid: 5e21d1b63d4034b46a4b4eaf11533deb, type: 3}
+  m_Sprite: {fileID: -3104292782015897593, guid: c5efa708023bbd24d8e6048bf95341f1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2467,7 +2467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &791146307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5267,10 +5267,8 @@ MonoBehaviour:
   toastText: {fileID: 2079357401}
   backgroundImage: {fileID: 476894482}
   canvasGroup: {fileID: 1809052240}
-  toastRect: {fileID: 0}
   holdDuration: 1
-  moveDuration: 1
-  moveDistance: 100
+  fadeDuration: 2
 --- !u!225 &1809052240
 CanvasGroup:
   m_ObjectHideFlags: 0
