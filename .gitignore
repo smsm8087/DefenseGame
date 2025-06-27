@@ -74,3 +74,9 @@ crashlytics-build.properties
 #Mac
 *.DS_Store
 Assets/TextMesh Pro/Fonts/DungGeunMo SDF.asset
+
+Assets/Resources/UI/top_toast_message_bg.png.meta
+
+Assets/Resources/UI/center_toast_message_bg.png.meta
+
+Assets/Resources/UI/partymember_icon.png.meta
