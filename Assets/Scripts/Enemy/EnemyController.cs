@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     public string guid;
     public Vector3 serverPosition;
     public SpriteRenderer spriteRenderer;
+    public GameObject outlineObj;
 
     private IEnemyState currentState;
     public EnemyMoveState moveState = new ();
@@ -37,6 +38,20 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         currentState?.Update(this);
+    }
+
+    public void ShowOutline(float duration = 3f)
+    {
+        if (outlineObj == null) return;
+
+        outlineObj.SetActive(true);
+        CancelInvoke(nameof(HideOutline));
+        Invoke(nameof(HideOutline), duration);
+    }
+
+    private void HideOutline()
+    {
+        outlineObj.SetActive(false);
     }
     public void ChangeStateByEnum(EnemyState stateEnum)
     {
@@ -99,6 +114,8 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator FadeOutCoroutine()
     {
+        CancelInvoke(nameof(HideOutline));
+        outlineObj.SetActive(false);
         float elapsed = 0f;
         Color color = spriteRenderer.color;
         float duration = 0.5f;
