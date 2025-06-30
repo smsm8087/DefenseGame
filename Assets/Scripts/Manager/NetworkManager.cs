@@ -113,6 +113,11 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new SettlementTimerUpdateHandler());
         AddHandler(new UpdateUltGaugeHandler(profileUI));
         AddHandler(new UpdatePlayerDataHandler(players));
+        AddHandler(new PartyMemberHealthHandler());
+        AddHandler(new PartyMemberUltHandler());
+        AddHandler(new PartyMemberStatusHandler());
+        AddHandler(new PartyInfoHandler());
+        AddHandler(new PartyMemberLeftHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)

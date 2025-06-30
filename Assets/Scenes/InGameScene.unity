@@ -2344,6 +2344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 675933982}
   - component: {fileID: 675933983}
+  - component: {fileID: 675933984}
   m_Layer: 5
   m_Name: PartyMember
   m_TagString: Untagged
@@ -2396,6 +2397,23 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &675933984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675933981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86bdcfc93e242e1905be1727ceb4a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  partyContainer: {fileID: 0}
+  memberPrefab: {fileID: 3895703681480449699, guid: 1c3bf930df819194eae19977fbc12db3, type: 3}
+  tankIcon: {fileID: 21300000, guid: 4834878a58034ed4a9caaf0884fccc28, type: 2}
+  programmerIcon: {fileID: 21300000, guid: 00f36c07a05f5c74aaf2d02e39049dee, type: 2}
+  enableTestMode: 1
 --- !u!1 &733777035
 GameObject:
   m_ObjectHideFlags: 0

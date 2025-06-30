@@ -21,4 +21,13 @@
         public int critical_pct { get; set; }
         public int critical_dmg { get; set; }
     }
+    public class PartyMemberData
+    {
+        public string id { get; set; }
+        public string job_type { get; set; }
+        public float current_health { get; set; }
+        public float max_health { get; set; }
+        public float current_ult { get; set; }
+        public float max_ult { get; set; }
+    }
 }
