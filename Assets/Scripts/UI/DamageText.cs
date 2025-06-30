@@ -2,17 +2,18 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace UI
 {
     public class DamageText : MonoBehaviour
     {
-        private Text damageText;
         private RectTransform rectTransform;
+        [SerializeField] private TextMeshProUGUI damageText;
+        [SerializeField] private GameObject criticalDamageImage;
 
         public void Awake()
         {
-            damageText = GetComponent<Text>();
             rectTransform = GetComponent<RectTransform>();
         }
 
@@ -23,6 +24,7 @@ namespace UI
             damageText.gameObject.SetActive(true);
             if (isCritical)
             {
+                criticalDamageImage.SetActive(true);
                 damageText.color = Color.red;
             }
             
