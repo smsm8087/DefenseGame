@@ -14,6 +14,9 @@ public class ProfileUI : MonoBehaviour
     [SerializeField] private Slider ultSlider; // ULTBAR 하위의 슬라이더  
     [SerializeField] private Image ultBG; // ult_outline 등
     [SerializeField] private TextMeshProUGUI nicknameText;
+    
+    [Header("StatUI")]
+    [SerializeField] private Button statUIButton;
 
     // 현재 플레이어 정보
     private float maxUlt = 100f; // 모든 직업 동일한 최대값
@@ -29,6 +32,12 @@ public class ProfileUI : MonoBehaviour
         {
             SetPlayerIcon(spriteRenderer.sprite);
         }
+        statUIButton?.onClick.AddListener(OnShowStatPopup);
+    }
+
+    public void OnShowStatPopup()
+    {
+        UIManager.Instance.ShowStatPopup();
     }
     public void UpdateHp(int currentHp, int maxHp)
     {

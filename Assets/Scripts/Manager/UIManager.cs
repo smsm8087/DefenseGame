@@ -7,7 +7,9 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     [SerializeField] private GameObject cardSelectPopupPrefab;
+    [SerializeField] private GameObject statUIPrefab;
     private CardSelectPopup cardSelectPopup;
+    private StatPopup statUIPopup;
 
     private void Awake()
     {
@@ -34,6 +36,13 @@ public class UIManager : MonoBehaviour
     public void UpdateSettlementReadyCount(int readyCount)
     {
         cardSelectPopup?.setCheckSlot(readyCount);
+    }
+    #endregion
+    #region statPopup
+    public void ShowStatPopup()
+    {
+        statUIPopup = PopupManager.Instance.ShowPopup<StatPopup>(statUIPrefab);
+        statUIPopup.Init();
     }
     #endregion
     
