@@ -26,6 +26,12 @@ public class EnemyDamagedHandler : INetworkMessageHandler
             {
                 Debug.Log($"Found enemy: {enemyObj.name}");
             
+                //몬스터 아웃라인 셰이더 적용
+                var enemyController = enemyObj.GetComponent<EnemyController>();
+                if (enemyController != null)
+                {
+                    enemyController.ShowOutline(3f);
+                }
                 // HP바 업데이트
                 Transform hpBarFill = enemyObj.transform.Find("UICanvas/HpUI/Health Bar Fill");
                 if (hpBarFill != null)
