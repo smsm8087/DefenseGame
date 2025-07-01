@@ -32,12 +32,17 @@ public class ProfileUI : MonoBehaviour
         {
             SetPlayerIcon(spriteRenderer.sprite);
         }
-        statUIButton?.onClick.AddListener(OnShowStatPopup);
+        statUIButton?.onClick.AddListener(() => OnShowStatPopup(this.playerinfo));
     }
 
-    public void OnShowStatPopup()
+    public void UpdatePlayerInfo(PlayerInfo playerinfo)
     {
-        UIManager.Instance.ShowStatPopup();
+        this.playerinfo = playerinfo;
+    }
+
+    public void OnShowStatPopup(PlayerInfo playerinfo)
+    {
+        UIManager.Instance.ShowStatPopup(playerinfo);
     }
     public void UpdateHp(int currentHp, int maxHp)
     {

@@ -10,8 +10,6 @@ public class CardSelectPopup : BasePopup
     [SerializeField] private List<CardSlot> cardSlots;
     [SerializeField] private Button confirmButton;
     [SerializeField] private Image timeBarImage;
-    [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private TextMeshProUGUI btnText;
     [SerializeField] private GameObject readyPrefab;
     [SerializeField] private Transform readySlotTransform;
     
@@ -39,8 +37,6 @@ public class CardSelectPopup : BasePopup
         confirmButton?.onClick.AddListener(OnConfirmClicked);
         confirmButton.interactable = false;
         timeBarImage.fillAmount = Mathf.Clamp01(duration / duration);
-        titleText.text = TextManager.Instance.GetText("popup_title_select_card");
-        btnText.text = TextManager.Instance.GetText("btn_select");
         
         foreach (Transform child in readySlotTransform)
             Destroy(child.gameObject);

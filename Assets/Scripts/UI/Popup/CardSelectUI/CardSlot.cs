@@ -126,7 +126,7 @@ public class CardSlot : MonoBehaviour
         }
         if (ColorUtility.TryParseHtmlString(hex, out Color gradeColor))
         {
-            cardNameText.text = $"{title}\n<color={hex}><size=50>{value.ToString()}%</color>";
+            cardNameText.text = $"{title}\n<color={hex}><size=50>{value.ToString()}</color>";
         }
     }
 }

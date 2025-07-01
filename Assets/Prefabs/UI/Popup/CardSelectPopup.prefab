@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 7745511125874954999}
   - component: {fileID: 2576898597011173990}
   - component: {fileID: 9141549846579982688}
+  - component: {fileID: 1058313073822612741}
   m_Layer: 5
   m_Name: text
   m_TagString: Untagged
@@ -254,7 +255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC120\uD0DD"
+  m_text: '#btn_select'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
   m_sharedMaterial: {fileID: 3047399304152153358, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
@@ -325,6 +326,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1058313073822612741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527696615463684168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2675643f6c83404b80e6af8c42a3b1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: btn_select
 --- !u!1 &6469572441282833245
 GameObject:
   m_ObjectHideFlags: 0
@@ -570,6 +584,7 @@ GameObject:
   - component: {fileID: 8213977981383057434}
   - component: {fileID: 1574696950734735289}
   - component: {fileID: 560605422697905211}
+  - component: {fileID: 953803352257733050}
   m_Layer: 5
   m_Name: TitleText
   m_TagString: Untagged
@@ -624,7 +639,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uCE74\uB4DC\uB97C \uC120\uD0DD\uD574\uC8FC\uC138\uC694"
+  m_text: '#popup_title_select_card'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
   m_sharedMaterial: {fileID: 3047399304152153358, guid: d98f029c2e65b55459496a4f1cf96c1c, type: 2}
@@ -695,6 +710,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &953803352257733050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8162559133414665860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2675643f6c83404b80e6af8c42a3b1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textKey: popup_title_select_card
 --- !u!1 &8207668002898916634
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,8 +794,6 @@ MonoBehaviour:
   - {fileID: 9183059800131240478}
   confirmButton: {fileID: 2924144992991413569}
   timeBarImage: {fileID: 4942474659043182375}
-  titleText: {fileID: 560605422697905211}
-  btnText: {fileID: 9141549846579982688}
   readyPrefab: {fileID: 8482365141051503326, guid: df89421b71767af46b40f023695ce43d, type: 3}
   readySlotTransform: {fileID: 8334718338714196591}
 --- !u!1 &9094151426082269885

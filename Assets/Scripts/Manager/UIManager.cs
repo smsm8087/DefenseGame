@@ -39,10 +39,10 @@ public class UIManager : MonoBehaviour
     }
     #endregion
     #region statPopup
-    public void ShowStatPopup()
+    public void ShowStatPopup(PlayerInfo playerinfo)
     {
         statUIPopup = PopupManager.Instance.ShowPopup<StatPopup>(statUIPrefab);
-        statUIPopup.Init();
+        statUIPopup.Init(playerinfo);
     }
     #endregion
     

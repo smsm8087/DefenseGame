@@ -112,7 +112,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
         AddHandler(new SettlementTimerUpdateHandler());
         AddHandler(new UpdateUltGaugeHandler(profileUI));
-        AddHandler(new UpdatePlayerDataHandler(players));
+        AddHandler(new UpdatePlayerDataHandler(players, profileUI));
         AddHandler(new PartyMemberHealthHandler());
         AddHandler(new PartyMemberUltHandler());
         AddHandler(new PartyMemberStatusHandler());

@@ -19,3 +19,13 @@ add_hp_title_rare,체력증가
 add_hp_title_legend,체력증가
 btn_select,선택
 popup_title_select_card,카드를 선택해주세요
+tank,백수
+programmer,프로그래머
+popup_title_selected_cards,선택한 스킬 카드
+attack_power,공격력
+hp,체력
+move_speed,이동속도
+ultgauge,궁극기 증가량
+cri_pct,치명타확률
+cri_dmg,치명타데미지
+empty_selected_card,선택된 카드가 없습니다
