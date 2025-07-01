@@ -9,10 +9,26 @@ public class AttackState : PlayerState
 
     public override void Enter()
     {
-        player._animator.Play("ATTACK_Clip");
-        player.SendAnimationMessage("ATTACK_Clip");
+        string attack_clip_name = "ATTACK_Clip";
+        player._animator.Play(attack_clip_name);
+        player.SendAnimationMessage(attack_clip_name);
+        attackDuration = GetAnimationClipLength(attack_clip_name);
     }
+    private float GetAnimationClipLength(string clipName)
+    {
+        var clips = player._animator.runtimeAnimatorController.animationClips;
 
+        foreach (var clip in clips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip.length;
+            }
+        }
+
+        Debug.LogWarning($"[AttackState] 애니메이션 클립 '{clipName}' 을 찾을 수 없습니다. 기본 0.5초 사용.");
+        return 0.5f; // fallback
+    }
     public override void Update()
     {
         elapsedTime += Time.deltaTime;

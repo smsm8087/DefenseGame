@@ -912,6 +912,7 @@ MonoBehaviour:
   jobAnimationDataList:
   - {fileID: 11400000, guid: 8fa864190c089e0459e91fe207e7ca2d, type: 2}
   - {fileID: 11400000, guid: d3aeddeb88c056c4ebe8b1d45440545b, type: 2}
+  - {fileID: 11400000, guid: 0ef98b6f0d08b584b9e9ae1970577072, type: 2}
   baseAnchoredPosition: {x: 0, y: 0}
 --- !u!1 &5218335273037426933
 GameObject:

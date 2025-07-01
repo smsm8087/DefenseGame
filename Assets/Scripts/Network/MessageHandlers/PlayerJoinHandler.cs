@@ -29,7 +29,8 @@ public class PlayerJoinHandler : INetworkMessageHandler
         jobToPrefabIndex = new Dictionary<string, int>
         {
             {"tank", 0},        // Player → tank
-            {"programmer", 1}   // Programmer → programmer
+            {"programmer", 1},   // Programmer → programmer
+            {"sniper", 2},
         };
     }
 
@@ -61,6 +62,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
             playerController.enabled = true;
             playerController.playerGUID = pid;
             playerController.setMoveSpeed(msg.playerInfo.currentMoveSpeed);
+            playerController.job_type = msg.playerInfo.job_type;
             myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 100;
         
             // 모바일 입력 등록

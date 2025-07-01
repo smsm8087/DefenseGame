@@ -31,7 +31,7 @@ public class JumpState : PlayerState
         {
             player._sr.flipX = false;
         }
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.Z) && player.job_type != "sniper")
         {
             player.ChangeState(player.attackState);
         }
