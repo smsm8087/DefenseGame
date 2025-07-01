@@ -12,6 +12,7 @@ public class PartyMemberUI : MonoBehaviour
     [Header("Job Icons")]
     [SerializeField] private Sprite tankIcon;
     [SerializeField] private Sprite programmerIcon;
+    [SerializeField] private Sprite sniperIcon;
 
     [Header("Test")]
     [SerializeField] private bool enableTestMode = false;
@@ -86,6 +87,8 @@ public class PartyMemberUI : MonoBehaviour
             jobIcons["tank"] = tankIcon;
         if (programmerIcon != null)
             jobIcons["programmer"] = programmerIcon;
+        if (sniperIcon != null)
+            jobIcons["sniper"] = sniperIcon;
     }
 
     public void AddPartyMember(string playerId, string jobType)

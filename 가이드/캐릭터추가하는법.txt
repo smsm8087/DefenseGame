@@ -1,0 +1,19 @@
+[신캐 추가시 작업순서]
+
+[유니티 에디터]
+1. 애니메이션 ATTACK_Clip 사본 만들기
+2. 해당 애니메이션 클립에 OnSendAttackRequest 공격시점에 이벤트 등록
+3. 직업이름으로 animator 생성
+4. idle_clip 클릭후 에디터 Tools -> convert 메뉴 클릭
+5. Assets/GeneratedAnimations 경로 안에 생성된 scriptableObject 파일 이름 변경
+6. StatPopup 프리팹 안의 PlayerImg/Img 에 UI CharacterAnimator 에 컴포넌트로 넣어주기
+7. 공격범위 수정해주기
+[클라 스크립트]
+1. partyMemberUI에 JobIcons 에 Icon  추가해주기
+2. playerListHandler에 jobToPrefabIndex에 추가해주기
+3. playerJoinHandler에 jobToPrefabIndex에 추가해주기
+4. NetworkManager에 플레이어 프리팹 추가해주기
+
+
+[서버]
+1. GameManager에 _availableJobs에 추가해주기

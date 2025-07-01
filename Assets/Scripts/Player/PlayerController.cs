@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public Animator _animator;
     
     public bool _isGrounded = true;
+    public string job_type;
     
     //공격판정
     public Transform attackRangeTransform;

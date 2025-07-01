@@ -2261,6 +2261,7 @@ MonoBehaviour:
   memberPrefab: {fileID: 3895703681480449699, guid: 1c3bf930df819194eae19977fbc12db3, type: 3}
   tankIcon: {fileID: 21300000, guid: 4834878a58034ed4a9caaf0884fccc28, type: 2}
   programmerIcon: {fileID: 21300000, guid: 00f36c07a05f5c74aaf2d02e39049dee, type: 2}
+  sniperIcon: {fileID: 21300000, guid: 835fb4a5019d3244c871ba1a9017a250, type: 2}
   enableTestMode: 1
 --- !u!1 &733777035
 GameObject:
@@ -5396,6 +5397,7 @@ MonoBehaviour:
   playerPrefabs:
   - {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
   - {fileID: 6323616739901478146, guid: 0a0bea37e6e2e904f9421bf5d0aa9a19, type: 3}
+  - {fileID: 6323616739901478146, guid: 76f5b3fe2a5beb2498f1f30f7fb10a57, type: 3}
   waveManager: {fileID: 561100121}
   sharedHpManager: {fileID: 491611646}
   centerText: {fileID: 549031559}

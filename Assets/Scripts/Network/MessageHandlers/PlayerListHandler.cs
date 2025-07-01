@@ -20,7 +20,8 @@ public class PlayerListHandler : INetworkMessageHandler
         jobToPrefabIndex = new Dictionary<string, int>
         {
             {"tank", 0},     
-            {"programmer", 1}
+            {"programmer", 1},
+            {"sniper", 2}
         };
     }
 
