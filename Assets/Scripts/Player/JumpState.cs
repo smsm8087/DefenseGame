@@ -2,12 +2,12 @@
 
 public class JumpState : PlayerState
 {
-    public JumpState(PlayerController player) : base(player) { }
+    public JumpState(BasePlayer player) : base(player) { }
 
     public override void Enter()
     {
-        player._animator.Play("JUMP_Clip"); 
-        player.SendAnimationMessage("JUMP_Clip");
+        player._animator.Play(AnimationNames.Jump); 
+        player.SendAnimationMessage(AnimationNames.Jump);
 
         // 점프 처리
         if (player.GetPrevState() != player.attackState)
@@ -21,7 +21,7 @@ public class JumpState : PlayerState
     {
         // 이동
         float moveInput = InputManager.GetMoveInput();
-        MovementHelper.Move(player._rb, moveInput, player.getMoveSpeed());
+        MovementHelper.Move(player._rb, moveInput, player.GetMoveSpeed());
         // 방향 전환
         if (moveInput > 0)
         {
@@ -31,7 +31,7 @@ public class JumpState : PlayerState
         {
             player._sr.flipX = false;
         }
-        if (Input.GetKeyDown(KeyCode.Z) && player.job_type != "sniper")
+        if (Input.GetKeyDown(KeyCode.Z) && player.CanAttackWhileJumping)
         {
             player.ChangeState(player.attackState);
         }

@@ -24,8 +24,8 @@ public class UpdatePlayerDataHandler : INetworkMessageHandler
             Debug.LogError("Player " + pid + " doesn't exist");
             return;
         }
-        PlayerController playerController = myPlayerObj.GetComponent<PlayerController>();
-        playerController.setMoveSpeed(msg.playerInfo.currentMoveSpeed);
+        BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
+        playerController.ApplyPlayerInfo(msg.playerInfo);
         
         profileUI.UpdatePlayerInfo(msg.playerInfo);
     }

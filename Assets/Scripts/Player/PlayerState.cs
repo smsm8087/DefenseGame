@@ -1,8 +1,8 @@
 ﻿public abstract class PlayerState
 {
-    protected PlayerController player;
+    protected BasePlayer player;
 
-    protected PlayerState(PlayerController player)
+    protected PlayerState(BasePlayer player)
     {
         this.player = player;
     }

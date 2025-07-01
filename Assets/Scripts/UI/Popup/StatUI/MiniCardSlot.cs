@@ -49,19 +49,15 @@ public class MiniCardSlot : MonoBehaviour
         string grade = cardData.grade;
         int value = cardData.value;
         
-        string hex = "";
         switch (grade)
         {
             case "normal":
-                hex = "#75757b";
                 border.sprite = Resources.Load<Sprite>(baseResourcePath + "NORMAL_SKILLCARD");
                 break;
             case "rare":
-                hex = "#f2449c";
                 border.sprite = Resources.Load<Sprite>(baseResourcePath + "EPIC_SKILLCARD");
                 break;
             case "legend":
-                hex = "#ffc127";
                 border.sprite = Resources.Load<Sprite>(baseResourcePath + "LEGENDARY_SKILLCARD");
                 break; 
         }

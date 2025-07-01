@@ -5,33 +5,24 @@ using UnityEngine.UI;
 
 public class PlayerJoinHandler : INetworkMessageHandler
 {
-    private readonly List<GameObject> playerPrefabs;
     private readonly Dictionary<string, GameObject> players;
     private readonly NetworkManager networkManager;
-    private readonly Dictionary<string, int> jobToPrefabIndex;
+    private readonly Dictionary<string, GameObject> prefabMap;
     private readonly ProfileUI profileUI;
 
     public string Type => "player_join";
 
     public PlayerJoinHandler(
-        List<GameObject> playerPrefabs,
+        Dictionary<string, GameObject> prefabMap,
         Dictionary<string, GameObject> players,
         NetworkManager networkManager,
         ProfileUI profileUI
     )
     {
-        this.playerPrefabs = playerPrefabs;
+        this.prefabMap = prefabMap;
         this.players = players;
         this.networkManager = networkManager;
         this.profileUI = profileUI;
-        
-        // 직업과 프리팹 인덱스 매핑 초기화 (서버와 일치)
-        jobToPrefabIndex = new Dictionary<string, int>
-        {
-            {"tank", 0},        // Player → tank
-            {"programmer", 1},   // Programmer → programmer
-            {"sniper", 2},
-        };
     }
 
     public void Handle(NetMsg msg)
@@ -52,17 +43,15 @@ public class PlayerJoinHandler : INetworkMessageHandler
             networkManager.SetMyGUID(pid);
         
             // 내 플레이어 프리팹 생성
-            int prefabIndex = GetPrefabIndex(msg.playerInfo.job_type);
-            var myPlayerObj = GameObject.Instantiate(playerPrefabs[prefabIndex]);
+            var myPlayerObj = PlayerSpawn(msg.playerInfo);
+
+            if (myPlayerObj == null) return;
             players[pid] = myPlayerObj;
             
             // 내 캐릭터 설정
             CameraFollow.Instance.setTarget(myPlayerObj.transform);
-            PlayerController playerController = myPlayerObj.GetComponent<PlayerController>();
+            BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
             playerController.enabled = true;
-            playerController.playerGUID = pid;
-            playerController.setMoveSpeed(msg.playerInfo.currentMoveSpeed);
-            playerController.job_type = msg.playerInfo.job_type;
             myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 100;
         
             // 모바일 입력 등록
@@ -74,8 +63,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
         else
         {
             // 다른 플레이어 생성
-            int prefabIndex = GetPrefabIndex(msg.playerInfo.job_type);
-            var playerObj = GameObject.Instantiate(playerPrefabs[prefabIndex]);
+            var playerObj = GameObject.Instantiate(prefabMap[msg.playerInfo.job_type]);
         
             players[pid] = playerObj;
             playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
@@ -87,17 +75,19 @@ public class PlayerJoinHandler : INetworkMessageHandler
     {
         profileUI.InitializeProfile(playerinfo, myPlayerObj);
     }
-    
-    private int GetPrefabIndex(string jobType)
+
+    private GameObject PlayerSpawn(PlayerInfo playerinfo)
     {
-        if (!string.IsNullOrEmpty(jobType) && jobToPrefabIndex.ContainsKey(jobType))
+        if (!prefabMap.TryGetValue(playerinfo.job_type.ToLower(), out var prefab))
         {
-            return jobToPrefabIndex[jobType];
+            Debug.LogError($"[PlayerSpawner] 알 수 없는 직업 타입: {playerinfo.job_type}");
+            return null;
         }
-        else
-        {
-            Debug.LogWarning($"알 수 없는 직업: {jobType}. 기본 프리팹 사용");
-            return 0; // 기본값
-        }
+
+        GameObject playerGO = GameObject.Instantiate(prefab);
+        BasePlayer player = playerGO.GetComponent<BasePlayer>();
+        player.ApplyPlayerInfo(playerinfo);
+
+        return playerGO;
     }
 }

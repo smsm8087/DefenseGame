@@ -10,7 +10,10 @@ using UI;
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager Instance;
-    public List<GameObject> playerPrefabs;
+    [Header("직업별 프리팹")]
+    public GameObject tankPrefab;
+    public GameObject sniperPrefab;
+    public GameObject programmerPrefab;
     
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private SharedHpManager sharedHpManager;
@@ -21,6 +24,7 @@ public class NetworkManager : MonoBehaviour
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
+    private Dictionary<string, GameObject> prefabMap = new();
     private event Action onGameOver;
     public string MyGUID { get; private set; }
     void Awake()
@@ -31,6 +35,13 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
+        
+        prefabMap = new Dictionary<string, GameObject>()
+        {
+            { "tank", tankPrefab },
+            { "sniper", sniperPrefab },
+            { "programmer", programmerPrefab }
+        };
         
         RegisterHandlers();
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
@@ -94,9 +105,9 @@ public class NetworkManager : MonoBehaviour
     private void RegisterHandlers()
     {
         //서버 리시브 처리 부분.
-        AddHandler(new PlayerJoinHandler(playerPrefabs,players, this,profileUI));
+        AddHandler(new PlayerJoinHandler(prefabMap,players, this,profileUI));
         AddHandler(new PlayerMoveHandler(players));
-        AddHandler(new PlayerListHandler(playerPrefabs, players));
+        AddHandler(new PlayerListHandler(prefabMap, players));
         AddHandler(new PlayerLeaveHandler());
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));

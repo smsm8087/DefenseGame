@@ -2,19 +2,19 @@
 
 public class MoveState : PlayerState
 {
-    public MoveState(PlayerController player) : base(player) { }
+    public MoveState(BasePlayer player) : base(player) { }
 
     public override void Enter()
     {
-        player._animator.Play("RUN_Clip"); 
-        player.SendAnimationMessage("RUN_Clip"); 
+        player._animator.Play(AnimationNames.Run); 
+        player.SendAnimationMessage(AnimationNames.Run); 
     }
 
     public override void Update()
     {
         // 이동
         float moveInput = InputManager.GetMoveInput();
-        MovementHelper.Move(player._rb, moveInput, player.getMoveSpeed());
+        MovementHelper.Move(player._rb, moveInput, player.GetMoveSpeed());
 
         // 방향 전환
         if (moveInput > 0)

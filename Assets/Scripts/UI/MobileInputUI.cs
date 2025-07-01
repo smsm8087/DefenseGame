@@ -7,7 +7,7 @@ public class MobileInputUI : MonoBehaviour
     public Button jumpButton;
     public Button attackButton;
     
-    private PlayerController playerController;
+    private BasePlayer playerController;
 
     public static MobileInputUI Instance { get; private set; }
 
@@ -16,7 +16,7 @@ public class MobileInputUI : MonoBehaviour
         Instance = this;
     }
 
-    public void RegisterPlayer(PlayerController player)
+    public void RegisterPlayer(BasePlayer player)
     {
         playerController = player;
         //플레이어 조인 이후에 세팅

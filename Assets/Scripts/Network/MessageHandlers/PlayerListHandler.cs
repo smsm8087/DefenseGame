@@ -3,26 +3,15 @@ using System.Collections.Generic;
 
 public class PlayerListHandler : INetworkMessageHandler
 {
-    private readonly List<GameObject> playerPrefabs;
+    private readonly Dictionary<string, GameObject> prefabMap;
     private readonly Dictionary<string, GameObject> players;
-    
-    // 직업명과 프리팹 인덱스 매핑 (PlayerJoinHandler와 동일하게)
-    private readonly Dictionary<string, int> jobToPrefabIndex;
 
     public string Type => "player_list";
 
-    public PlayerListHandler(List<GameObject> playerPrefabs, Dictionary<string, GameObject> players)
+    public PlayerListHandler(Dictionary<string, GameObject> prefabMap, Dictionary<string, GameObject> players)
     {
-        this.playerPrefabs = playerPrefabs;
+        this.prefabMap = prefabMap;
         this.players = players;
-        
-        // 직업과 프리팹 인덱스 매핑 초기화 
-        jobToPrefabIndex = new Dictionary<string, int>
-        {
-            {"tank", 0},     
-            {"programmer", 1},
-            {"sniper", 2}
-        };
     }
 
     public void Handle(NetMsg msg)
@@ -52,18 +41,7 @@ public class PlayerListHandler : INetworkMessageHandler
                 continue;
             }
             
-            // 직업에 맞는 프리팹 선택
-            int prefabIndex = 0; 
-            if (jobToPrefabIndex.ContainsKey(jobType))
-            {
-                prefabIndex = jobToPrefabIndex[jobType];
-            }
-            else
-            {
-                Debug.LogWarning($"알 수 없는 직업 타입: {jobType}. 기본 프리팹 사용");
-            }
-            
-            var playerObj = GameObject.Instantiate(playerPrefabs[prefabIndex]);
+            var playerObj = GameObject.Instantiate(prefabMap[jobType]);
             players[pid] = playerObj;
             
             NetworkCharacterFollower playerFollower = playerObj.GetComponent<NetworkCharacterFollower>();

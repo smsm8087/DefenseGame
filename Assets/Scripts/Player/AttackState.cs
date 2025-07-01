@@ -5,14 +5,13 @@ public class AttackState : PlayerState
     private float attackDuration = 0.5f;
     private float elapsedTime = 0f;
 
-    public AttackState(PlayerController player) : base(player) { }
+    public AttackState(BasePlayer player) : base(player) { }
 
     public override void Enter()
     {
-        string attack_clip_name = "ATTACK_Clip";
-        player._animator.Play(attack_clip_name);
-        player.SendAnimationMessage(attack_clip_name);
-        attackDuration = GetAnimationClipLength(attack_clip_name);
+        player._animator.Play(AnimationNames.Attack);
+        player.SendAnimationMessage(AnimationNames.Attack);
+        attackDuration = GetAnimationClipLength(AnimationNames.Attack);
     }
     private float GetAnimationClipLength(string clipName)
     {

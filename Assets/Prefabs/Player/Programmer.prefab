@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 868196668607656329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.59, y: 0.57, z: 0}
+  m_LocalPosition: {x: -0.77, y: 0.57, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,7 +76,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.3, y: 1.1}
+  m_Size: {x: 1.2, y: 1.1}
   m_EdgeRadius: 0
 --- !u!1 &6323616739901478146
 GameObject:
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: -7494265202619478441}
   - component: {fileID: -2516490492847099922}
   - component: {fileID: 8482776089211228461}
-  - component: {fileID: 5109775715164140592}
+  - component: {fileID: 4001208728039327238}
   m_Layer: 6
   m_Name: Programmer
   m_TagString: Untagged
@@ -279,24 +279,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.68190193, y: 1.0353167}
   m_EdgeRadius: 0
---- !u!114 &5109775715164140592
+--- !u!114 &4001208728039327238
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6323616739901478146}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6735929e181c9b044a4d16732f65f08e, type: 3}
+  m_Script: {fileID: 11500000, guid: 49f5a1eb3160494ba70f534fe34eb742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerGUID: 
+  job_type: 
+  moveSpeed: 5
   jumpForce: 10
+  attackPower: 0
+  critChance: 0
+  critDamage: 0
+  currentHp: 0
+  maxHp: 0
+  currentUlt: 0
+  currentUltGauge: 0
+  cardIds: 
   _rb: {fileID: 0}
   _sr: {fileID: 0}
   _animator: {fileID: 0}
   _isGrounded: 1
-  job_type: 
-  attackRangeTransform: {fileID: 9142270794343980553}
-  attackRangeCollider: {fileID: 3601580221457127967}
+  attackRangeTransform: {fileID: 0}
+  attackRangeCollider: {fileID: 0}

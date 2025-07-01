@@ -2,12 +2,12 @@
 
 public class IdleState : PlayerState
 {
-    public IdleState(PlayerController player) : base(player) { }
+    public IdleState(BasePlayer player) : base(player) { }
 
     public override void Enter()
     {
-        player._animator.Play("IDLE_Clip");
-        player.SendAnimationMessage("IDLE_Clip"); 
+        player._animator.Play(AnimationNames.Idle);
+        player.SendAnimationMessage(AnimationNames.Idle); 
     }
 
     public override void Update()
