@@ -145,25 +145,7 @@ public abstract class BasePlayer : MonoBehaviour
     public virtual void OnSendAttackRequest()
     {
         if (!IsMyPlayer) return;
-
-        Vector3 localPos = attackRangeTransform.localPosition;
-        localPos.x = Mathf.Abs(localPos.x) * (_sr.flipX ? 1f : -1f);
-        attackRangeTransform.localPosition = localPos;
-
-        Vector2 centerWorldPos = attackRangeTransform.position;
-        Vector3 lossyScale = attackRangeTransform.lossyScale;
-        Vector2 size = attackRangeCollider.size;
-
-        var attackMsg = new NetMsg
-        {
-            type = "player_attack",
-            playerId = NetworkManager.Instance.MyGUID,
-            attackBoxCenterX = centerWorldPos.x,
-            attackBoxCenterY = centerWorldPos.y,
-            attackBoxWidth = size.x * lossyScale.x,
-            attackBoxHeight = size.y * lossyScale.y
-        };
-
+        NetMsg attackMsg = AttackBoxHelper.BuildAttackMessage(this);
         NetworkManager.Instance.SendMsg(attackMsg);
     }
 
