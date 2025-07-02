@@ -2,7 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using DataModels;
-
+public class PartyMemberData
+{
+    public string id { get; set; }
+    public string job_type { get; set; }
+    public float current_health { get; set; }
+    public float max_health { get; set; }
+    public float current_ult { get; set; }
+    public float max_ult { get; set; }
+}
 public class PartyMemberUI : MonoBehaviour
 {
     [Header("References")]

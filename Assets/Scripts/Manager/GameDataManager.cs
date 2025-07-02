@@ -14,6 +14,8 @@ public class GameDataManager
         //table 추가시에 여기다가 작업
         _tableDict["card_data"] = CsvLoader.Load<CardData>("DataExcels/card_data");
         _tableDict["player_data"] = CsvLoader.Load<PlayerData>("DataExcels/player_data");
+        _tableDict["enemy_data"] = CsvLoader.Load<EnemyData>("DataExcels/enemy_data");
+        _tableDict["wave_data"] = CsvLoader.Load<WaveData>("DataExcels/wave_data");
     }
 
     public Dictionary<int, T> GetTable<T>(string tableName)

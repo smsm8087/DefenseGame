@@ -16,7 +16,6 @@ public class NetworkManager : MonoBehaviour
     public GameObject programmerPrefab;
     
     [SerializeField] private WaveManager waveManager;
-    [SerializeField] private SharedHpManager sharedHpManager;
     [SerializeField] private CenterText centerText;
     [SerializeField] private GameObject DamageTextPrefab;
     [SerializeField] private ProfileUI profileUI;
@@ -98,7 +97,7 @@ public class NetworkManager : MonoBehaviour
     public void ResetHp()
     {
         //임시 초기화
-        sharedHpManager.UpdateHPBar(100,100);
+        GameManager.Instance.UpdateHPBar(100,100);
     }
     private Dictionary<string, INetworkMessageHandler> _handlers;
 
@@ -112,7 +111,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new SpawnEnemyHandler(enemies,waveManager));
         AddHandler(new EnemySyncHandler(enemies));
         AddHandler(new EnemyDieHandler(enemies));
-        AddHandler(new SharedHpUpdateHandler(sharedHpManager));
+        AddHandler(new SharedHpUpdateHandler());
         AddHandler(new CountDownHandler(centerText));
         AddHandler(new WaveStartHandler(centerText));
         AddHandler(new GameOverHandler(centerText));
@@ -129,6 +128,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PartyMemberStatusHandler());
         AddHandler(new PartyInfoHandler());
         AddHandler(new PartyMemberLeftHandler());
+        AddHandler(new InitialGameHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)
