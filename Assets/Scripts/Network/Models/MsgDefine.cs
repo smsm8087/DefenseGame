@@ -6,9 +6,11 @@ public class NetMsg
 {
     public string type;
     public int wave;
+    public int wave_id;
     
     public string playerId;
     public string enemyId;
+    public int enemyDataId;
     public List<PlayerInfo> players; // List<string> -> List<PlayerInfo>로 변경
     public string jobType;
 

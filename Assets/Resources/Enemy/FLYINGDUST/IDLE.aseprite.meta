@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: IDLE
     originalName: 
-    pivot: {x: 0.5, y: -0.20930232}
+    pivot: {x: 0.49494952, y: -0.19148937}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,8 +133,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 98
-      height: 86
+      width: 99
+      height: 94
     spriteID: dc1221704549a234ba021b0a87ff8a1a
     spriteBone: []
     spriteOutline: []
@@ -144,6 +144,48 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.43209878, y: -0.1777778}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 106
+      width: 81
+      height: 90
+    spriteID: 1667077cba4b0c944a2d5bc5835bdfd6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 106}
+  - name: Frame_2
+    originalName: 
+    pivot: {x: 0.4268293, y: -0.1797753}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 111
+      y: 4
+      width: 82
+      height: 89
+    spriteID: c86c2a40a7cfad24b9ec13f3f5d2b8e6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 111, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -158,15 +200,33 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: IDLE
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 11
         y: 18
-        width: 98
-        height: 86
+        width: 99
+        height: 94
       spriteId: dc1221704549a234ba021b0a87ff8a1a
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 16
+        width: 81
+        height: 90
+      spriteId: 1667077cba4b0c944a2d5bc5835bdfd6
+    - name: Frame_2
+      frameIndex: 2
+      additiveSortOrder: 0
+      cellRect:
+        x: 25
+        y: 16
+        width: 82
+        height: 89
+      spriteId: c86c2a40a7cfad24b9ec13f3f5d2b8e6
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -186,4 +246,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 120, y: 120}
-  previousTextureSize: {x: 128, y: 128}
+  previousTextureSize: {x: 256, y: 256}

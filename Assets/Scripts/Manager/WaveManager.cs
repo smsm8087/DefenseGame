@@ -1,20 +1,23 @@
 
 using System.Collections;
+using DataModels;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform[] spawnPoints;
-
-
-    public GameObject SpawnEnemy(string guid, float spawnPosX, float spawnPosY)
+    public GameObject SpawnEnemy(string guid, float spawnPosX, float spawnPosY, int enemyDataId)
     {
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0);
-        
-        var enemy = Instantiate(enemyPrefab, spawnPos , Quaternion.identity);
+
+        var enemy = CreateEnemyFromId(enemyDataId, spawnPos);
         var movement = enemy.GetComponent<EnemyController>();
         movement?.SetGuid(guid);
         return enemy;
+    }
+    GameObject CreateEnemyFromId(int enemyId, Vector3 spawnPos)
+    {
+        var enemyData = GameDataManager.Instance.GetData<EnemyData>("enemy_data", enemyId);
+        var prefab = Resources.Load<GameObject>(enemyData.prefab);
+        return prefab ? Instantiate(prefab, spawnPos , Quaternion.identity) : null;
     }
 }

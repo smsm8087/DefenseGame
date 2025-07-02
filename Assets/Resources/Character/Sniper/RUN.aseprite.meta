@@ -282,7 +282,15 @@ ScriptedImporter:
       y: 367
       width: 95
       height: 113
+<<<<<<< HEAD
     spriteID: 814cb62c62fd7804e9250ce8f77cd0ac
+=======
+<<<<<<< HEAD
+    spriteID: 6f1e0f113b13e8e46a4ce6b940056e87
+=======
+    spriteID: c9cf2c18e6fa46e4da68c972617932c4
+>>>>>>> origin/master
+>>>>>>> origin/master
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -303,7 +311,15 @@ ScriptedImporter:
       y: 4
       width: 95
       height: 113
+<<<<<<< HEAD
     spriteID: bca813e8fadec594d9348384c8f6f34a
+=======
+<<<<<<< HEAD
+    spriteID: 39f8d9a21a713674b801927465c9ff81
+=======
+    spriteID: 26db678899614c84fa28c5f355c15cbb
+>>>>>>> origin/master
+>>>>>>> origin/master
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -324,7 +340,15 @@ ScriptedImporter:
       y: 125
       width: 95
       height: 113
+<<<<<<< HEAD
     spriteID: ee241027341bb4046a696e6519653c7a
+=======
+<<<<<<< HEAD
+    spriteID: 851fb83a2d1999549a744c1d8155f692
+=======
+    spriteID: 340343c302d994441afd012f5bb1b388
+>>>>>>> origin/master
+>>>>>>> origin/master
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -418,7 +442,15 @@ ScriptedImporter:
         y: 0
         width: 95
         height: 113
+<<<<<<< HEAD
       spriteId: 814cb62c62fd7804e9250ce8f77cd0ac
+=======
+<<<<<<< HEAD
+      spriteId: 6f1e0f113b13e8e46a4ce6b940056e87
+=======
+      spriteId: c9cf2c18e6fa46e4da68c972617932c4
+>>>>>>> origin/master
+>>>>>>> origin/master
     - name: Frame_8
       frameIndex: 8
       additiveSortOrder: 0
@@ -427,7 +459,15 @@ ScriptedImporter:
         y: 0
         width: 95
         height: 113
+<<<<<<< HEAD
       spriteId: bca813e8fadec594d9348384c8f6f34a
+=======
+<<<<<<< HEAD
+      spriteId: 39f8d9a21a713674b801927465c9ff81
+=======
+      spriteId: 26db678899614c84fa28c5f355c15cbb
+>>>>>>> origin/master
+>>>>>>> origin/master
     - name: Frame_9
       frameIndex: 9
       additiveSortOrder: 0
@@ -436,7 +476,15 @@ ScriptedImporter:
         y: 0
         width: 95
         height: 113
+<<<<<<< HEAD
       spriteId: ee241027341bb4046a696e6519653c7a
+=======
+<<<<<<< HEAD
+      spriteId: 851fb83a2d1999549a744c1d8155f692
+=======
+      spriteId: 340343c302d994441afd012f5bb1b388
+>>>>>>> origin/master
+>>>>>>> origin/master
     linkedCells: []
     parentIndex: -1
   platformSettings:
