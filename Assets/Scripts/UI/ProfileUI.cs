@@ -8,30 +8,31 @@ using System.Linq;
 public class ProfileUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] private Image iconBG; // IconBG 하위의 실제 아이콘 이미지
-    [SerializeField] private Slider hpSlider; // HPBAR 하위의 슬라이더
-    [SerializeField] private Image hpBG; // hp_outline 등
-    [SerializeField] private Slider ultSlider; // ULTBAR 하위의 슬라이더  
-    [SerializeField] private Image ultBG; // ult_outline 등
+    [SerializeField] private Image iconBG;
+    [SerializeField] private Slider hpSlider;
+    [SerializeField] private Image hpBG;
+    [SerializeField] private Slider ultSlider;
+    [SerializeField] private Image ultBG;
     [SerializeField] private TextMeshProUGUI nicknameText;
-    
+
     [Header("StatUI")]
     [SerializeField] private Button statUIButton;
 
-    // 현재 플레이어 정보
-    private float maxUlt = 100f; // 모든 직업 동일한 최대값
+    private float maxUlt = 100f;
     private PlayerInfo playerinfo;
+
     public void InitializeProfile(PlayerInfo playerinfo, GameObject player)
     {
-        //서버에서 받은 플레이어 데이터 세팅
         this.playerinfo = playerinfo;
         UpdateHp(playerinfo.currentHp, playerinfo.currentHp);
         UpdateUltGauge(0, maxUlt);
+
         var spriteRenderer = player.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
-            SetPlayerIcon(spriteRenderer.sprite);
+            SetPlayerIcon(spriteRenderer.sprite, playerinfo.job_type);
         }
+
         statUIButton?.onClick.AddListener(() => OnShowStatPopup(this.playerinfo));
     }
 
@@ -44,9 +45,9 @@ public class ProfileUI : MonoBehaviour
     {
         UIManager.Instance.ShowStatPopup(playerinfo);
     }
+
     public void UpdateHp(int currentHp, int maxHp)
     {
-        // HPBAR 하위에서 슬라이더 찾기
         if (hpSlider == null)
         {
             Transform hpBarTransform = transform.Find("HPBAR");
@@ -62,7 +63,6 @@ public class ProfileUI : MonoBehaviour
             hpSlider.value = currentHp;
         }
 
-        // HP 텍스트 업데이트 (있다면)
         Transform hpTextTransform = transform.Find("HPBAR/hpBG/hp");
         if (hpTextTransform != null)
         {
@@ -76,7 +76,6 @@ public class ProfileUI : MonoBehaviour
 
     public void UpdateUltGauge(float currentUlt, float maxUlt)
     {
-        // ULTBAR 하위에서 슬라이더 찾기
         if (ultSlider == null)
         {
             Transform ultBarTransform = transform.Find("ULTBAR");
@@ -86,7 +85,6 @@ public class ProfileUI : MonoBehaviour
             }
         }
 
-        // Slider가 있으면 Slider 사용
         if (ultSlider != null)
         {
             ultSlider.maxValue = maxUlt;
@@ -94,7 +92,6 @@ public class ProfileUI : MonoBehaviour
         }
         else
         {
-            // Slider가 없으면 Image fillAmount 사용
             Transform ultImageTransform = transform.Find("ULTBAR/ult");
             if (ultImageTransform != null)
             {
@@ -107,7 +104,6 @@ public class ProfileUI : MonoBehaviour
             }
         }
 
-        // ULT 텍스트 업데이트
         Transform ultTextTransform = transform.Find("ULTBAR/ult");
         if (ultTextTransform != null)
         {
@@ -123,6 +119,7 @@ public class ProfileUI : MonoBehaviour
     {
         // 닉네임 기능은 나중에 구현 예정
     }
+
     public bool IsUltReady()
     {
         return playerinfo.currentUlt >= maxUlt;
@@ -135,23 +132,80 @@ public class ProfileUI : MonoBehaviour
             UpdateUltGauge(0, maxUlt);
         }
     }
-    
-    // 플레이어의 실제 스프라이트를 설정하는 메서드
-    public void SetPlayerIcon(Sprite playerSprite)
+
+    public void SetPlayerIcon(Sprite playerSprite, string jobType = "")
     {
-        // IconBG/mask/playerImg에서 플레이어 아이콘 설정
         Transform playerImgTransform = transform.Find("IconBG/mask/playerImg");
-        if (playerImgTransform != null)
+        if (playerImgTransform == null) return;
+
+        Image playerImg = playerImgTransform.GetComponent<Image>();
+        if (playerImg == null) return;
+
+        if (playerSprite == null || playerSprite.name == "Frame_0")
         {
-            Image playerImgComponent = playerImgTransform.GetComponent<Image>();
-            if (playerImgComponent != null)
+            if (!string.IsNullOrEmpty(jobType))
             {
-                // Image Type을 Simple로 설정하여 일관성 유지
-                playerImgComponent.sprite = playerSprite;
-                playerImgComponent.type = Image.Type.Simple;
-                playerImgComponent.preserveAspect = false;
+                string capitalJob = FirstCharToUpper(jobType);
+                string spritePath = $"Character/{capitalJob}/profile_{capitalJob}";
+
+                Sprite overrideSprite = Resources.Load<Sprite>(spritePath);
+                if (overrideSprite != null)
+                {
+                    playerSprite = overrideSprite;
+                }
+                else
+                {
+                    Debug.LogWarning($"[ProfileUI] Sprite '{spritePath}'을(를) Resources에서 찾지 못함");
+                    return;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Frame_0인데 jobType 정보도 없음");
+                return;
             }
         }
+
+        playerImg.sprite = playerSprite;
+        playerImg.type = Image.Type.Simple;
+        playerImg.preserveAspect = false;
+        playerImg.rectTransform.sizeDelta = new Vector2(0.7f, 1.04f);
+
+        float scaleX = 1f;
+        float scaleY = 1f;
+        float scaleZ = 1f;
+        switch (playerSprite.name)
+        {
+            case "profile_Tank":
+                scaleX = 1.126f;
+                scaleY = 1.111f;
+                scaleZ = 0.06f;
+                break;
+            case "profile_Programmer":
+                scaleX = 1.2f;
+                scaleY = 1.3f;
+                scaleZ = 0.06f;
+                break;
+            case "profile_Sniper":
+                scaleX = 1.0f;
+                scaleY = 1.0f;
+                scaleZ = 0.06f;
+                break;
+            default:
+                scaleX = 1.0f;
+                scaleY = 1.0f;
+                scaleZ = 0.06f;
+                break;
+        }
+
+        playerImg.rectTransform.anchoredPosition = new Vector2(-0.02f, -0.7f);
+        playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+    }
+
+    private string FirstCharToUpper(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return "";
+        return char.ToUpper(input[0]) + input.Substring(1).ToLower();
     }
 
     // 게터 메서드들

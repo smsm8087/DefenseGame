@@ -112,14 +112,69 @@ public class PartyMemberIcon : MonoBehaviour
     {
         playerId = id;
         jobType = job;
-        
-        if (icon != null && playerIcon != null)
-            playerIcon.sprite = icon;
 
-        // 초기값 설정
+        // 아이콘이 없으면 jobType 기반으로 Resources에서 자동 로딩
+        if (icon == null && !string.IsNullOrEmpty(jobType))
+        {
+            string capitalJob = FirstCharToUpper(jobType);
+            string spritePath = $"Character/{capitalJob}/profile_{capitalJob}";
+            icon = Resources.Load<Sprite>(spritePath);
+
+            if (icon == null)
+            {
+                Debug.LogWarning($"[PartyMemberIcon] Sprite '{spritePath}' 을(를) Resources에서 찾을 수 없습니다.");
+            }
+        }
+
+        if (icon != null && playerIcon != null)
+        {
+            playerIcon.sprite = icon;
+            playerIcon.type = Image.Type.Simple;
+            playerIcon.preserveAspect = false;
+            playerIcon.rectTransform.sizeDelta = new Vector2(100, 100);
+
+            float scaleX = 1f;
+            float scaleY = 1f;
+            float scaleZ = 1f;
+
+            switch (icon.name)
+            {
+                case "profile_Tank":
+                    scaleX = 1.126f;
+                    scaleY = 1.111f;
+                    scaleZ = 0.06f;
+                    break;
+                case "profile_Programmer":
+                    scaleX = 1.2f;
+                    scaleY = 1.3f;
+                    scaleZ = 0.06f;
+                    break;
+                case "profile_Sniper":
+                    scaleX = 1.0f;
+                    scaleY = 1.0f;
+                    scaleZ = 0.06f;
+                    break;
+                default:
+                    scaleX = 1.0f;
+                    scaleY = 1.0f;
+                    scaleZ = 0.06f;
+                    break;
+            }
+
+            playerIcon.rectTransform.anchoredPosition = new Vector2(1.6f, -19.9f);
+            playerIcon.rectTransform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+        }
+
         UpdateHealth(100f, 100f);
         UpdateUlt(0f, 100f);
     }
+    
+    private string FirstCharToUpper(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return "";
+        return char.ToUpper(input[0]) + input.Substring(1).ToLower();
+    }
+
 
     public void UpdateHealth(float current, float max)
     {
