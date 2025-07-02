@@ -30,7 +30,7 @@ public class ProfileUI : MonoBehaviour
         var spriteRenderer = player.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
-            SetPlayerIcon(spriteRenderer.sprite, playerinfo.job_type);
+            SetPlayerIcon(null, playerinfo.job_type);
         }
 
         statUIButton?.onClick.AddListener(() => OnShowStatPopup(this.playerinfo));
@@ -141,29 +141,28 @@ public class ProfileUI : MonoBehaviour
         Image playerImg = playerImgTransform.GetComponent<Image>();
         if (playerImg == null) return;
 
-        if (playerSprite == null || playerSprite.name == "Frame_0")
+        // 항상 jobType 기반으로 로딩
+        if (!string.IsNullOrEmpty(jobType))
         {
-            if (!string.IsNullOrEmpty(jobType))
-            {
-                string capitalJob = FirstCharToUpper(jobType);
-                string spritePath = $"Character/{capitalJob}/profile_{capitalJob}";
+            string capitalJob = FirstCharToUpper(jobType);
+            string spritePath = $"Character/{capitalJob}/PROFILE_{capitalJob}";
 
-                Sprite overrideSprite = Resources.Load<Sprite>(spritePath);
-                if (overrideSprite != null)
-                {
-                    playerSprite = overrideSprite;
-                }
-                else
-                {
-                    Debug.LogWarning($"[ProfileUI] Sprite '{spritePath}'을(를) Resources에서 찾지 못함");
-                    return;
-                }
+            Sprite overrideSprite = Resources.Load<Sprite>(spritePath);
+            Debug.Log($"[ProfileUI] Try load sprite: {spritePath} => {(overrideSprite != null ? "Success" : "Fail")}");
+            if (overrideSprite != null)
+            {
+                playerSprite = overrideSprite;
             }
             else
             {
-                Debug.LogWarning("Frame_0인데 jobType 정보도 없음");
+                Debug.LogWarning($"[ProfileUI] Sprite '{spritePath}'을(를) Resources에서 찾지 못함");
                 return;
             }
+        }
+        else if (playerSprite == null)
+        {
+            Debug.LogWarning("playerSprite도 없고 jobType도 없음");
+            return;
         }
 
         playerImg.sprite = playerSprite;
@@ -171,36 +170,37 @@ public class ProfileUI : MonoBehaviour
         playerImg.preserveAspect = false;
         playerImg.rectTransform.sizeDelta = new Vector2(0.7f, 1.04f);
 
-        float scaleX = 1f;
-        float scaleY = 1f;
-        float scaleZ = 1f;
-        switch (playerSprite.name)
-        {
-            case "profile_Tank":
-                scaleX = 1.126f;
-                scaleY = 1.111f;
-                scaleZ = 0.06f;
-                break;
-            case "profile_Programmer":
-                scaleX = 1.2f;
-                scaleY = 1.3f;
-                scaleZ = 0.06f;
-                break;
-            case "profile_Sniper":
-                scaleX = 1.0f;
-                scaleY = 1.0f;
-                scaleZ = 0.06f;
-                break;
-            default:
-                scaleX = 1.0f;
-                scaleY = 1.0f;
-                scaleZ = 0.06f;
-                break;
-        }
+        float scaleX = 1.25f;
+        float scaleY = 1.1f;
+        
+        // switch (playerSprite.name)
+        // {
+        //     case "PROFILE_Tank_0":
+        //         scaleX = 1.126f;
+        //         scaleY = 1.111f;
+        //         scaleZ = 0.06f;
+        //         break;
+        //     case "PROFILE_Programmer_0":
+        //         scaleX = 1.2f;
+        //         scaleY = 1.3f;
+        //         scaleZ = 0.06f;
+        //         break;
+        //     case "PROFILE_Sniper_0":
+        //         scaleX = 1.0f;
+        //         scaleY = 1.0f;
+        //         scaleZ = 0.06f;
+        //         break;
+        //     default:
+        //         scaleX = 1.0f;
+        //         scaleY = 1.0f;
+        //         scaleZ = 0.06f;
+        //         break;
+        // }
 
         playerImg.rectTransform.anchoredPosition = new Vector2(-0.02f, -0.7f);
-        playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+        playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
     }
+
 
     private string FirstCharToUpper(string input)
     {

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e198dd39e5528c44abfc9b030f3ab171
+guid: 5ba9cadfb891f0c479ce5d55d091952d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5950351912824813626
-    second: PROFILE_0
+      213: 4057293888562473388
+    second: PROFILE_Tank_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PROFILE_0
+      name: PROFILE_Tank_0
       rect:
         serializedVersion: 2
-        x: 19
+        x: 28
         y: 0
-        width: 89
-        height: 115
+        width: 68
+        height: 105
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c7c28b267a1c6da0800000000000000
-      internalID: -5950351912824813626
+      spriteID: ca921219b476e4830800000000000000
+      internalID: 4057293888562473388
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      PROFILE_0: -5950351912824813626
+      PROFILE_Tank_0: 4057293888562473388
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

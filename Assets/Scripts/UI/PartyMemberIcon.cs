@@ -81,7 +81,7 @@ public class PartyMemberIcon : MonoBehaviour
 
         if (playerIcon == null)
         {
-            Transform iconTransform = transform.Find("Canvas (Environment)/member/IconBg/playering");
+            Transform iconTransform = transform.Find("Canvas (Environment)/member/IconBg/playerImg");
             if (iconTransform != null)
             {
                 playerIcon = iconTransform.GetComponent<Image>();
@@ -113,56 +113,75 @@ public class PartyMemberIcon : MonoBehaviour
         playerId = id;
         jobType = job;
 
-        // 아이콘이 없으면 jobType 기반으로 Resources에서 자동 로딩
-        if (icon == null && !string.IsNullOrEmpty(jobType))
+        if (playerIcon == null) return;
+
+        // 항상 jobType 기반으로 로딩
+        if (!string.IsNullOrEmpty(jobType))
         {
             string capitalJob = FirstCharToUpper(jobType);
-            string spritePath = $"Character/{capitalJob}/profile_{capitalJob}";
-            icon = Resources.Load<Sprite>(spritePath);
+            string spritePath = $"Character/{capitalJob}/PROFILE_{capitalJob}";
 
-            if (icon == null)
+            Sprite overrideSprite = Resources.Load<Sprite>(spritePath);
+            Debug.Log($"[PartyMemberIcon] Try load sprite: {spritePath} => {(overrideSprite != null ? "Success" : "Fail")}");
+            if (overrideSprite != null)
             {
-                Debug.LogWarning($"[PartyMemberIcon] Sprite '{spritePath}' 을(를) Resources에서 찾을 수 없습니다.");
+                icon = overrideSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"[PartyMemberIcon] Sprite '{spritePath}'을(를) Resources에서 찾지 못함");
+                icon = null; 
             }
         }
+        else if (icon == null)
+        {
+            Debug.LogWarning("playerSprite도 없고 jobType도 없음");
+            icon = null;
+        }
 
-        if (icon != null && playerIcon != null)
+        if (icon != null)
         {
             playerIcon.sprite = icon;
             playerIcon.type = Image.Type.Simple;
             playerIcon.preserveAspect = false;
             playerIcon.rectTransform.sizeDelta = new Vector2(100, 100);
 
-            float scaleX = 1f;
-            float scaleY = 1f;
-            float scaleZ = 1f;
-
-            switch (icon.name)
-            {
-                case "profile_Tank":
-                    scaleX = 1.126f;
-                    scaleY = 1.111f;
-                    scaleZ = 0.06f;
-                    break;
-                case "profile_Programmer":
-                    scaleX = 1.2f;
-                    scaleY = 1.3f;
-                    scaleZ = 0.06f;
-                    break;
-                case "profile_Sniper":
-                    scaleX = 1.0f;
-                    scaleY = 1.0f;
-                    scaleZ = 0.06f;
-                    break;
-                default:
-                    scaleX = 1.0f;
-                    scaleY = 1.0f;
-                    scaleZ = 0.06f;
-                    break;
-            }
+            float scaleX = 1.25f;
+            float scaleY = 1.1f;
+            
+            // switch (playerIcon.sprite.name)
+            // {
+            //     case "PROFILE_Tank_0":
+            //         scaleX = 1.126f;
+            //         scaleY = 1.111f;
+            //         scaleZ = 0.06f; 
+            //         break;
+            //     case "PROFILE_Programmer_0":
+            //         scaleX = 1.2f;
+            //         scaleY = 1.3f;
+            //         scaleZ = 0.06f;
+            //         break;
+            //     case "PROFILE_Sniper_0":
+            //         scaleX = 1.0f;
+            //         scaleY = 1.0f;
+            //         scaleZ = 0.06f;
+            //         break;
+            //     default:
+            //         scaleX = 1.0f;
+            //         scaleY = 1.0f;
+            //         scaleZ = 0.06f;
+            //         break;
+            // }
 
             playerIcon.rectTransform.anchoredPosition = new Vector2(1.6f, -19.9f);
-            playerIcon.rectTransform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+            playerIcon.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
+        }
+        else
+        {
+            playerIcon.sprite = null;
+            playerIcon.rectTransform.sizeDelta = Vector2.zero;
+            playerIcon.rectTransform.anchoredPosition = Vector2.zero;
+            playerIcon.rectTransform.localScale = Vector3.one;
         }
 
         UpdateHealth(100f, 100f);
