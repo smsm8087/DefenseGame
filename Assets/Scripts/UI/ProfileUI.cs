@@ -166,39 +166,38 @@ public class ProfileUI : MonoBehaviour
         }
 
         playerImg.sprite = playerSprite;
-        playerImg.type = Image.Type.Simple;
-        playerImg.preserveAspect = false;
-        playerImg.rectTransform.sizeDelta = new Vector2(0.7f, 1.04f);
-
-        float scaleX = 1.25f;
-        float scaleY = 1.1f;
-        
-        // switch (playerSprite.name)
-        // {
-        //     case "PROFILE_Tank_0":
-        //         scaleX = 1.126f;
-        //         scaleY = 1.111f;
-        //         scaleZ = 0.06f;
-        //         break;
-        //     case "PROFILE_Programmer_0":
-        //         scaleX = 1.2f;
-        //         scaleY = 1.3f;
-        //         scaleZ = 0.06f;
-        //         break;
-        //     case "PROFILE_Sniper_0":
-        //         scaleX = 1.0f;
-        //         scaleY = 1.0f;
-        //         scaleZ = 0.06f;
-        //         break;
-        //     default:
-        //         scaleX = 1.0f;
-        //         scaleY = 1.0f;
-        //         scaleZ = 0.06f;
-        //         break;
-        // }
-
-        playerImg.rectTransform.anchoredPosition = new Vector2(-0.02f, -0.7f);
-        playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
+        //나중에 이미지 각자 조절 필요할 때
+        // playerImg.rectTransform.sizeDelta = new Vector2(1.23f, 1.19f);
+        //
+        // float scaleX = 1.12f;
+        // float scaleY = 1.11f;
+        //
+        // // switch (playerSprite.name)
+        // // {
+        // //     case "PROFILE_Tank_0":
+        // //         scaleX = 1.126f;
+        // //         scaleY = 1.111f;
+        // //         scaleZ = 0.06f;
+        // //         break;
+        // //     case "PROFILE_Programmer_0":
+        // //         scaleX = 1.2f;
+        // //         scaleY = 1.3f;
+        // //         scaleZ = 0.06f;
+        // //         break;
+        // //     case "PROFILE_Sniper_0":
+        // //         scaleX = 1.0f;
+        // //         scaleY = 1.0f;
+        // //         scaleZ = 0.06f;
+        // //         break;
+        // //     default:
+        // //         scaleX = 1.0f;
+        // //         scaleY = 1.0f;
+        // //         scaleZ = 0.06f;
+        // //         break;
+        // // }
+        //
+        // playerImg.rectTransform.anchoredPosition = new Vector2(-0.05f, -0.755f);
+        // playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
     }
 
 

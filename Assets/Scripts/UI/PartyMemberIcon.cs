@@ -142,46 +142,37 @@ public class PartyMemberIcon : MonoBehaviour
         if (icon != null)
         {
             playerIcon.sprite = icon;
-            playerIcon.type = Image.Type.Simple;
-            playerIcon.preserveAspect = false;
-            playerIcon.rectTransform.sizeDelta = new Vector2(100, 100);
-
-            float scaleX = 1.25f;
-            float scaleY = 1.1f;
-            
-            // switch (playerIcon.sprite.name)
-            // {
-            //     case "PROFILE_Tank_0":
-            //         scaleX = 1.126f;
-            //         scaleY = 1.111f;
-            //         scaleZ = 0.06f; 
-            //         break;
-            //     case "PROFILE_Programmer_0":
-            //         scaleX = 1.2f;
-            //         scaleY = 1.3f;
-            //         scaleZ = 0.06f;
-            //         break;
-            //     case "PROFILE_Sniper_0":
-            //         scaleX = 1.0f;
-            //         scaleY = 1.0f;
-            //         scaleZ = 0.06f;
-            //         break;
-            //     default:
-            //         scaleX = 1.0f;
-            //         scaleY = 1.0f;
-            //         scaleZ = 0.06f;
-            //         break;
-            // }
-
-            playerIcon.rectTransform.anchoredPosition = new Vector2(1.6f, -19.9f);
-            playerIcon.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
-        }
-        else
-        {
-            playerIcon.sprite = null;
-            playerIcon.rectTransform.sizeDelta = Vector2.zero;
-            playerIcon.rectTransform.anchoredPosition = Vector2.zero;
-            playerIcon.rectTransform.localScale = Vector3.one;
+            // playerIcon.rectTransform.sizeDelta = new Vector2(100, 100);
+            //
+            // float scaleX = 1.25f;
+            // float scaleY = 1.1f;
+            //
+            // // switch (playerIcon.sprite.name)
+            // // {
+            // //     case "PROFILE_Tank_0":
+            // //         scaleX = 1.126f;
+            // //         scaleY = 1.111f;
+            // //         scaleZ = 0.06f; 
+            // //         break;
+            // //     case "PROFILE_Programmer_0":
+            // //         scaleX = 1.2f;
+            // //         scaleY = 1.3f;
+            // //         scaleZ = 0.06f;
+            // //         break;
+            // //     case "PROFILE_Sniper_0":
+            // //         scaleX = 1.0f;
+            // //         scaleY = 1.0f;
+            // //         scaleZ = 0.06f;
+            // //         break;
+            // //     default:
+            // //         scaleX = 1.0f;
+            // //         scaleY = 1.0f;
+            // //         scaleZ = 0.06f;
+            // //         break;
+            // // }
+            //
+            // playerIcon.rectTransform.anchoredPosition = new Vector2(1.6f, -19.9f);
+            // playerIcon.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
         }
 
         UpdateHealth(100f, 100f);
