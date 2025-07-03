@@ -66,6 +66,13 @@ public class CardSelectPopup : BasePopup
     {
         if (ui_lock) return;
         ui_lock = true;
+        confirmButton.interactable = false;
+        
+        foreach (var slot in cardSlotMap.Values)
+        {
+            slot.SetUILock(true);
+        }
+        
         var msg = new NetMsg
         {
             type = "settlement_ready",
