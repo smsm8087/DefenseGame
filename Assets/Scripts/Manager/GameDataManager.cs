@@ -16,6 +16,7 @@ public class GameDataManager
         _tableDict["player_data"] = CsvLoader.Load<PlayerData>("DataExcels/player_data");
         _tableDict["enemy_data"] = CsvLoader.Load<EnemyData>("DataExcels/enemy_data");
         _tableDict["wave_data"] = CsvLoader.Load<WaveData>("DataExcels/wave_data");
+        _tableDict["shared_data"] = CsvLoader.Load<SharedData>("DataExcels/shared_data");
     }
 
     public Dictionary<int, T> GetTable<T>(string tableName)

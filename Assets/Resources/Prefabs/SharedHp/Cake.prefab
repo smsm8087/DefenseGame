@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2055102311959635374}
   - component: {fileID: 9159043832785286225}
   m_Layer: 20
-  m_Name: Crystal
+  m_Name: Cake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

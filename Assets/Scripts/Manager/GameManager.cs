@@ -48,14 +48,22 @@ public class GameManager : MonoBehaviour
             Debug.LogError("wave data not found");
             return;
         }
-        GameObject crystalPrefab = Resources.Load<GameObject>(waveData.shared_hp);
+
+        var sharedHpData = GameDataManager.Instance.GetData<SharedData>("shared_data", waveData.shared_hp_id);
+        if (sharedHpData == null)
+        {
+            Debug.LogError("sharedHpData not found");
+            return;
+        }
+        
+        GameObject crystalPrefab = Resources.Load<GameObject>(sharedHpData.prefab_path);
         if (crystalPrefab != null)
         {
             GameObject go = Instantiate(crystalPrefab, crystalRoot);
         }
         else
         {
-            Debug.LogError($"프리팹 로드 실패: {waveData.shared_hp}");
+            Debug.LogError($"프리팹 로드 실패: {sharedHpData.prefab_path}");
         }
         Sprite backGroundSprite = Resources.Load<Sprite>(waveData.background);
         if (backGroundSprite != null)
