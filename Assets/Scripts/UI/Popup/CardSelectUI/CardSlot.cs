@@ -18,6 +18,8 @@ public class CardSlot : MonoBehaviour
     private string baseResourcePath = "UI/skillcards_ui/";
 
     private bool isDuringAction = true;
+    private bool isUILocked = false;
+    
     public void Init(CardData cardData,  System.Action<int> onClickCallback)
     {
         this.cardData = cardData;
@@ -28,6 +30,7 @@ public class CardSlot : MonoBehaviour
         onClick = onClickCallback;
         SetSelected(false);
         canvasGroup.alpha = 0f;
+        isUILocked = false;
     }
 
     public void StartCoroutine(float waitTime)
@@ -66,8 +69,13 @@ public class CardSlot : MonoBehaviour
 
     public void OnClick()
     {
-        if (isDuringAction) return;
+        if (isDuringAction || isUILocked) return;
         onClick?.Invoke(cardData.id);
+    }
+    
+    public void SetUILock(bool locked)
+    {
+        isUILocked = locked;
     }
 
     public void SetSelected(bool selected)
