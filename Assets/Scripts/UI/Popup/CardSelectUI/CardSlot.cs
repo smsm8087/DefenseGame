@@ -115,6 +115,7 @@ public class CardSlot : MonoBehaviour
         string title = TextManager.Instance.GetText(cardData.title);
         string grade = cardData.grade;
         int value = cardData.value;
+        string valueText = cardData.need_percent == 1 ? $"{value}%" : value.ToString();
         
         string hex = "";
         switch (grade)
@@ -134,7 +135,7 @@ public class CardSlot : MonoBehaviour
         }
         if (ColorUtility.TryParseHtmlString(hex, out Color gradeColor))
         {
-            cardNameText.text = $"{title}\n<color={hex}><size=50>{value.ToString()}</color>";
+            cardNameText.text = $"{title}\n<color={hex}><size=50>{valueText}</color>";
         }
     }
 }

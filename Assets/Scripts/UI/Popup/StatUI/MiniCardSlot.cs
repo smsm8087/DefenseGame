@@ -48,6 +48,7 @@ public class MiniCardSlot : MonoBehaviour
     {
         string grade = cardData.grade;
         int value = cardData.value;
+        string displayValue = cardData.need_percent == 1 ? $"{value}%" : value.ToString();
         
         switch (grade)
         {
@@ -61,6 +62,6 @@ public class MiniCardSlot : MonoBehaviour
                 border.sprite = Resources.Load<Sprite>(baseResourcePath + "LEGENDARY_SKILLCARD");
                 break; 
         }
-        valueText.text = $"+ {value.ToString()}";
+        valueText.text = $"+ {displayValue}";
     }
 }
