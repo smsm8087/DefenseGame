@@ -20,6 +20,7 @@ public class NetMsg
     public float y;
     public float currentUlt;
     public float maxUlt;
+    public PlayerInfo playerInfo { get; set; }
     
     //partymember
     public string player_id;           // 파티 멤버 ID
@@ -56,8 +57,6 @@ public class NetMsg
     public int readyCount;
     //cheat
     public bool isCheat;
-    
-    public PlayerInfo playerInfo { get; set; }
 }
 
 [System.Serializable]

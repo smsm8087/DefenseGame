@@ -129,6 +129,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PartyInfoHandler());
         AddHandler(new PartyMemberLeftHandler());
         AddHandler(new InitialGameHandler());
+        AddHandler(new PlayerUpdateHpHandler(profileUI));
     }
 
     private void AddHandler(INetworkMessageHandler handler)
