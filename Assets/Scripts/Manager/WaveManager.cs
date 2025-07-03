@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
     GameObject CreateEnemyFromId(int enemyId, Vector3 spawnPos)
     {
         var enemyData = GameDataManager.Instance.GetData<EnemyData>("enemy_data", enemyId);
-        var prefab = Resources.Load<GameObject>(enemyData.prefab);
+        var prefab = Resources.Load<GameObject>(enemyData.prefab_path);
         return prefab ? Instantiate(prefab, spawnPos , Quaternion.identity) : null;
     }
 }
