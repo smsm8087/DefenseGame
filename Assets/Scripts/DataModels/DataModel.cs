@@ -43,4 +43,9 @@ namespace DataModels
         public int id { get; set; }
         public string prefab_path { get; set; }
     }
+    public class BulletData
+    {
+        public int id { get; set; }
+        public string prefab_path { get; set; }
+    }
 }
