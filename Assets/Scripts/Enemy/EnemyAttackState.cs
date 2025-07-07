@@ -5,7 +5,7 @@ public class EnemyAttackState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        enemy.animator.Play("Attack_Clip");
+        enemy.animator.Play("attack");
 
         // Animation Event or Coroutine 사용해서 서버에 AttackHit 송신
         // 예시: Animator Event 에서 NetworkManager.Instance.SendAttackHit(enemy.guid)

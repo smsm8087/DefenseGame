@@ -3196,10 +3196,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -530577403860489602, guid: ce370fc37a2c1764aa5816ead554c062, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -5351,6 +5351,7 @@ MonoBehaviour:
   tankPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
   sniperPrefab: {fileID: 6323616739901478146, guid: 76f5b3fe2a5beb2498f1f30f7fb10a57, type: 3}
   programmerPrefab: {fileID: 6323616739901478146, guid: 0a0bea37e6e2e904f9421bf5d0aa9a19, type: 3}
+  bulletPrefab: {fileID: 5475192822370675610, guid: 9d28b02a24c7d7a4387c49e6655715d3, type: 3}
   waveManager: {fileID: 561100121}
   centerText: {fileID: 549031559}
   DamageTextPrefab: {fileID: 6224278285089542279, guid: face83d47adf43743adf59030ced7397, type: 3}

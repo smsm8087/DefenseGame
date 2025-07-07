@@ -61,8 +61,32 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings: []
-    pptrCurveMapping: []
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: -6535696398567606255, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 3345392144157940561, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -595672171077337157, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -1432451539098602028, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -2061731425492611043, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 1573849608284961467, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 451822279930484279, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 5759463035173336866, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 765738319781582452, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -9157569988101959122, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 1979402285247177163, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 5976918780854129060, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: 1996858802237524067, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -316424803187888170, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
+    - {fileID: -316424803187888170, guid: 1eafc5ba74f134b4681da6cd9c3e9346, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -87,4 +111,11 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 1.4
+    functionName: OnAttackHit
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

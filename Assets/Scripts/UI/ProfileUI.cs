@@ -48,19 +48,15 @@ public class ProfileUI : MonoBehaviour
 
     public void UpdateHp(int currentHp, int maxHp)
     {
-        if (hpSlider == null)
+        Transform hpImageTransform = transform.Find("HPBAR/hp");
+        if (hpImageTransform != null)
         {
-            Transform hpBarTransform = transform.Find("HPBAR");
-            if (hpBarTransform != null)
+            Image hpImage = hpImageTransform.GetComponent<Image>();
+            if (hpImage != null)
             {
-                hpSlider = hpBarTransform.GetComponentInChildren<Slider>();
+                hpImage.fillAmount = (float) currentHp / maxHp;
+                hpImage.type = Image.Type.Filled;
             }
-        }
-
-        if (hpSlider != null)
-        {
-            hpSlider.maxValue = maxHp;
-            hpSlider.value = currentHp;
         }
 
         Transform hpTextTransform = transform.Find("HPBAR/hpBG/hp");
