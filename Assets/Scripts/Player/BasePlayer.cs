@@ -20,6 +20,7 @@ public abstract class BasePlayer : MonoBehaviour
 
     [Header("Battle Stats")]
     public float attackPower;
+    public float attackSpeed;
     public int critChance;
     public int critDamage;
     public int currentHp;
@@ -103,6 +104,7 @@ public abstract class BasePlayer : MonoBehaviour
         jumpForce = 10f; // 필요 시 직업별 기본값 설정 가능
 
         attackPower = info.currentAttack;
+        attackSpeed = info.currentAttackSpeed;
         critChance = info.currentCriPct;
         critDamage = info.currentCriDmg;
 

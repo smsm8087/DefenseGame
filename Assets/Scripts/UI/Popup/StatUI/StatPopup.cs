@@ -61,6 +61,10 @@ public class StatPopup : BasePopup
         var attack_statSlot = attack_statObj.GetComponent<StatSlot>();
         attack_statSlot.Init(TextManager.Instance.GetText("attack_power"), playerinfo.currentAttack.ToString());
         
+        var attackSpeed_statObj = Instantiate(statPrefab, statLeftTransform);
+        var attackSpeed_statSlot = attackSpeed_statObj.GetComponent<StatSlot>();
+        attackSpeed_statSlot.Init(TextManager.Instance.GetText("attack_speed"), playerinfo.currentAttackSpeed.ToString("F2"));
+        
         var hp_statObj = Instantiate(statPrefab, statLeftTransform);
         var hp_statSlot = hp_statObj.GetComponent<StatSlot>();
         hp_statSlot.Init(TextManager.Instance.GetText("hp"), playerinfo.currentMaxHp.ToString());

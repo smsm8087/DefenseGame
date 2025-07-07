@@ -115,7 +115,20 @@ public class CardSlot : MonoBehaviour
         string title = TextManager.Instance.GetText(cardData.title);
         string grade = cardData.grade;
         int value = cardData.value;
-        string valueText = cardData.need_percent == 1 ? $"{value}%" : value.ToString();
+        string valueText;
+        if (cardData.need_percent == 1)
+        {
+            valueText = $"{value}%";
+        }
+        else if (cardData.type == "add_attackspeed")
+        {
+            float displayValue = value / 10.0f;
+            valueText = displayValue.ToString("F1");  // 2 → "0.2"
+        }
+        else
+        {
+            valueText = value.ToString();
+        }
         
         string hex = "";
         switch (grade)

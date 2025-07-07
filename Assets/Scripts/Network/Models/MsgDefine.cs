@@ -69,6 +69,7 @@ public class PlayerInfo
     public int currentMaxHp { get; set; }
     public float currentUltGauge { get; set; }
     public float currentMoveSpeed { get; set; }
+    public float currentAttackSpeed { get; set; }
     public int currentCriPct { get; set; }
     public int currentCriDmg { get; set; }
     public float currentAttack { get; set; }

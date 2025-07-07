@@ -5,6 +5,9 @@ add_cri_pct_title_legend,치명타확률증가
 add_attack_title_normal,공격력증가
 add_attack_title_rare,공격력증가
 add_attack_title_legend,공격력증가
+add_attackspeed_title_normal,공격속도증가
+add_attackspeed_title_rare,공격속도증가
+add_attackspeed_title_legend,공격속도증가
 add_movespeed_title_normal,이동속도증가
 add_movespeed_title_rare,이동속도증가
 add_movespeed_title_legend,이동속도증가
@@ -23,6 +26,9 @@ add_cri_pct_pct_title_legend,치명타확률증가
 add_attack_pct_title_normal,공격력증가
 add_attack_pct_title_rare,공격력증가
 add_attack_pct_title_legend,공격력증가
+add_attackspeed_pct_title_normal,공격속도증가
+add_attackspeed_pct_title_rare,공격속도증가
+add_attackspeed_pct_title_legend,공격속도증가
 add_movespeed_pct_title_normal,이동속도증가
 add_movespeed_pct_title_rare,이동속도증가
 add_movespeed_pct_title_legend,이동속도증가
@@ -41,6 +47,7 @@ tank,백수
 programmer,프로그래머
 popup_title_selected_cards,선택한 스킬 카드
 attack_power,공격력
+attack_speed,공격속도
 hp,체력
 move_speed,이동속도
 ultgauge,궁극기 증가량
