@@ -128,7 +128,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RestartHandler());
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
-        AddHandler(new EnemyAttackHandler(enemies));
+        AddHandler(new EnemyChangeStateHandler(enemies));
         AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
         AddHandler(new SettlementTimerUpdateHandler());
         AddHandler(new UpdateUltGaugeHandler(profileUI));

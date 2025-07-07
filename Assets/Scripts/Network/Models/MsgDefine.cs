@@ -43,6 +43,7 @@ public class NetMsg
     public List<EnemySyncPacket> enemies;
     public List<string> deadEnemyIds;
     public List<EnemyDamageInfo> damagedEnemies;
+    public string animName;
     
     //ui
     public float currentHp;
