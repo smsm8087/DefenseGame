@@ -42,7 +42,6 @@ public class EnemyController : MonoBehaviour
     {
         currentState?.Update(this);
     }
-
     public void setTarget(string playerId)
     {
         targetPlayerId = playerId;

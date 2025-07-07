@@ -27,6 +27,7 @@ public class BulletSpawnHandler : INetworkMessageHandler
         GameObject bullet = GameObject.Instantiate(bulletPrefab, pos, Quaternion.identity);
         bullet.GetComponent<BulletController>().SyncFromServer(msg.x, msg.y);
         bullets.Add(pid, bullet);
+        bullet.GetComponent<SpriteRenderer>().sortingOrder = bullets.Count * 2;
         Debug.Log($"[BulletSpawnHandler] 총알 생성됨: {pid}");
     }
 }

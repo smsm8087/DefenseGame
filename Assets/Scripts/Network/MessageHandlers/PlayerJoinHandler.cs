@@ -52,7 +52,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
             CameraFollow.Instance.setTarget(myPlayerObj.transform);
             BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
             playerController.enabled = true;
-            myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 100;
+            myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 1000;
         
             // 모바일 입력 등록
             MobileInputUI.Instance.RegisterPlayer(playerController);

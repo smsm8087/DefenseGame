@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    private int spawnOrderOffset = 0;
     public GameObject SpawnEnemy(string guid, float spawnPosX, float spawnPosY, int enemyDataId)
     {
+        spawnOrderOffset = NetworkManager.Instance.GetEnemies().Count;
         Vector3 spawnPos = new Vector3(spawnPosX, spawnPosY, 0);
-
         var enemy = CreateEnemyFromId(enemyDataId, spawnPos);
         var movement = enemy.GetComponent<EnemyController>();
-        movement?.SetGuid(guid);
+        if (movement)
+        {
+            movement.spriteRenderer.sortingOrder = spawnOrderOffset * 2;
+            movement?.SetGuid(guid);
+        }
+        
         return enemy;
     }
     GameObject CreateEnemyFromId(int enemyId, Vector3 spawnPos)

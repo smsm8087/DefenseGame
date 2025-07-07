@@ -205,7 +205,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 6.3538604
+  m_Mass: 3.8203187
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 2.5
@@ -277,7 +277,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.68190193, y: 1.0353167}
+  m_Size: {x: 0.41, y: 1.0353167}
   m_EdgeRadius: 0
 --- !u!114 &4001208728039327238
 MonoBehaviour:
@@ -296,6 +296,7 @@ MonoBehaviour:
   moveSpeed: 5
   jumpForce: 10
   attackPower: 0
+  attackSpeed: 0
   critChance: 0
   critDamage: 0
   currentHp: 0
