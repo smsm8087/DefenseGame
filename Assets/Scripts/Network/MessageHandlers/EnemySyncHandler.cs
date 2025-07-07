@@ -22,7 +22,7 @@ public class EnemySyncHandler : INetworkMessageHandler
             if (!enemyObj) continue;
             EnemyController enemyController = enemyObj.GetComponent<EnemyController>();
             if (!enemyController) continue;
-            enemyController.SyncFromServer(enemySyncPacket.x);
+            enemyController.SyncFromServer(enemySyncPacket.x, enemySyncPacket.y,enemySyncPacket.enemyType);
         }
     }
 }

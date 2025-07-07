@@ -97,6 +97,8 @@ public class EnemySyncPacket
 {
     public string enemyId { get; set; }
     public float x { get; set; }
+    public float y { get; set; }
+    public string enemyType { get; set; }
 }
 
 public class EnemyDamageInfo

@@ -98,13 +98,22 @@ public class EnemyController : MonoBehaviour
         currentState?.Enter(this);
     }
 
-    public void SyncFromServer(float posX)
+    public void SyncFromServer(float posX, float posY, string enemyType)
     {
         if (currentState == null)
         {
             ChangeState(moveState);
         }
-        serverPosition = new Vector3(posX, transform.position.y,transform.position.z);
+
+        if (enemyType == "player")
+        {
+            serverPosition = new Vector3(posX, posY, transform.position.z);
+        }
+        else
+        {
+            serverPosition = new Vector3(posX, transform.position.y, transform.position.z);
+        }
+        
     }
 
     public void SetGuid(string guid)
