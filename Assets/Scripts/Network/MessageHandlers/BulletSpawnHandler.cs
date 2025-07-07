@@ -25,9 +25,14 @@ public class BulletSpawnHandler : INetworkMessageHandler
         Vector3 pos = new Vector3(msg.x, msg.y, 0f);
 
         GameObject bullet = GameObject.Instantiate(bulletPrefab, pos, Quaternion.identity);
-        bullet.GetComponent<BulletController>().SyncFromServer(msg.x, msg.y);
-        bullets.Add(pid, bullet);
-        bullet.GetComponent<SpriteRenderer>().sortingOrder = bullets.Count * 2;
-        Debug.Log($"[BulletSpawnHandler] 총알 생성됨: {pid}");
+        var bulletController = bullet.GetComponent<BulletController>();
+        if (bulletController)
+        {
+            bulletController.StartFadeIn();
+            bulletController.SyncFromServer(msg.x, msg.y);
+            bullets.Add(pid, bullet);
+            bullet.GetComponent<SpriteRenderer>().sortingOrder = 500 + bullets.Count * 2;
+            Debug.Log($"[BulletSpawnHandler] 총알 생성됨: {pid}");    
+        }
     }
 }

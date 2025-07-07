@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
     public Vector3 serverPosition;
-    
+    SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     public void SyncFromServer(float posX, float posY)
     {
         serverPosition = new Vector3(posX, posY,transform.position.z);
@@ -17,5 +25,23 @@ public class BulletController : MonoBehaviour
         }
 
         transform.Rotate(0f, 0f, 360f * Time.deltaTime);
+    }
+    public void StartFadeIn()
+    {
+        StartCoroutine(FadeInCoroutine());
+    }
+    private IEnumerator FadeInCoroutine()
+    {
+        float elapsed = 0f;
+        Color color = spriteRenderer.color;
+        float duration = 0.2f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
     }
 }
