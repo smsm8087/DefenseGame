@@ -16,7 +16,9 @@ public class EnemyController : MonoBehaviour
     public Vector3 serverPosition;
     public SpriteRenderer spriteRenderer;
     public GameObject outlineObj;
-
+    
+    private string killedPlayerId;
+    
     private IEnemyState currentState;
     public EnemyMoveState moveState = new ();
     public EnemyAttackState attackState = new ();
@@ -111,7 +113,6 @@ public class EnemyController : MonoBehaviour
     {
         StartCoroutine(FadeOutCoroutine());
     }
-
     private IEnumerator FadeOutCoroutine()
     {
         CancelInvoke(nameof(HideOutline));
@@ -119,6 +120,7 @@ public class EnemyController : MonoBehaviour
         float elapsed = 0f;
         Color color = spriteRenderer.color;
         float duration = 0.5f;
+        
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -128,5 +130,38 @@ public class EnemyController : MonoBehaviour
         }
         gameObject.SetActive(false); // 완전히 사라지면 비활성화
         NetworkManager.Instance.RemoveEnemy(guid);
+    }
+
+    public void setKilledPlayerId(string playerId)
+    {
+        this.killedPlayerId = playerId;
+    }
+    public void StartKnockBack()
+    {
+        StartCoroutine(KnockBackCoroutine());
+    }
+    private IEnumerator KnockBackCoroutine()
+    {
+        var players = NetworkManager.Instance.GetPlayers();
+        if (players.ContainsKey(killedPlayerId))
+        {
+            GameObject player = players[killedPlayerId];
+            Vector3 attackPosition = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
+            
+            float elapsed = 0f;
+            float duration = 0.5f;
+            Vector3 startPos = transform.position;
+            //오른쪽으로 볼때 flipx == false
+            Vector3 hitDir = (transform.position - attackPosition).normalized;
+            Vector3 endPos = startPos + hitDir * 0.3f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float eased = Utils.EaseOutCubic(t); 
+                transform.position = Vector3.Lerp(startPos, endPos, eased);
+                yield return null;
+            }
+        }
     }
 }

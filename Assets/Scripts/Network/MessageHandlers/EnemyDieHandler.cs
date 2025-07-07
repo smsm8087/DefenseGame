@@ -20,6 +20,7 @@ public class EnemyDieHandler : INetworkMessageHandler
         {
             var pid = deadEnemyId;
             var enemyController = Enemies[pid].GetComponent<EnemyController>();
+            enemyController.setKilledPlayerId(msg.playerId);
             enemyController.ChangeStateByEnum(EnemyState.Dead);
         }
     }
