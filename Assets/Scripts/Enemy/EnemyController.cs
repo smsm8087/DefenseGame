@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     public GameObject outlineObj;
     
     private string killedPlayerId;
+    private string targetPlayerId;
     
     private IEnemyState currentState;
     public EnemyMoveState moveState = new ();
@@ -42,6 +43,25 @@ public class EnemyController : MonoBehaviour
         currentState?.Update(this);
     }
 
+    public void setTarget(string playerId)
+    {
+        targetPlayerId = playerId;
+    }
+    public void OnCheckFlip()
+    {
+        var players = NetworkManager.Instance.GetPlayers();
+        if (!players.ContainsKey(targetPlayerId)) return;
+        
+        var targetPos = players[targetPlayerId].transform.position;
+        if (targetPos.x != 0)
+        {
+            Vector3 dir = targetPos - transform.position;
+            if (Mathf.Abs(dir.x) > 0.01f)
+            {
+                spriteRenderer.flipX = dir.x < 0;
+            }
+        }
+    }
     public void ShowOutline(float duration = 3f)
     {
         if (outlineObj == null) return;

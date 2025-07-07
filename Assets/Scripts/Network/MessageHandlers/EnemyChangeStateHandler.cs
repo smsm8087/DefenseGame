@@ -23,6 +23,10 @@ namespace NativeWebSocket.MessageHandlers
             switch (animName)
             {
                 case "attack" :
+                    if (msg.playerId != string.Empty)
+                    {
+                        enemyController.setTarget(msg.playerId);
+                    }
                     enemyController.ChangeStateByEnum(EnemyState.Attack);
                     break;
                 case "idle" :
