@@ -55,6 +55,11 @@ public class NetMsg
     public List<CardData> cards;
     public int selectedCardId;
     public int readyCount;
+    
+    //bullet
+    public string bulletId;
+    public List<BulletInfo> bullets;
+
     //cheat
     public bool isCheat;
 }
@@ -99,4 +104,10 @@ public class EnemyDamageInfo
     public int maxHp { get; set; }
     public int damage { get; set; }
     public bool isCritical { get; set; }
+}
+public class BulletInfo
+{
+    public string bulletId;
+    public float x;
+    public float y;
 }

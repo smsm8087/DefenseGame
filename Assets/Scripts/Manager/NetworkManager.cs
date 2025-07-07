@@ -15,6 +15,9 @@ public class NetworkManager : MonoBehaviour
     public GameObject sniperPrefab;
     public GameObject programmerPrefab;
     
+    [Header("총알")]
+    [SerializeField] private GameObject bulletPrefab;
+    
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private CenterText centerText;
     [SerializeField] private GameObject DamageTextPrefab;
@@ -24,6 +27,7 @@ public class NetworkManager : MonoBehaviour
     private Dictionary<string, GameObject> enemies = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
     private Dictionary<string, GameObject> prefabMap = new();
+    private Dictionary<string, GameObject> bullets = new();
     private event Action onGameOver;
     public string MyGUID { get; private set; }
     void Awake()
@@ -83,6 +87,12 @@ public class NetworkManager : MonoBehaviour
         Destroy(enemies[guid]);
         enemies.Remove(guid);
     }
+    public void RemoveBullet(string guid)
+    {
+        if (!bullets.ContainsKey(guid)) return;
+        Destroy(bullets[guid]);
+        bullets.Remove(guid);
+    }
 
     public void RemoveAllEnemies()
     {
@@ -130,6 +140,9 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PartyMemberLeftHandler());
         AddHandler(new InitialGameHandler());
         AddHandler(new PlayerUpdateHpHandler(profileUI));
+        AddHandler(new BulletSpawnHandler(bullets, bulletPrefab));
+        AddHandler(new BulletTickHandler(bullets));
+        AddHandler(new BulletDestroyHandler(bullets));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

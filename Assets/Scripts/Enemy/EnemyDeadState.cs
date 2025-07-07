@@ -4,7 +4,7 @@ public class EnemyDeadState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        enemy.animator.Play("Dead_Clip");
+        enemy.animator.Play("dead");
     }
 
     public void Update(EnemyController enemy) { }
