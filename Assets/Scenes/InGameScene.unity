@@ -2306,11 +2306,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86bdcfc93e242e1905be1727ceb4a1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  partyContainer: {fileID: 0}
+  partyContainer: {fileID: 675933982}
   memberPrefab: {fileID: 3895703681480449699, guid: 1c3bf930df819194eae19977fbc12db3, type: 3}
-  tankIcon: {fileID: 21300000, guid: 4834878a58034ed4a9caaf0884fccc28, type: 2}
-  programmerIcon: {fileID: 21300000, guid: 00f36c07a05f5c74aaf2d02e39049dee, type: 2}
-  sniperIcon: {fileID: 21300000, guid: 835fb4a5019d3244c871ba1a9017a250, type: 2}
+  tankIcon: {fileID: 4057293888562473388, guid: 5ba9cadfb891f0c479ce5d55d091952d, type: 3}
+  programmerIcon: {fileID: 21300000, guid: 4b9bc0aa049a11c4faea320eb434829c, type: 3}
+  sniperIcon: {fileID: 2637682295782984432, guid: 44a510d4340911348aa2fe3fb6582af0, type: 3}
   enableTestMode: 1
 --- !u!1 &733777035
 GameObject:
