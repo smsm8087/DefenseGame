@@ -101,6 +101,7 @@ public class BossController : MonoBehaviour
         canvasGroup.alpha = 0f;
         UIManager.Instance.setActiveGameUICanvas(true);
         UIManager.Instance.setActiveIntroUICanvas(false);
+        UIManager.Instance.setActiveBossHpUI(true);
     }
     public void ShowOutline(float duration = 3f)
     {

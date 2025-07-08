@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject GameUICanvas;
     [SerializeField] private GameObject IntroUICanvas;
     
+    [SerializeField] private GameObject BossHpUI;
     [SerializeField] private GameObject cardSelectPopupPrefab;
     [SerializeField] private GameObject statUIPrefab;
     private CardSelectPopup cardSelectPopup;
@@ -34,10 +35,9 @@ public class UIManager : MonoBehaviour
     {
         IntroUICanvas.SetActive(isActive);
     }
-
-    public GameObject getGameUICanvas()
+    public void setActiveBossHpUI(bool isActive)
     {
-        return GameUICanvas;
+        BossHpUI.SetActive(isActive);
     }
 
     public GameObject getIntroUICanvas()

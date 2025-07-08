@@ -255,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameUICanvas: {fileID: 1032199167}
   IntroUICanvas: {fileID: 1200828168}
+  BossHpUI: {fileID: 791146306}
   cardSelectPopupPrefab: {fileID: 8207668002898916634, guid: cb1c4965f3b9c064394c2c47b5f6a28f, type: 3}
   statUIPrefab: {fileID: 4655644722412314644, guid: 908531e8cc58b11408512475d9cf202b, type: 3}
 --- !u!1 &62866336
