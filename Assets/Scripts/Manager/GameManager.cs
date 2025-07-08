@@ -8,12 +8,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public static bool IsPaused = false;
 
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private Transform crystalRoot;
     [SerializeField] private List<SpriteRenderer> backGroundImages;
     [SerializeField] private HPBar hpBar;
     [SerializeField] private HPText hpText;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,7 +41,18 @@ public class GameManager : MonoBehaviour
         hpBar?.UpdateHP(currentHp, maxHp);
         hpText?.UpdateHP(currentHp, maxHp);
     }
-    
+
+    public void PauseGame()
+    {
+        IsPaused = true;
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame()
+    {
+        IsPaused = false;
+        Time.timeScale = 1f;
+    }
     public void InitializeGame(int wave_id)
     {
         var waveData = GameDataManager.Instance.GetData<WaveData>("wave_data", wave_id);

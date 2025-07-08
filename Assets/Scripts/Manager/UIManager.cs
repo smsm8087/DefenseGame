@@ -6,6 +6,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [SerializeField] private GameObject GameUICanvas;
+    [SerializeField] private GameObject IntroUICanvas;
+    
     [SerializeField] private GameObject cardSelectPopupPrefab;
     [SerializeField] private GameObject statUIPrefab;
     private CardSelectPopup cardSelectPopup;
@@ -21,6 +24,28 @@ public class UIManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
+    #region canvas
+    public void setActiveGameUICanvas(bool isActive)
+    {
+        GameUICanvas.SetActive(isActive);
+    }
+    public void setActiveIntroUICanvas(bool isActive)
+    {
+        IntroUICanvas.SetActive(isActive);
+    }
+
+    public GameObject getGameUICanvas()
+    {
+        return GameUICanvas;
+    }
+
+    public GameObject getIntroUICanvas()
+    {
+        return IntroUICanvas;
+    }
+    
+    #endregion
 
     #region cardSelectPopup
     public void ShowCardSelectPopup(List<CardData> cards, float duration)

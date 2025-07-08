@@ -12,5 +12,6 @@ public class RestartHandler : INetworkMessageHandler
         //치트썼다는 로그용.
         Debug.Log(String.Format("restart from user : {0}", msg.playerId));
         NetworkManager.Instance.TriggerGameOver();
+        GameManager.Instance.ResumeGame();
     }
 }

@@ -23,11 +23,15 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private GameObject DamageTextPrefab;
     [SerializeField] private ProfileUI profileUI;
     
+    [Header("보스")]
+    [SerializeField] private GameObject bossPrefab;
+    
     private Dictionary<string, GameObject> players = new();
     private Dictionary<string, GameObject> enemies = new();
     private Dictionary<string, INetworkMessageHandler> handlers = new();
     private Dictionary<string, GameObject> prefabMap = new();
     private Dictionary<string, GameObject> bullets = new();
+    private Dictionary<string, GameObject> bossDict = new();
     private event Action onGameOver;
     public string MyGUID { get; private set; }
     void Awake()
@@ -144,6 +148,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new BulletDestroyHandler(bullets));
         AddHandler(new PlayerDeathHandler(players));
         AddHandler(new PlayerReviveHandler(players));
+        AddHandler(new BossStartHandler(bossPrefab, bossDict));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

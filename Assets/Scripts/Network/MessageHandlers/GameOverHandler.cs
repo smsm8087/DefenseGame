@@ -15,7 +15,6 @@ public class GameOverHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         centerText.UpdateText(-1, msg.message);
-        Time.timeScale = 0f;
-        //NetworkManager.Instance.TriggerGameOver();
+        GameManager.Instance.PauseGame();
     }
 }
