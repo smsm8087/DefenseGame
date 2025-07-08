@@ -90,7 +90,6 @@ public class NetworkManager : MonoBehaviour
     public void RemoveBullet(string guid)
     {
         if (!bullets.ContainsKey(guid)) return;
-        Destroy(bullets[guid]);
         bullets.Remove(guid);
     }
 

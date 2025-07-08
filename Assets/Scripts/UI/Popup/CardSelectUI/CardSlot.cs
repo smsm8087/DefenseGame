@@ -14,6 +14,7 @@ public class CardSlot : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     
     private CardData cardData;
+    private CardData cardClientData;
     private System.Action<int> onClick;
     private string baseResourcePath = "UI/skillcards_ui/";
 
@@ -23,7 +24,7 @@ public class CardSlot : MonoBehaviour
     public void Init(CardData cardData,  System.Action<int> onClickCallback)
     {
         this.cardData = cardData;
-        
+        cardClientData = GameDataManager.Instance.GetData<CardData>("card_data", cardData.id);
         setCard();
         setIconType();
         
@@ -87,40 +88,18 @@ public class CardSlot : MonoBehaviour
     //TODO : 아이콘 작업 끝나면 작업 예정
     public void setIconType()
     {
-        string type = cardData.type;
-        switch (type)
-        {
-            case "add_criticalpct":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_criticalpercentageup");
-            break;
-            case "add_attack":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_damageup");
-            break;
-            case "add_movespeed":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_movspeedup");
-            break;
-            case "add_ultgauge":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_ultgaugeup");
-            break;
-            case "add_criticaldmg":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_criticaldamageup");
-                break;
-            case "add_hp":
-                Icon.sprite = Resources.Load<Sprite>(baseResourcePath + "icon_healthicon");
-            break;
-        }
+        Icon.sprite = Resources.Load<Sprite>(cardClientData.icon_path);
     }
     public void setCard()
     {
-        string title = TextManager.Instance.GetText(cardData.title);
-        string grade = cardData.grade;
-        int value = cardData.value;
+        string title = TextManager.Instance.GetText(cardClientData.title);
+        int value = cardClientData.value;
         string valueText;
-        if (cardData.need_percent == 1)
+        if (cardClientData.need_percent == 1)
         {
             valueText = $"{value}%";
         }
-        else if (cardData.type == "add_attackspeed")
+        else if (cardClientData.type == "add_attackspeed")
         {
             float displayValue = value / 10.0f;
             valueText = displayValue.ToString("F1");  // 2 → "0.2"
@@ -129,26 +108,11 @@ public class CardSlot : MonoBehaviour
         {
             valueText = value.ToString();
         }
-        
-        string hex = "";
-        switch (grade)
+        border.sprite = Resources.Load<Sprite>(cardClientData.border_path);
+        string colorhex = cardClientData.color;
+        if (ColorUtility.TryParseHtmlString(colorhex, out Color gradeColor))
         {
-            case "normal":
-                hex = "#75757b";
-                border.sprite = Resources.Load<Sprite>(baseResourcePath + "NORMAL_SKILLCARD");
-                break;
-            case "rare":
-                hex = "#f2449c";
-                border.sprite = Resources.Load<Sprite>(baseResourcePath + "EPIC_SKILLCARD");
-                break;
-            case "legend":
-                hex = "#ffc127";
-                border.sprite = Resources.Load<Sprite>(baseResourcePath + "LEGENDARY_SKILLCARD");
-                break; 
-        }
-        if (ColorUtility.TryParseHtmlString(hex, out Color gradeColor))
-        {
-            cardNameText.text = $"{title}\n<color={hex}><size=50>{valueText}</color>";
+            cardNameText.text = $"{title}\n<color={colorhex}><size=50>{valueText}</color>";
         }
     }
 }
