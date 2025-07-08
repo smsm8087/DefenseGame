@@ -40,6 +40,9 @@ public abstract class BasePlayer : MonoBehaviour
     [Header("Attack Range")]
     public Transform attackRangeTransform;
     public BoxCollider2D attackRangeCollider;
+    
+    [Header("Player Status")]
+    public bool isDead = false;
 
     // FSM
     protected PlayerState currentState;
@@ -48,6 +51,7 @@ public abstract class BasePlayer : MonoBehaviour
     public MoveState moveState { get; private set; }
     public JumpState jumpState { get; private set; }
     public AttackState attackState { get; private set; }
+    public DeathState deathState { get; private set; }
 
     protected virtual void Awake()
     {
@@ -69,12 +73,16 @@ public abstract class BasePlayer : MonoBehaviour
         moveState = new MoveState(this);
         jumpState = new JumpState(this);
         attackState = new AttackState(this);
+        deathState = new DeathState(this);
 
         ChangeState(idleState);
     }
 
     protected virtual void Update()
     {
+        // 사망 상태일 때는 입력 처리 안함
+        if (isDead) return;
+        
         // 본인 캐릭터일 때만 상태 업데이트 및 서버로 위치 전송
         if (!IsMyPlayer) return;
 
@@ -158,12 +166,61 @@ public abstract class BasePlayer : MonoBehaviour
             _isGrounded = true;
         }
     }
+
     /// <summary>
     /// 점프 중 공격이 가능한 직업인지 여부
     /// </summary>
     public virtual bool CanAttackWhileJumping => true;
+    
     public virtual bool IsMyPlayer
     {
         get => playerGUID == NetworkManager.Instance.MyGUID;
+    }
+
+    // 사망 처리 메서드
+    public virtual void Die()
+    {
+        if (isDead) return;
+        
+        isDead = true;
+        ChangeState(deathState);
+        
+        // 사망 메시지를 서버에 전송
+        if (IsMyPlayer)
+        {
+            var deathMsg = new NetMsg
+            {
+                type = "player_death",
+                playerId = NetworkManager.Instance.MyGUID
+            };
+            NetworkManager.Instance.SendMsg(deathMsg);
+        }
+    }
+    
+    // 부활 처리 메서드
+    public virtual void Revive()
+    {
+        if (!isDead) return;
+        
+        isDead = false;
+        ChangeState(idleState);
+        
+        // 체력 회복
+        // currentHp = maxHp;
+    }
+    
+    // HP 업데이트 시 사망 체크
+    public virtual void UpdateHp(int newHp)
+    {
+        currentHp = newHp;
+        
+        if (currentHp <= 0 && !isDead)
+        {
+            Die();
+        }
+        else if (currentHp > 0 && isDead)
+        {
+            Revive();
+        }
     }
 }

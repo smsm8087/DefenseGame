@@ -139,10 +139,12 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new PartyInfoHandler());
         AddHandler(new PartyMemberLeftHandler());
         AddHandler(new InitialGameHandler());
-        AddHandler(new PlayerUpdateHpHandler(profileUI));
+        AddHandler(new PlayerUpdateHpHandler(players, profileUI));
         AddHandler(new BulletSpawnHandler(bullets, bulletPrefab));
         AddHandler(new BulletTickHandler(bullets));
         AddHandler(new BulletDestroyHandler(bullets));
+        AddHandler(new PlayerDeathHandler(players));
+        AddHandler(new PlayerReviveHandler(players));
     }
 
     private void AddHandler(INetworkMessageHandler handler)

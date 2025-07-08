@@ -23,13 +23,13 @@ public class NetMsg
     public PlayerInfo playerInfo { get; set; }
     
     //partymember
-    public string player_id;           // 파티 멤버 ID
-    public float current_health;       // 현재 체력
-    public float max_health;          // 최대 체력
-    public float current_ult;         // 현재 궁극기 (이미 있음)
-    public float max_ult;             // 최대 궁극기 (이미 있음)
-    public string status;             // 플레이어 상태 (dead, normal 등)
-    public List<PartyMemberInfo> members;  // 파티 전체 정보용
+    public string player_id;         
+    public float current_health;      
+    public float max_health;        
+    public float current_ult;      
+    public float max_ult;          
+    public string status;            
+    public List<PartyMemberInfo> members;
     
     //히트박스 영역
     public float attackBoxCenterX;
