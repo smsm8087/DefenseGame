@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a97de354ae4738b6427b34e2573e35, type: 3}
+  m_Name: sniper
+  m_EditorClassIdentifier: 
+  jobType: sniper
+  idleFrames:
+  - sprite: {fileID: -1089880436365166466, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.3
+  - sprite: {fileID: -552762088534701751, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.099999994
+  - sprite: {fileID: -2259313446459586067, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.099999994
+  - sprite: {fileID: -4818377151431853726, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.19999999
+  - sprite: {fileID: -5953173566501831086, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.100000024
+  - sprite: {fileID: -949217232646567315, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.099999964
+  - sprite: {fileID: 1147400469606359023, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.29000008
+  - sprite: {fileID: 1147400469606359023, guid: b4391068535102b4194cd4c1ae9beacc, type: 3}
+    duration: 0.00999999

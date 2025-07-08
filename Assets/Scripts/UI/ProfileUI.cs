@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DataModels;
@@ -20,6 +22,19 @@ public class ProfileUI : MonoBehaviour
 
     private float maxUlt = 100f;
     private PlayerInfo playerinfo;
+
+    private Image hpImage;
+    private TextMeshProUGUI hpText;
+    private Image ultImage;
+    private TextMeshProUGUI ultText;
+
+    private void Start()
+    {
+        hpImage = transform.Find("HPBAR/hp").GetComponent<Image>();
+        //hpText = transform.Find("HPBAR/hpBG/hp").GetComponent<TextMeshProUGUI>();
+        ultImage =  transform.Find("ULTBAR/ult").GetComponent<Image>();
+        //ultText = transform.Find("ULTBAR/ult").GetComponent<TextMeshProUGUI>();
+    }
 
     public void InitializeProfile(PlayerInfo playerinfo, GameObject player)
     {
@@ -48,67 +63,39 @@ public class ProfileUI : MonoBehaviour
 
     public void UpdateHp(int currentHp, int maxHp)
     {
-        Transform hpImageTransform = transform.Find("HPBAR/hp");
-        if (hpImageTransform != null)
-        {
-            Image hpImage = hpImageTransform.GetComponent<Image>();
-            if (hpImage != null)
-            {
-                hpImage.fillAmount = (float) currentHp / maxHp;
-                hpImage.type = Image.Type.Filled;
-            }
-        }
+        float hpPct = Mathf.Clamp01((float)currentHp / (float)maxHp);
+        StartCoroutine(LerpGaugeBar(hpPct, hpImage));
+        // if (hpText != null)
+        // {
+        //     hpText.text = $"{currentHp}/{maxHp}";
+        // }
+    }
+    public IEnumerator LerpGaugeBar(float targetPercent, Image targetImg)
+    {
+        if (targetImg == null) yield break;
+        targetImg.type = Image.Type.Filled;
+        
+        float duration = 0.2f;
+        float elapsed = 0f;
+        float startFill = targetImg.fillAmount;
 
-        Transform hpTextTransform = transform.Find("HPBAR/hpBG/hp");
-        if (hpTextTransform != null)
+        while (elapsed < duration)
         {
-            TextMeshProUGUI hpText = hpTextTransform.GetComponent<TextMeshProUGUI>();
-            if (hpText != null)
-            {
-                hpText.text = $"{currentHp}/{maxHp}";
-            }
+            elapsed += Time.deltaTime;
+            targetImg.fillAmount = Mathf.Lerp(startFill, targetPercent, elapsed / duration);
+            yield return null;
         }
+        targetImg.fillAmount = targetPercent; 
     }
 
     public void UpdateUltGauge(float currentUlt, float maxUlt)
     {
-        if (ultSlider == null)
-        {
-            Transform ultBarTransform = transform.Find("ULTBAR");
-            if (ultBarTransform != null)
-            {
-                ultSlider = ultBarTransform.GetComponentInChildren<Slider>();
-            }
-        }
-
-        if (ultSlider != null)
-        {
-            ultSlider.maxValue = maxUlt;
-            ultSlider.value = currentUlt;
-        }
-        else
-        {
-            Transform ultImageTransform = transform.Find("ULTBAR/ult");
-            if (ultImageTransform != null)
-            {
-                Image ultImage = ultImageTransform.GetComponent<Image>();
-                if (ultImage != null)
-                {
-                    ultImage.fillAmount = currentUlt / maxUlt;
-                    ultImage.type = Image.Type.Filled;
-                }
-            }
-        }
-
-        Transform ultTextTransform = transform.Find("ULTBAR/ult");
-        if (ultTextTransform != null)
-        {
-            TextMeshProUGUI ultText = ultTextTransform.GetComponent<TextMeshProUGUI>();
-            if (ultText != null)
-            {
-                ultText.text = $"{currentUlt:F0}/{maxUlt:F0}";
-            }
-        }
+        float ultPct = Mathf.Clamp01((float)currentUlt / (float)maxUlt);
+        StartCoroutine(LerpGaugeBar(ultPct, ultImage));
+        // if (ultText != null)
+        // {
+        //     ultText.text = $"{currentUlt:F0}/{maxUlt:F0}";
+        // }
     }
 
     public void SetNickname(string nickname)
@@ -162,38 +149,6 @@ public class ProfileUI : MonoBehaviour
         }
 
         playerImg.sprite = playerSprite;
-        //나중에 이미지 각자 조절 필요할 때
-        // playerImg.rectTransform.sizeDelta = new Vector2(1.23f, 1.19f);
-        //
-        // float scaleX = 1.12f;
-        // float scaleY = 1.11f;
-        //
-        // // switch (playerSprite.name)
-        // // {
-        // //     case "PROFILE_Tank_0":
-        // //         scaleX = 1.126f;
-        // //         scaleY = 1.111f;
-        // //         scaleZ = 0.06f;
-        // //         break;
-        // //     case "PROFILE_Programmer_0":
-        // //         scaleX = 1.2f;
-        // //         scaleY = 1.3f;
-        // //         scaleZ = 0.06f;
-        // //         break;
-        // //     case "PROFILE_Sniper_0":
-        // //         scaleX = 1.0f;
-        // //         scaleY = 1.0f;
-        // //         scaleZ = 0.06f;
-        // //         break;
-        // //     default:
-        // //         scaleX = 1.0f;
-        // //         scaleY = 1.0f;
-        // //         scaleZ = 0.06f;
-        // //         break;
-        // // }
-        //
-        // playerImg.rectTransform.anchoredPosition = new Vector2(-0.05f, -0.755f);
-        // playerImg.rectTransform.localScale = new Vector3(scaleX, scaleY, 1);
     }
 
 

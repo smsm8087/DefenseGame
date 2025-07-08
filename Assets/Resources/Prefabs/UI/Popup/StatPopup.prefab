@@ -910,9 +910,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetImage: {fileID: 8605516478560467064}
   jobAnimationDataList:
-  - {fileID: 11400000, guid: 8fa864190c089e0459e91fe207e7ca2d, type: 2}
-  - {fileID: 11400000, guid: d3aeddeb88c056c4ebe8b1d45440545b, type: 2}
-  - {fileID: 11400000, guid: 0ef98b6f0d08b584b9e9ae1970577072, type: 2}
+  - {fileID: 11400000, guid: d2b4d0497ca85ee45b4f00f561f578fe, type: 2}
+  - {fileID: 11400000, guid: 77582ae903e362a4e9d839e5ff3c2588, type: 2}
+  - {fileID: 11400000, guid: 16a300a1004adb7418c43a4cf1eb1fdb, type: 2}
   baseAnchoredPosition: {x: 0, y: 0}
 --- !u!1 &5218335273037426933
 GameObject:
