@@ -11,6 +11,9 @@ namespace DataModels
         public int value { get; set; }
         public int pct { get; set; }
         public int need_percent { get; set; }
+        public string color { get; set; }
+        public string border_path { get; set; }
+        public string icon_path  { get; set; }
     }
 
     public class PlayerData

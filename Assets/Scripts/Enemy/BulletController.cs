@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    [SerializeField] public GameObject bulletEffectPrefab;
     public Vector3 serverPosition;
     SpriteRenderer spriteRenderer;
+    Animator animator;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator =  GetComponent<Animator>();
     }
 
     public void SyncFromServer(float posX, float posY)
@@ -43,5 +46,21 @@ public class BulletController : MonoBehaviour
             spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
             yield return null;
         }
+    }
+
+    public void SpawnBulletEffect()
+    {
+        GameObject eff_obj =  Instantiate(bulletEffectPrefab, transform.position, Quaternion.identity);
+        Destroy(eff_obj, 1f);
+    }
+
+    public void PlayDeadAnimation()
+    {
+        animator.Play("dead");
+    }
+
+    public void OnDestroy()
+    {
+        Destroy(this.gameObject);
     }
 }

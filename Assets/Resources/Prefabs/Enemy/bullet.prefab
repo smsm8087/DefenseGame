@@ -100,7 +100,7 @@ Animator:
   m_GameObject: {fileID: 5475192822370675610}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: -4512787880426116050, guid: 44e5255c5ce35e74b8ce38993f2844b8, type: 3}
+  m_Controller: {fileID: 9100000, guid: 2d7d45dd445d38042acdd9bc420de364, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -160,4 +160,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b29b4617d820445294f8ac753eb7e341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletEffectPrefab: {fileID: 7951117966038978385, guid: a94c8ade65ddbd34abafd6d2f2d3bbc6, type: 3}
   serverPosition: {x: 0, y: 0, z: 0}
