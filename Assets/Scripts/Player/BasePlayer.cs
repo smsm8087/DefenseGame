@@ -53,6 +53,9 @@ public abstract class BasePlayer : MonoBehaviour
     public AttackState attackState { get; private set; }
     public DeathState deathState { get; private set; }
 
+    // SpectatorManager 캐싱
+    private static SpectatorManager _spectatorManager;
+
     protected virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -177,6 +180,18 @@ public abstract class BasePlayer : MonoBehaviour
         get => playerGUID == NetworkManager.Instance.MyGUID;
     }
 
+    /// <summary>
+    /// SpectatorManager 찾기
+    /// </summary>
+    private static SpectatorManager GetSpectatorManager()
+    {
+        if (_spectatorManager == null)
+        {
+            _spectatorManager = FindObjectOfType<SpectatorManager>();
+        }
+        return _spectatorManager;
+    }
+
     // 사망 처리 메서드
     public virtual void Die()
     {
@@ -195,6 +210,17 @@ public abstract class BasePlayer : MonoBehaviour
             };
             NetworkManager.Instance.SendMsg(deathMsg);
         }
+        
+        // 관전 시스템에 알림 
+        SpectatorManager spectatorManager = GetSpectatorManager();
+        if (spectatorManager != null)
+        {
+            if (IsMyPlayer)
+            {
+                spectatorManager.StartSpectating();
+            }
+            spectatorManager.OnPlayerDied(playerGUID);
+        }
     }
     
     // 부활 처리 메서드
@@ -207,6 +233,16 @@ public abstract class BasePlayer : MonoBehaviour
         
         // 체력 회복
         // currentHp = maxHp;
+        
+        // 내 플레이어가 부활했다면 관전 모드 종료
+        if (IsMyPlayer)
+        {
+            SpectatorManager spectatorManager = GetSpectatorManager();
+            if (spectatorManager != null)
+            {
+                spectatorManager.StopSpectating();
+            }
+        }
     }
     
     // HP 업데이트 시 사망 체크
