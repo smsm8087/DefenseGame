@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private HPBar hpBar;
     [SerializeField] private HPText hpText;
     
+    [SerializeField] private HPBar bossHpBar;
+    [SerializeField] private HPText bossHpText;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,6 +42,11 @@ public class GameManager : MonoBehaviour
     {
         hpBar?.UpdateHP(currentHp, maxHp);
         hpText?.UpdateHP(currentHp, maxHp);
+    }
+    public void UpdateBossHPBar(float currentHp, float maxHp)
+    {
+        bossHpBar?.UpdateHP(currentHp, maxHp);
+        bossHpText?.UpdateHP(currentHp, maxHp);
     }
 
     public void PauseGame()

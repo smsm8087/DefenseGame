@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Enemy;
 using TMPro;
 using UnityEngine;
 
@@ -15,33 +13,68 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform facePos;
     [SerializeField] private Transform bodyPos;
     [SerializeField] private Transform textShowPos;
-    void Awake()
-    {
-        serverPosition = transform.position;
-    }
 
+    private bool isSync = false;
     void Start()
     {
-        //ChangeState(moveState);
+        animator.Play("BOSS_idle");
     }
 
     void Update()
     {
-        //currentState?.Update(this);
-    }
+        if (!isSync) return;
+        Vector3 dir = serverPosition - transform.position;
+        if (dir.sqrMagnitude > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, serverPosition, Time.deltaTime * 5f);
 
-    public void SetPosition(Vector3 pos)
-    {
-        transform.position = pos;
+            if (Mathf.Abs(dir.x) > 0.01f)
+            {
+                spriteRenderer.flipX = dir.x < 0;
+            }
+        }
     }
+    public void PlayDustSummon()
+    {
+        animator.Play("BOSS_summon");
+        StartCoroutine(WaitForAnimationThenIdle("BOSS_summon", "BOSS_idle"));
+    }
+    private IEnumerator WaitForAnimationThenIdle(string currentAnim, string nextAnim)
+    {
+        // 현재 상태 이름이 다를 경우 대기
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(currentAnim))
+            yield return null;
 
-    public void PlayIntroCoroutine()
-    {
-        StartCoroutine(PlayBossIntro());
+        // 현재 애니메이션 길이만큼 대기
+        float duration = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(duration);
+
+        // 애니메이션 끝나면 idle 전환
+        animator.Play(nextAnim);
     }
-    private IEnumerator PlayBossIntro()
+    
+    public void SyncFromServer(float posX)
+    {
+        serverPosition = new Vector3(posX, transform.position.y, transform.position.z);
+        isSync = true;
+    }
+    public void PlayIntroCoroutine(float hp)
+    {
+        StartCoroutine(PlayBossIntro(hp));
+    }
+    private IEnumerator PlayBossIntro(float hp)
     {
         GameManager.Instance.PauseGame();
+        GameObject introUI = UIManager.Instance.getIntroUICanvas();
+        CanvasGroup canvasGroup = introUI.GetComponent<CanvasGroup>();
+        TextMeshProUGUI titleText = introUI.transform.Find("BossTitle").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI descText =  introUI.transform.Find("BossDesc").GetComponent<TextMeshProUGUI>();
+        if(canvasGroup == null || titleText == null || descText == null) yield break;
+        canvasGroup.alpha = 0f;
+        
+        UIManager.Instance.setActiveGameUICanvas(false);
+        UIManager.Instance.setActiveIntroUICanvas(true);
+        
         //카메라 팔로우
         // 1. 발 → 줌인
         yield return StartCoroutine(CameraFollow.Instance.MoveCamera(footPos.position, 2f, 0.8f));
@@ -52,26 +85,21 @@ public class BossController : MonoBehaviour
         // 3. 전체 → 줌아웃
         yield return StartCoroutine(CameraFollow.Instance.MoveCamera(bodyPos.position, 4f, 1.2f));
 
-        StartCoroutine(CameraFollow.Instance.MoveCamera(textShowPos.position, 5f, 0.2f));
-        yield return StartCoroutine(PlayBossIntroText());   
+        yield return StartCoroutine(CameraFollow.Instance.MoveCamera(textShowPos.position, 5f, 0.2f));
+        yield return StartCoroutine(PlayBossIntroText(canvasGroup, titleText, descText));   
 
         //resume 하면 카메라도 알아서 update 됨.
         GameManager.Instance.ResumeGame();
+        UIManager.Instance.setActiveGameUICanvas(true);
+        UIManager.Instance.setActiveIntroUICanvas(false);
+        UIManager.Instance.setActiveBossHpUI(true);
+        GameManager.Instance.UpdateBossHPBar(hp,hp);
     }
-    IEnumerator PlayBossIntroText()
+    IEnumerator PlayBossIntroText(CanvasGroup canvasGroup, TextMeshProUGUI titleText,  TextMeshProUGUI descText)
     {
         // 등장 연출 예시 (페이드 인)
-        GameObject introUI = UIManager.Instance.getIntroUICanvas();
-        CanvasGroup canvasGroup = introUI.GetComponent<CanvasGroup>();
-        TextMeshProUGUI titleText = introUI.transform.Find("BossTitle").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI descText =  introUI.transform.Find("BossDesc").GetComponent<TextMeshProUGUI>();
         RectTransform titleRT = titleText.GetComponent<RectTransform>();
         RectTransform descRT = descText.GetComponent<RectTransform>();
-        if(canvasGroup == null || titleText == null || descText == null) yield break;
-        
-        canvasGroup.alpha = 0f;
-        UIManager.Instance.setActiveGameUICanvas(false);
-        UIManager.Instance.setActiveIntroUICanvas(true);
 
         Vector2 titleStartPos = titleRT.anchoredPosition;
         Vector2 descStartPos = descRT.anchoredPosition;
@@ -99,9 +127,6 @@ public class BossController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1f);
         canvasGroup.alpha = 0f;
-        UIManager.Instance.setActiveGameUICanvas(true);
-        UIManager.Instance.setActiveIntroUICanvas(false);
-        UIManager.Instance.setActiveBossHpUI(true);
     }
     public void ShowOutline(float duration = 3f)
     {

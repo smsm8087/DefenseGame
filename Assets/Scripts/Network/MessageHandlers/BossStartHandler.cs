@@ -15,9 +15,9 @@ public class BossStartHandler : INetworkMessageHandler
     }
     public void Handle(NetMsg msg)
     {
-        if (bossDict.ContainsKey("1")) return;
+        if (bossDict.ContainsKey("boss")) return;
         var bossObj = GameObject.Instantiate(bossPrefab, new Vector3(msg.x, msg.y, 0), Quaternion.identity);
-        bossDict["1"] = bossObj;
-        bossObj.GetComponent<BossController>().PlayIntroCoroutine();
+        bossDict["boss"] = bossObj;
+        bossObj.GetComponent<BossController>().PlayIntroCoroutine(msg.maxHp);
     }
 }

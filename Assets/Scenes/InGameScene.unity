@@ -4500,6 +4500,8 @@ MonoBehaviour:
   - {fileID: 825052418}
   hpBar: {fileID: 599760218}
   hpText: {fileID: 1311080112}
+  bossHpBar: {fileID: 1326519748}
+  bossHpText: {fileID: 540544474}
 --- !u!4 &1187352996
 Transform:
   m_ObjectHideFlags: 0

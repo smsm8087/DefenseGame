@@ -44,6 +44,10 @@ public class UIManager : MonoBehaviour
     {
         return IntroUICanvas;
     }
+    public GameObject getBossHpUI()
+    {
+        return BossHpUI;
+    }
     
     #endregion
 

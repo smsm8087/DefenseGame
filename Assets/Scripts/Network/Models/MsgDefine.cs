@@ -61,6 +61,10 @@ public class NetMsg
     public string bulletId;
     public List<BulletInfo> bullets;
 
+    //boss
+    public BossDamageInfo damagedBoss;
+
+    public List<(float, float)> spawnPositions;
     //cheat
     public bool isCheat;
 }
@@ -104,6 +108,13 @@ public class EnemySyncPacket
 public class EnemyDamageInfo
 {
     public string enemyId { get; set; }
+    public int currentHp { get; set; }
+    public int maxHp { get; set; }
+    public int damage { get; set; }
+    public bool isCritical { get; set; }
+}
+public class BossDamageInfo
+{
     public int currentHp { get; set; }
     public int maxHp { get; set; }
     public int damage { get; set; }
