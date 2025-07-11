@@ -10,15 +10,15 @@ public class StatPopup : BasePopup
     [SerializeField] private Button closeBtn;
     [SerializeField] private TextMeshProUGUI nickText;
     [SerializeField] private TextMeshProUGUI jobText;
-    [SerializeField] private Transform cardPanelTransform;
+    [SerializeField] private Transform cardPanelUpTransform;
+    [SerializeField] private Transform cardPanelDownTransform;
     [SerializeField] private Transform statLeftTransform;
-    [SerializeField] private Transform statRightTransform;
 
     [SerializeField] private GameObject miniCardPrefab;
     [SerializeField] private GameObject statPrefab;
     
-    [SerializeField] private UICharacterAnimator characterAnimator;
     [SerializeField] private GameObject emptyTextObj;
+    [SerializeField] private Image playerImage;
     
 
     private PlayerInfo playerinfo;
@@ -28,18 +28,20 @@ public class StatPopup : BasePopup
         setJobText();
         setCards();
         setStats();
+        SetPlayerIcon(null, playerinfo.job_type);
         closeBtn?.onClick.AddListener(OnClose);
     }
 
     private void setJobText()
     {
         jobText.text = TextManager.Instance.GetText(playerinfo.job_type);
-        characterAnimator.SetJob(playerinfo.job_type);
     }
 
     private void setCards()
     {
-        foreach (Transform child in cardPanelTransform)
+        foreach (Transform child in cardPanelUpTransform)
+            Destroy(child.gameObject);
+        foreach (Transform child in cardPanelDownTransform)
             Destroy(child.gameObject);
         
         var cardTable = GameDataManager.Instance.GetTable<CardData>("card_data");
@@ -47,7 +49,8 @@ public class StatPopup : BasePopup
         {
             int cardId =  playerinfo.cardIds[i];
             CardData cardData = cardTable[cardId];
-            var miniCardObj = Instantiate(miniCardPrefab, cardPanelTransform);
+            Transform targetTransform = i > 2 ? cardPanelDownTransform : cardPanelUpTransform;
+            var miniCardObj = Instantiate(miniCardPrefab, targetTransform);
             var miniCardSlot = miniCardObj.GetComponent<MiniCardSlot>();
             miniCardSlot.Init(cardData);
         }
@@ -56,41 +59,61 @@ public class StatPopup : BasePopup
 
     private void setStats()
     {
-        //left
-        var attack_statObj = Instantiate(statPrefab, statLeftTransform);
-        var attack_statSlot = attack_statObj.GetComponent<StatSlot>();
-        attack_statSlot.Init(TextManager.Instance.GetText("attack_power"), playerinfo.currentAttack.ToString());
+        List<(string,string)> slotTextList =  new List<(string,string)>();
+        slotTextList.Add((TextManager.Instance.GetText("attack_power"), playerinfo.currentAttack.ToString()));
+        slotTextList.Add((TextManager.Instance.GetText("attack_speed"), playerinfo.currentAttackSpeed.ToString("F2")));
+        slotTextList.Add((TextManager.Instance.GetText("hp"), playerinfo.currentMaxHp.ToString()));
+        slotTextList.Add((TextManager.Instance.GetText("move_speed"), playerinfo.currentMoveSpeed.ToString()));
+        slotTextList.Add((TextManager.Instance.GetText("ultgauge"), playerinfo.currentUltGauge.ToString()));
+        slotTextList.Add((TextManager.Instance.GetText("cri_pct"), playerinfo.currentCriPct.ToString()));
+        slotTextList.Add((TextManager.Instance.GetText("cri_dmg"), playerinfo.currentCriDmg.ToString()));
         
-        var attackSpeed_statObj = Instantiate(statPrefab, statLeftTransform);
-        var attackSpeed_statSlot = attackSpeed_statObj.GetComponent<StatSlot>();
-        attackSpeed_statSlot.Init(TextManager.Instance.GetText("attack_speed"), playerinfo.currentAttackSpeed.ToString("F2"));
-        
-        var hp_statObj = Instantiate(statPrefab, statLeftTransform);
-        var hp_statSlot = hp_statObj.GetComponent<StatSlot>();
-        hp_statSlot.Init(TextManager.Instance.GetText("hp"), playerinfo.currentMaxHp.ToString());
-        
-        var moveSpeed_statObj = Instantiate(statPrefab, statLeftTransform);
-        var moveSpeed_statSlot = moveSpeed_statObj.GetComponent<StatSlot>();
-        moveSpeed_statSlot.Init(TextManager.Instance.GetText("move_speed"), playerinfo.currentMoveSpeed.ToString());
-        
-        //right
-        var ultgauge_statObj = Instantiate(statPrefab, statRightTransform);
-        var ultgauge_statSlot = ultgauge_statObj.GetComponent<StatSlot>();
-        ultgauge_statSlot.Init(TextManager.Instance.GetText("ultgauge"), playerinfo.currentUltGauge.ToString());
-        
-        var cri_pct_statObj = Instantiate(statPrefab, statRightTransform);
-        var cri_pct_statSlot = cri_pct_statObj.GetComponent<StatSlot>();
-        cri_pct_statSlot.Init(TextManager.Instance.GetText("cri_pct"), playerinfo.currentCriPct.ToString());
-        
-        var cri_dmg_statObj = Instantiate(statPrefab, statRightTransform);
-        var cri_dmg_statSlot = cri_dmg_statObj.GetComponent<StatSlot>();
-        cri_dmg_statSlot.Init(TextManager.Instance.GetText("cri_dmg"), playerinfo.currentCriDmg.ToString());
+        for (int i = 0; i < slotTextList.Count; i++)
+        {
+            GameObject statObj = Instantiate(statPrefab, statLeftTransform);
+            StatSlot slot =  statObj.GetComponent<StatSlot>();
+            if (!slot) continue;
+            slot.Init(slotTextList[i].Item1, slotTextList[i].Item2);
+        }
     }
     private void OnClose()
     {
         if (ui_lock) return;
         ui_lock = true;
         Close();
+    }
+    public void SetPlayerIcon(Sprite playerSprite, string jobType = "")
+    {
+        // 항상 jobType 기반으로 로딩
+        if (!string.IsNullOrEmpty(jobType))
+        {
+            string capitalJob = FirstCharToUpper(jobType);
+            string spritePath = $"Character/{capitalJob}/PROFILE_{capitalJob}";
+
+            Sprite overrideSprite = Resources.Load<Sprite>(spritePath);
+            Debug.Log($"[ProfileUI] Try load sprite: {spritePath} => {(overrideSprite != null ? "Success" : "Fail")}");
+            if (overrideSprite != null)
+            {
+                playerSprite = overrideSprite;
+            }
+            else
+            {
+                Debug.LogWarning($"[ProfileUI] Sprite '{spritePath}'을(를) Resources에서 찾지 못함");
+                return;
+            }
+        }
+        else if (playerSprite == null)
+        {
+            Debug.LogWarning("playerSprite도 없고 jobType도 없음");
+            return;
+        }
+
+        playerImage.sprite = playerSprite;
+    }
+    private string FirstCharToUpper(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return "";
+        return char.ToUpper(input[0]) + input.Substring(1).ToLower();
     }
 }
 
