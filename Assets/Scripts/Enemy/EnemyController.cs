@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(FadeInCoroutine());
         ChangeState(moveState);
     }
 
@@ -158,6 +159,20 @@ public class EnemyController : MonoBehaviour
         }
         gameObject.SetActive(false); // 완전히 사라지면 비활성화
         NetworkManager.Instance.RemoveEnemy(guid);
+    }
+    private IEnumerator FadeInCoroutine()
+    {
+        float elapsed = 0f;
+        Color color = spriteRenderer.color;
+        float duration = 0.2f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(0f, 1f, elapsed / duration);
+            spriteRenderer.color = new Color(color.r, color.g, color.b, alpha);
+            yield return null;
+        }
     }
 
     public void setKilledPlayerId(string playerId)

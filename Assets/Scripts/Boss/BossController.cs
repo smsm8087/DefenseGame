@@ -13,6 +13,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform facePos;
     [SerializeField] private Transform bodyPos;
     [SerializeField] private Transform textShowPos;
+    [SerializeField] private GameObject magicCircleEffect;
 
     private bool isSync = false;
     void Start()
@@ -39,6 +40,47 @@ public class BossController : MonoBehaviour
         animator.Play("BOSS_summon");
         StartCoroutine(WaitForAnimationThenIdle("BOSS_summon", "BOSS_idle"));
     }
+
+    public void PlayDustSummonEffect(float spawnPosX, float spawnPosY)
+    {
+        Quaternion rotation = Quaternion.Euler(20f, 0f, 0f);
+        GameObject eff_obj = Instantiate(magicCircleEffect, new Vector3(spawnPosX, spawnPosY, -1f), rotation);
+        StartCoroutine(FadeOutParticle(eff_obj, 0.2f));
+    }
+    IEnumerator FadeOutParticle(GameObject obj, float duration)
+    {
+        yield return new WaitForSeconds(2f);
+        var root_renderer = obj.GetComponent<ParticleSystemRenderer>();
+        var renderers = obj.GetComponentsInChildren<ParticleSystemRenderer>();
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, t / duration);
+
+            foreach (var r in renderers)
+            {
+                if (r.material.HasProperty("_Color"))
+                {
+                    r.material = new Material(r.material);
+                    Color c = r.material.color;
+                    c.a = alpha;
+                    r.material.color = c;
+                }
+            }
+            if (root_renderer.material.HasProperty("_Color"))
+            {
+                root_renderer.material = new Material(root_renderer.material);
+                Color c = root_renderer.material.color;
+                c.a = alpha;
+                root_renderer.material.color = c;
+            }
+            yield return null;
+        }
+
+        Destroy(obj);
+    }
+    
     private IEnumerator WaitForAnimationThenIdle(string currentAnim, string nextAnim)
     {
         // 현재 상태 이름이 다를 경우 대기

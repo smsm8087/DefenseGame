@@ -359,6 +359,7 @@ MonoBehaviour:
   facePos: {fileID: 2583885043429101143}
   bodyPos: {fileID: 5748580492456689725}
   textShowPos: {fileID: 3010632706492066961}
+  magicCircleEffect: {fileID: 3744133877081091469, guid: 61bcf8040e0814649a5c65104d785078, type: 3}
 --- !u!212 &6752369973652573196
 SpriteRenderer:
   m_ObjectHideFlags: 0
