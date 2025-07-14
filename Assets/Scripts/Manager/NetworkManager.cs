@@ -147,7 +147,6 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new BulletTickHandler(bullets));
         AddHandler(new BulletDestroyHandler(bullets));
         AddHandler(new PlayerDeathHandler(players));
-        AddHandler(new PlayerReviveHandler(players));
         AddHandler(new BossStartHandler(bossPrefab, bossDict));
         AddHandler(new BossDamagedHandler(bossDict,DamageTextPrefab));
         AddHandler(new BossSyncHandler(bossDict));

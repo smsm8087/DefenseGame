@@ -29,9 +29,15 @@ public class PlayerDeathHandler : INetworkMessageHandler
                     // 메시지에 위치 정보가 없으면 현재 위치 사용
                     player.deathPosition = playerObj.transform.position;
                 }
-                
-                player.Die();
-                
+
+                if (NetworkManager.Instance.MyGUID == msg.playerId)
+                {
+                    player.Die();
+                }
+                else
+                {
+                    SpectatorManager.Instance.OnPlayerDied(msg.playerId);
+                }
                 Debug.Log($"[PlayerDeathHandler] {msg.playerId} 사망 처리");
             }
         }

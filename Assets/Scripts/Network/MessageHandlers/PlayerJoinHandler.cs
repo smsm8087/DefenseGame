@@ -63,7 +63,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
         else
         {
             // 다른 플레이어 생성
-            var playerObj = GameObject.Instantiate(prefabMap[msg.playerInfo.job_type]);
+            var playerObj = PlayerSpawn(msg.playerInfo);
         
             players[pid] = playerObj;
             playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;

@@ -8,6 +8,7 @@ using TMPro; // TextMeshPro 사용을 위해 추가
 /// </summary>
 public class SpectatorManager : MonoBehaviour
 {
+    public static SpectatorManager Instance;
     [Header("Spectator Settings")]
     public float switchCooldown = 1f; // 플레이어 전환 쿨다운
     
@@ -27,6 +28,13 @@ public class SpectatorManager : MonoBehaviour
     
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        
         // UI 버튼 이벤트 연결
         if (nextPlayerButton != null)
             nextPlayerButton.onClick.AddListener(NextPlayer);

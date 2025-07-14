@@ -16,16 +16,6 @@ public class PlayerUpdateHpHandler : INetworkMessageHandler
     
     public void Handle(NetMsg msg)
     {
-        // 플레이어 HP 업데이트 (사망 체크 포함)
-        if (players.TryGetValue(msg.playerId, out GameObject playerObj))
-        {
-            BasePlayer player = playerObj.GetComponent<BasePlayer>();
-            if (player != null)
-            {
-                player.UpdateHp(msg.playerInfo.currentHp);
-            }
-        }
-        
         if (msg.playerId == NetworkManager.Instance.MyGUID)
         {
             profileUI.UpdateHp(msg.playerInfo.currentHp, msg.playerInfo.currentMaxHp);
