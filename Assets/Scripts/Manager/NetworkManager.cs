@@ -152,6 +152,12 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new BossDamagedHandler(bossDict,DamageTextPrefab));
         AddHandler(new BossSyncHandler(bossDict));
         AddHandler(new BossDustWarningHandler(bossDict));
+        AddHandler(new RevivalStartedHandler());
+        AddHandler(new RevivalProgressHandler());
+        AddHandler(new RevivalCompletedHandler(players, profileUI));
+        AddHandler(new RevivalCancelledHandler(players));
+        AddHandler(new InvulnerabilityEndedHandler(players));
+        Debug.Log("[NetworkManager] 부활 핸들러들 등록 완료");
     }
 
     private void AddHandler(INetworkMessageHandler handler)

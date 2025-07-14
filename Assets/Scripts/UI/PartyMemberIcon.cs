@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 
 public class PartyMemberIcon : MonoBehaviour
 {
@@ -10,6 +12,19 @@ public class PartyMemberIcon : MonoBehaviour
     [SerializeField] private Image ultBg;
     [SerializeField] private Image playerIcon;
     [SerializeField] private Image mask;
+    
+    [Header("Revival System UI")]
+    [SerializeField] private GameObject deadIndicator;      // 죽음 표시 오브젝트
+    [SerializeField] private GameObject revivingIndicator;  // 부활 중 표시 오브젝트
+    [SerializeField] private GameObject invulnerableIndicator; // 무적 표시 오브젝트
+    [SerializeField] private TextMeshProUGUI statusText;    // 상태 텍스트
+    [SerializeField] private TextMeshProUGUI reviverText;   // 부활시키는 사람 텍스트
+
+    [Header("Visual Effects")]
+    [SerializeField] private Color normalColor = Color.white;
+    [SerializeField] private Color deadColor = Color.gray;
+    [SerializeField] private Color revivingColor = Color.yellow;
+    [SerializeField] private Color invulnerableColor = Color.cyan;
 
     private string playerId;
     private string jobType;
@@ -17,6 +32,11 @@ public class PartyMemberIcon : MonoBehaviour
     private float maxHealth;
     private float currentUlt;
     private float maxUlt;
+    private bool isDead = false;
+    private bool isBeingRevived = false;
+    private bool isInvulnerable = false;
+    private Vector2 deathPosition;
+    private Coroutine blinkCoroutine;
 
     private void Awake()
     {
@@ -177,6 +197,9 @@ public class PartyMemberIcon : MonoBehaviour
 
         UpdateHealth(100f, 100f);
         UpdateUlt(0f, 100f);
+        SetDeadState(false);
+        SetRevivingState(false);
+        SetInvulnerableState(false);
     }
     
     private string FirstCharToUpper(string input)
@@ -226,19 +249,233 @@ public class PartyMemberIcon : MonoBehaviour
 
     public void SetStatus(string status)
     {
-        // 특별한 상태 처리가 필요한 경우에만 사용
         switch (status)
         {
             case "dead":
-                // 필요시 죽음 상태 처리
+                SetDeadState(true);
+                break;
+            case "being_revived":
+                SetRevivingState(true);
+                break;
+            case "invulnerable":
+                SetInvulnerableState(true);
                 break;
             case "normal":
             default:
-                // 정상 상태로 복원
+                SetDeadState(false);
+                SetRevivingState(false);
+                SetInvulnerableState(false);
                 break;
         }
+    }
+    
+    /// <summary>
+    /// 죽음 상태 설정
+    /// </summary>
+    public void SetDeadState(bool dead)
+    {
+        isDead = dead;
+        
+        if (deadIndicator != null)
+        {
+            deadIndicator.SetActive(dead);
+        }
+
+        // 배경색 변경 (hpBg 또는 다른 UI 요소 사용)
+        if (hpBg != null)
+        {
+            hpBg.color = dead ? deadColor : normalColor;
+        }
+
+        // 죽었을 때 다른 상태들 해제
+        if (dead)
+        {
+            SetRevivingState(false);
+            SetInvulnerableState(false);
+        }
+
+        UpdateVisualState();
+    }
+
+    /// <summary>
+    /// 부활 중 상태 설정
+    /// </summary>
+    public void SetRevivingState(bool reviving)
+    {
+        isBeingRevived = reviving;
+        
+        if (revivingIndicator != null)
+        {
+            revivingIndicator.SetActive(reviving);
+        }
+
+        if (reviving)
+        {
+            // 부활 중일 때 깜빡임 효과
+            StartBlinking(revivingColor);
+        }
+        else
+        {
+            StopBlinking();
+            if (reviverText != null)
+            {
+                reviverText.text = "";
+            }
+        }
+
+        UpdateVisualState();
+    }
+
+    /// <summary>
+    /// 무적 상태 설정
+    /// </summary>
+    public void SetInvulnerableState(bool invulnerable)
+    {
+        isInvulnerable = invulnerable;
+        
+        if (invulnerableIndicator != null)
+        {
+            invulnerableIndicator.SetActive(invulnerable);
+        }
+
+        if (invulnerable)
+        {
+            // 무적 상태일 때 깜빡임 효과
+            StartBlinking(invulnerableColor);
+        }
+        else if (!isBeingRevived)
+        {
+            StopBlinking();
+        }
+
+        UpdateVisualState();
+    }
+
+    /// <summary>
+    /// 부활시키는 사람 정보 설정
+    /// </summary>
+    public void SetReviverInfo(string reviverPlayerId)
+    {
+        if (reviverText != null)
+        {
+            string reviverJob = GetPlayerJobType(reviverPlayerId);
+            reviverText.text = $"{reviverJob}이 부활 중...";
+        }
+        else
+        {
+            // reviverText가 없으면 상태 텍스트 사용
+            if (statusText != null)
+            {
+                string reviverJob = GetPlayerJobType(reviverPlayerId);
+                statusText.text = $"{reviverJob}이 부활 중...";
+            }
+        }
+    }
+
+    /// <summary>
+    /// 죽은 위치 설정
+    /// </summary>
+    public void SetDeathPosition(float x, float y)
+    {
+        deathPosition = new Vector2(x, y);
+    }
+
+    /// <summary>
+    /// 시각적 상태 업데이트
+    /// </summary>
+    private void UpdateVisualState()
+    {
+        // hpBg를 배경으로 사용해서 색상 변경
+        if (hpBg == null) return;
+
+        Color targetColor = normalColor;
+
+        if (isDead)
+        {
+            targetColor = deadColor;
+        }
+        else if (isBeingRevived)
+        {
+            targetColor = revivingColor;
+        }
+        else if (isInvulnerable)
+        {
+            targetColor = invulnerableColor;
+        }
+
+        if (blinkCoroutine == null)
+        {
+            hpBg.color = targetColor;
+        }
+    }
+
+    /// <summary>
+    /// 깜빡임 효과 시작
+    /// </summary>
+    private void StartBlinking(Color blinkColor)
+    {
+        StopBlinking();
+        blinkCoroutine = StartCoroutine(BlinkCoroutine(blinkColor));
+    }
+
+    /// <summary>
+    /// 깜빡임 효과 중지
+    /// </summary>
+    private void StopBlinking()
+    {
+        if (blinkCoroutine != null)
+        {
+            StopCoroutine(blinkCoroutine);
+            blinkCoroutine = null;
+        }
+    }
+
+    /// <summary>
+    /// 깜빡임 코루틴
+    /// </summary>
+    private IEnumerator BlinkCoroutine(Color blinkColor)
+    {
+        while (true)
+        {
+            // 깜빡임 색상으로 변경
+            if (hpBg != null)
+            {
+                hpBg.color = blinkColor;
+            }
+            yield return new WaitForSeconds(0.5f);
+
+            // 원래 색상으로 변경
+            if (hpBg != null)
+            {
+                Color baseColor = isDead ? deadColor : normalColor;
+                hpBg.color = baseColor;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    /// <summary>
+    /// 플레이어 직업 타입 가져오기
+    /// </summary>
+    private string GetPlayerJobType(string playerId)
+    {
+        var players = NetworkManager.Instance.GetPlayers();
+        if (players.TryGetValue(playerId, out GameObject playerObj))
+        {
+            BasePlayer player = playerObj.GetComponent<BasePlayer>();
+            if (player != null)
+            {
+                return player.job_type;
+            }
+        }
+        return "플레이어";
     }
 
     public string GetPlayerId() => playerId;
     public string GetJobType() => jobType;
+    
+    private void OnDestroy()
+    {
+        StopBlinking();
+    }
 }

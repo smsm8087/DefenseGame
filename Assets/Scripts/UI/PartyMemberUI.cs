@@ -10,12 +10,18 @@ public class PartyMemberData
     public float max_health { get; set; }
     public float current_ult { get; set; }
     public float max_ult { get; set; }
+    public bool is_dead { get; set; }
+    public bool is_being_revived { get; set; }
+    public bool is_invulnerable { get; set; }
+    public string revived_by { get; set; }
+    public float? death_position_x { get; set; }
+    public float? death_position_y { get; set; }
 }
 public class PartyMemberUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform partyContainer; // Canvas/PartyMember
-    [SerializeField] private GameObject memberPrefab; // 파티원 프리팹
+    [SerializeField] private Transform partyContainer;
+    [SerializeField] private GameObject memberPrefab;
 
     [Header("Job Icons")]
     [SerializeField] private Sprite tankIcon;
@@ -171,6 +177,25 @@ public class PartyMemberUI : MonoBehaviour
         if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
         {
             memberIcon.SetStatus(status);
+            
+            // ===== 부활 관련 상태별 추가 처리 =====
+            switch (status)
+            {
+                case "dead":
+                    memberIcon.SetDeadState(true);
+                    break;
+                case "being_revived":
+                    memberIcon.SetRevivingState(true);
+                    break;
+                case "invulnerable":
+                    memberIcon.SetInvulnerableState(true);
+                    break;
+                case "normal":
+                    memberIcon.SetDeadState(false);
+                    memberIcon.SetRevivingState(false);
+                    memberIcon.SetInvulnerableState(false);
+                    break;
+            }
         }
     }
 
@@ -201,6 +226,65 @@ public class PartyMemberUI : MonoBehaviour
             // 정보 업데이트
             UpdateMemberHealth(member.id, member.current_health, member.max_health);
             UpdateMemberUlt(member.id, member.current_ult, member.max_ult);
+            
+            // 부활 상태 정보 업데이트
+            if (partyMembers.TryGetValue(member.id, out PartyMemberIcon memberIcon))
+            {
+                memberIcon.SetDeadState(member.is_dead);
+                memberIcon.SetRevivingState(member.is_being_revived);
+                memberIcon.SetInvulnerableState(member.is_invulnerable);
+                
+                if (member.is_being_revived && !string.IsNullOrEmpty(member.revived_by))
+                {
+                    memberIcon.SetReviverInfo(member.revived_by);
+                }
+                
+                if (member.is_dead && member.death_position_x.HasValue && member.death_position_y.HasValue)
+                {
+                    memberIcon.SetDeathPosition(member.death_position_x.Value, member.death_position_y.Value);
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 특정 플레이어의 부활 상태 업데이트
+    /// </summary>
+    public void UpdateMemberRevivalState(string playerId, bool isBeingRevived, string revivedBy = "")
+    {
+        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
+        {
+            memberIcon.SetRevivingState(isBeingRevived);
+            if (isBeingRevived && !string.IsNullOrEmpty(revivedBy))
+            {
+                memberIcon.SetReviverInfo(revivedBy);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 특정 플레이어의 무적 상태 업데이트
+    /// </summary>
+    public void UpdateMemberInvulnerability(string playerId, bool isInvulnerable)
+    {
+        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
+        {
+            memberIcon.SetInvulnerableState(isInvulnerable);
+        }
+    }
+
+    /// <summary>
+    /// 특정 플레이어의 죽음 상태 업데이트
+    /// </summary>
+    public void UpdateMemberDeathState(string playerId, bool isDead, float deathX = 0, float deathY = 0)
+    {
+        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
+        {
+            memberIcon.SetDeadState(isDead);
+            if (isDead)
+            {
+                memberIcon.SetDeathPosition(deathX, deathY);
+            }
         }
     }
 

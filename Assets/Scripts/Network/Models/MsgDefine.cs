@@ -67,6 +67,21 @@ public class NetMsg
     public List<(float, float)> spawnPositions;
     //cheat
     public bool isCheat;
+    
+    //revival
+    public string targetId;
+    public string reviverId;
+    public float progress;
+    public string reason;
+    public float reviveX;
+    public float reviveY;
+    public float deathX;
+    public float deathY;
+    public float invulnerabilityDuration;
+    public bool isDead;
+    public bool isBeingRevived;
+    public bool isInvulnerable;
+    public string revivedBy;
 }
 
 [System.Serializable]
@@ -95,6 +110,12 @@ public class PartyMemberInfo
     public float max_health;
     public float current_ult;
     public float max_ult;
+    public bool is_dead;
+    public bool is_being_revived;
+    public bool is_invulnerable;
+    public string revived_by;
+    public float? death_position_x;
+    public float? death_position_y;
 }
 
 public class EnemySyncPacket

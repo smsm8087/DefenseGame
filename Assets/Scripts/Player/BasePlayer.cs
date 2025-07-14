@@ -43,6 +43,19 @@ public abstract class BasePlayer : MonoBehaviour
     
     [Header("Player Status")]
     public bool isDead = false;
+    
+    [Header("Revival System")]
+    public bool isBeingRevived = false;
+    public bool isInvulnerable = false;
+    public string revivedBy = "";
+    public Vector3 deathPosition;
+    
+    private float revivalStartTime = 0f;
+    private bool isCurrentlyReviving = false;
+    private string currentRevivalTarget = "";
+    
+    private Coroutine invulnerabilityCoroutine;
+    private SpriteRenderer spriteRenderer;  
 
     // FSM
     protected PlayerState currentState;
@@ -61,6 +74,7 @@ public abstract class BasePlayer : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _sr = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         var attackRangeObj = transform.Find("AttackRanageCollider");
         if (attackRangeObj)
@@ -91,10 +105,19 @@ public abstract class BasePlayer : MonoBehaviour
 
         SendMoveToServer();
         currentState?.Update();
+        
+        // 부활 입력 체크
+        CheckRevivalInput();
     }
 
     public virtual void ChangeState(PlayerState newState)
     {
+        if (newState == null)
+        {
+            Debug.LogError("새로운 상태가 null입니다!");
+            return;
+        }
+    
         currentState?.Exit();
         prevState = currentState;
         currentState = newState;
@@ -198,18 +221,11 @@ public abstract class BasePlayer : MonoBehaviour
         if (isDead) return;
         
         isDead = true;
+        deathPosition = transform.position;
         ChangeState(deathState);
         
-        // 사망 메시지를 서버에 전송
-        if (IsMyPlayer)
-        {
-            var deathMsg = new NetMsg
-            {
-                type = "player_death",
-                playerId = NetworkManager.Instance.MyGUID
-            };
-            NetworkManager.Instance.SendMsg(deathMsg);
-        }
+        // 무적 상태 해제
+        StopInvulnerability();
         
         // 관전 시스템에 알림 
         SpectatorManager spectatorManager = GetSpectatorManager();
@@ -229,10 +245,10 @@ public abstract class BasePlayer : MonoBehaviour
         if (!isDead) return;
         
         isDead = false;
-        ChangeState(idleState);
+        isBeingRevived = false;
+        revivedBy = "";
         
-        // 체력 회복
-        // currentHp = maxHp;
+        ChangeState(idleState);
         
         // 내 플레이어가 부활했다면 관전 모드 종료
         if (IsMyPlayer)
@@ -258,5 +274,249 @@ public abstract class BasePlayer : MonoBehaviour
         {
             Revive();
         }
+    }
+    
+    /// <summary>
+    /// 부활 입력 체크 (F키)
+    /// </summary>
+    private void CheckRevivalInput()
+    {
+        if (isDead || !IsMyPlayer) return;
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("[부활] F키 눌림 - 부활 시도");
+            string targetId = FindNearbyDeadPlayer();
+            if (!string.IsNullOrEmpty(targetId))
+            {
+                TryStartRevival();
+                // 부활 시작 시간 기록
+                revivalStartTime = Time.time;
+                isCurrentlyReviving = true;
+                currentRevivalTarget = targetId;
+                Debug.Log($"[부활] 부활 시작 - 대상: {targetId}");
+            }
+            else
+            {
+                Debug.Log("[부활] 근처에 부활 가능한 플레이어 없음");
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            Debug.Log("[부활] F키 뗌 - 부활 중단");
+            if (isCurrentlyReviving)
+            {
+                TryStopRevival();
+                isCurrentlyReviving = false;
+                currentRevivalTarget = "";
+            }
+        }
+
+        // F키를 누르고 있는 동안 진행률 업데이트
+        if (Input.GetKey(KeyCode.F) && isCurrentlyReviving && !string.IsNullOrEmpty(currentRevivalTarget))
+        {
+            UpdateRevivalProgress();
+        }
+    }
+
+    /// <summary>
+    /// 부활 시작 시도
+    /// </summary>
+    private void TryStartRevival()
+    {
+        string targetPlayerId = FindNearbyDeadPlayer();
+        if (string.IsNullOrEmpty(targetPlayerId)) 
+        {
+            Debug.Log("[부활] 근처에 부활 가능한 플레이어 없음");
+            return;
+        }
+
+        Debug.Log($"[부활] 부활 시작 요청 전송: targetId={targetPlayerId}");
+    
+        // 중복 요청 방지
+        if (isBeingRevived)
+        {
+            Debug.Log("[부활] 이미 부활 진행 중");
+            return;
+        }
+    
+        // 서버에 부활 시작 요청
+        var revivalMsg = new NetMsg
+        {
+            type = "start_revival",
+            targetId = targetPlayerId
+        };
+        NetworkManager.Instance.SendMsg(revivalMsg);
+    
+        Debug.Log("[부활] 부활 메시지 전송 완료");
+    }
+
+    /// <summary>
+    /// 부활 중단
+    /// </summary>
+    private void TryStopRevival()
+    {
+        if (string.IsNullOrEmpty(currentRevivalTarget)) return;
+
+        // 서버에 부활 취소 요청
+        var cancelMsg = new NetMsg
+        {
+            type = "cancel_revival",
+            targetId = currentRevivalTarget
+        };
+        NetworkManager.Instance.SendMsg(cancelMsg);
+        
+        Debug.Log($"[부활] 부활 취소 요청 전송: {currentRevivalTarget}");
+    }
+
+    /// <summary>
+    /// 부활 진행률 업데이트
+    /// </summary>
+    private void UpdateRevivalProgress()
+    {
+        if (!isCurrentlyReviving || string.IsNullOrEmpty(currentRevivalTarget)) return;
+        
+        // 실제 경과 시간 기반 진행률 계산
+        float elapsedTime = Time.time - revivalStartTime;
+        float progress = (elapsedTime / 3.0f) * 100f; // 3초로 완료
+        progress = Mathf.Clamp(progress, 0f, 100f);
+        
+        var progressMsg = new NetMsg
+        {
+            type = "update_revival",
+            targetId = currentRevivalTarget,
+            progress = progress
+        };
+        NetworkManager.Instance.SendMsg(progressMsg);
+        
+        Debug.Log($"[부활] 진행률 업데이트: {progress:F1}% (경과시간: {elapsedTime:F1}초)");
+    }
+
+    /// <summary>
+    /// 근처 죽은 플레이어 찾기
+    /// </summary>
+    private string FindNearbyDeadPlayer()
+    {
+        var players = NetworkManager.Instance.GetPlayers();
+        float maxDistance = 2.0f;
+    
+        Debug.Log($"근처 죽은 플레이어 찾기 시작. 총 플레이어 수: {players.Count}");
+    
+        foreach (var kvp in players)
+        {
+            if (kvp.Key == playerGUID) continue;
+        
+            GameObject playerObj = kvp.Value;
+            if (playerObj == null) 
+            {
+                Debug.Log($"플레이어 {kvp.Key} 오브젝트가 null");
+                continue;
+            }
+        
+            BasePlayer player = playerObj.GetComponent<BasePlayer>();
+            if (player == null) 
+            {
+                Debug.Log($"플레이어 {kvp.Key}에 BasePlayer 컴포넌트 없음");
+                continue;
+            }
+        
+            Debug.Log($"플레이어 {kvp.Key}: isDead={player.isDead}, isBeingRevived={player.isBeingRevived}");
+        
+            if (!player.isDead || player.isBeingRevived) continue;
+        
+            float distance = Vector3.Distance(transform.position, player.deathPosition);
+            Debug.Log($"플레이어 {kvp.Key}와의 거리: {distance}, 최대거리: {maxDistance}");
+        
+            if (distance <= maxDistance)
+            {
+                Debug.Log($"부활 가능한 플레이어 발견: {kvp.Key}");
+                return kvp.Key;
+            }
+        }
+    
+        Debug.Log("근처에 부활 가능한 플레이어 없음");
+        return null;
+    }
+
+    /// <summary>
+    /// 현재 부활시키고 있는 대상 ID 가져오기
+    /// </summary>
+    private string GetRevivalTargetId()
+    {
+        // 현재 부활 중인 대상을 추적하는 로직 필요
+        // 임시로 빈 문자열 반환
+        return "";
+    }
+
+    /// <summary>
+    /// 무적 상태 시작
+    /// </summary>
+    public void StartInvulnerability(float duration)
+    {
+        if (invulnerabilityCoroutine != null)
+        {
+            StopCoroutine(invulnerabilityCoroutine);
+        }
+        
+        isInvulnerable = true;
+        invulnerabilityCoroutine = StartCoroutine(InvulnerabilityCoroutine(duration));
+    }
+
+    /// <summary>
+    /// 무적 상태 해제
+    /// </summary>
+    public void StopInvulnerability()
+    {
+        if (invulnerabilityCoroutine != null)
+        {
+            StopCoroutine(invulnerabilityCoroutine);
+            invulnerabilityCoroutine = null;
+        }
+        
+        isInvulnerable = false;
+        
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.white;
+        }
+    }
+
+    /// <summary>
+    /// 무적 상태 코루틴
+    /// </summary>
+    private IEnumerator InvulnerabilityCoroutine(float duration)
+    {
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            if (spriteRenderer != null)
+            {
+                float alpha = Mathf.PingPong(Time.time * 10f, 1f);
+                spriteRenderer.color = new Color(1f, 1f, 1f, alpha);
+            }
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        // 무적 해제
+        isInvulnerable = false;
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.white;
+        }
+        
+        invulnerabilityCoroutine = null;
+    }
+
+    /// <summary>
+    /// 부활 상태 업데이트 (서버에서 호출)
+    /// </summary>
+    public void SetRevivalState(bool beingRevived, string reviverPlayerId = "")
+    {
+        isBeingRevived = beingRevived;
+        revivedBy = reviverPlayerId;
     }
 }
