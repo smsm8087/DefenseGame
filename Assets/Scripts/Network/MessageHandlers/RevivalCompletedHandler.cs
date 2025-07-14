@@ -43,13 +43,10 @@ public class RevivalCompletedHandler : INetworkMessageHandler
                 Debug.Log($"[RevivalCompletedHandler] {msg.targetId} 부활 완료");
             }
         }
-        else
+        // UI 업데이트
+        if (RevivalUI.Instance != null)
         {
-            // UI 업데이트
-            if (RevivalUI.Instance != null)
-            {
-                RevivalUI.Instance.OnRevivalCompleted(msg.targetId);
-            }
+            RevivalUI.Instance.OnRevivalCompleted(msg.targetId);
         }
     }
 }
