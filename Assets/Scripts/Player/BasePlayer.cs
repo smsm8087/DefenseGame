@@ -206,11 +206,15 @@ public abstract class BasePlayer : MonoBehaviour
         
         isDead = true;
         deathPosition = transform.position;
-        ChangeState(deathState);
-        
         // 무적 상태 해제
         StopInvulnerability();
-        SpectatorManager.Instance.StartSpectating();
+        SpectatorManager.Instance.OnPlayerDied(playerGUID);
+
+        if (IsMyPlayer)
+        {
+            ChangeState(deathState);
+            SpectatorManager.Instance.StartSpectating();
+        }
     }
     
     // 부활 처리 메서드
@@ -221,9 +225,12 @@ public abstract class BasePlayer : MonoBehaviour
         isDead = false;
         isBeingRevived = false;
         revivedBy = "";
-        
-        ChangeState(idleState);
-        SpectatorManager.Instance.StopSpectating();
+
+        if (IsMyPlayer)
+        {
+            ChangeState(idleState);
+            SpectatorManager.Instance.StopSpectating();
+        }
     }
     /// <summary>
     /// 부활 입력 체크 (F키)
