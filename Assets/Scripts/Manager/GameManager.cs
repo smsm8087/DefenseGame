@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DataModels;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<SpriteRenderer> backGroundImages;
     [SerializeField] private HPBar hpBar;
     [SerializeField] private HPText hpText;
-    
+    [SerializeField] private Image hpImg;
     [SerializeField] private HPBar bossHpBar;
     [SerializeField] private HPText bossHpText;
+    [SerializeField] private Image bossHpImg;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -93,5 +95,8 @@ public class GameManager : MonoBehaviour
                 sprite.sprite = backGroundSprite;
             }
         }
+
+        hpImg.sprite = Resources.Load<Sprite>(waveData.hp_icon);
+        bossHpImg.sprite = Resources.Load<Sprite>(waveData.boss_icon);
     }
 }

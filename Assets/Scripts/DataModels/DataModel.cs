@@ -41,6 +41,8 @@ namespace DataModels
         public string difficulty { get; set; }
         public string background { get; set; }
         public int shared_hp_id { get; set; }
+        public string boss_icon { get; set; }
+        public string hp_icon { get; set; }
     }
     public class SharedData
     {
