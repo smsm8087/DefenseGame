@@ -24,7 +24,7 @@ namespace NativeWebSocket.MessageHandlers
             foreach (var spawnPosition in spawnPositions)
             { 
                 Debug.Log($"곧 먼지가 소환될 예정 x좌표 : {spawnPosition.Item1} , y좌표 : {spawnPosition.Item2} ");
-                bossController.PlayDustSummonEffect(spawnPosition.Item1, spawnPosition.Item2);
+                //bossController.PlayDustSummonEffect(spawnPosition.Item1, spawnPosition.Item2);
             }
         }
     }

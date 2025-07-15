@@ -50,8 +50,8 @@ public class BulletController : MonoBehaviour
 
     public void SpawnBulletEffect()
     {
-        GameObject eff_obj =  Instantiate(bulletEffectPrefab, transform.position, Quaternion.identity);
-        Destroy(eff_obj, 1f);
+        // GameObject eff_obj =  Instantiate(bulletEffectPrefab, transform.position, Quaternion.identity);
+        // Destroy(eff_obj, 1f);
     }
 
     public void PlayDeadAnimation()
