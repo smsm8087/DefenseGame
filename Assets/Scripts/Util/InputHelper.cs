@@ -23,10 +23,16 @@ public static class InputManager
 
     public static float GetMoveInput()
     {
-        if (joystick != null && Mathf.Abs(joystick.Horizontal) > 0.01f)
-        {
-            return joystick.Horizontal;
-        }
-        return Input.GetAxisRaw("Horizontal");
+#if UNITY_EDITOR || UNITY_STANDALONE
+        return Input.GetAxisRaw("Horizontal"); // 키보드 입력
+#elif UNITY_ANDROID || UNITY_IOS
+    if (joystick != null && Mathf.Abs(joystick.Horizontal) > 0.01f)
+    {
+        return joystick.Horizontal; // 조이스틱 입력
+    }
+    return 0f; // 입력 없음
+#else
+    return 0f;
+#endif
     }
 }

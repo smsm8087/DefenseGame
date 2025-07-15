@@ -20,7 +20,11 @@ public class MobileInputUI : MonoBehaviour
     {
         playerController = player;
         //플레이어 조인 이후에 세팅
+#if UNITY_EDITOR || UNITY_STANDALONE
+        this.gameObject.SetActive(false);
+#elif UNITY_ANDROID || UNITY_IOS
         this.gameObject.SetActive(true);
+#endif
     }
     
     void Start()

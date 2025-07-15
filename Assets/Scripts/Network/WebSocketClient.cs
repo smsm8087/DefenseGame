@@ -22,20 +22,25 @@ public class WebSocketClient : MonoBehaviour
 
     private string getUrl()
     {
-        // 설정 불러오기
-        var config = Resources.Load<ServerConfig>("ServerConfig");
-        if (config == null)
-        {
-            Debug.LogError("ServerConfig.asset이 Resources 폴더에 없습니다!");
-            return "";
-        }
-        string ip = config.GetServerIP();
-        int port = config.port;
-        return $"ws://{ip}:{port}/ws";
+#if UNITY_EDITOR || UNITY_STANDALONE
+         // 설정 불러오기
+         var config = Resources.Load<ServerConfig>("ServerConfig");
+         if (config == null)
+         {
+             Debug.LogError("ServerConfig.asset이 Resources 폴더에 없습니다!");
+             return "";
+         }
+         string url = config.GetServerIP();
+         return url;
+#elif UNITY_ANDROID || UNITY_IOS
+ return "wss://defensegamewebsocketserver.onrender.com/ws";
+#endif
     }
     private async void Start()
     {
-        websocket = new WebSocket(getUrl());
+        string url = getUrl();
+        Debug.Log($"웹소켓 연결 시도: {url}");
+        websocket = new WebSocket(url);
 
         websocket.OnOpen += () =>
         {
@@ -58,7 +63,15 @@ public class WebSocketClient : MonoBehaviour
             OnMessageReceived?.Invoke(message);
         };
 
-        await websocket.Connect();
+        try
+        {
+            await websocket.Connect();
+            Debug.Log("웹소켓 연결 완료!");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"연결 실패: {ex.Message}");
+        }
     }
 
     private void Update()
