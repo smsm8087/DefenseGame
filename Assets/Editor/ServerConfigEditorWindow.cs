@@ -6,6 +6,7 @@ public class ServerConfigEditorWindow : EditorWindow
     private ServerConfig config;
     private ServerMode mode;
     private string multiplayerIP;
+    private string testPlayIP;
     private int port;
 
     [MenuItem("Tools/Network Configurator")]
@@ -25,7 +26,8 @@ public class ServerConfigEditorWindow : EditorWindow
         else
         {
             mode = config.serverMode;
-            multiplayerIP = config.multiplayerIP;
+            testPlayIP = config.TestLocalIp;
+            multiplayerIP = config.renderServerIp;
             port = config.port;
         }
     }
@@ -41,17 +43,17 @@ public class ServerConfigEditorWindow : EditorWindow
         EditorGUILayout.LabelField("서버 설정", EditorStyles.boldLabel);
         mode = (ServerMode)EditorGUILayout.EnumPopup("모드", mode);
 
-        if (mode == ServerMode.Multiplayer)
+        if (mode == ServerMode.TestLocal)
         {
-            multiplayerIP = EditorGUILayout.TextField("멀티플레이 IP", multiplayerIP);
+            testPlayIP = EditorGUILayout.TextField("테스트IP", testPlayIP);
         }
-
+        
         port = EditorGUILayout.IntField("포트", port);
 
         if (GUILayout.Button("적용하기"))
         {
             config.serverMode = mode;
-            config.multiplayerIP = multiplayerIP;
+            config.TestLocalIp = testPlayIP;
             config.port = port;
             EditorUtility.SetDirty(config); // 변경사항 저장
             AssetDatabase.SaveAssets();

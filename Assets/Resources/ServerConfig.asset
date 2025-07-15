@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: ServerConfig
   m_EditorClassIdentifier: 
   serverMode: 1
-  multiplayerIP: 59.12.167.192
+  TestLocalIp: 59.12.167.192
+  renderServerIp: wss://defensegamewebsocketserver.onrender.com/ws
   port: 5215
