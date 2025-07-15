@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public static class Utils
 {
-    public static IEnumerator FadeOut(Image image, float fadeDuration)
+    public static IEnumerator FadeOut(Image image, float fadeDuration, Action callback = null)
     {
         Color color = image.color;
         float startAlpha = color.a;
@@ -20,8 +20,9 @@ public static class Utils
 
         color.a = 0f;
         image.color = color;
+        callback?.Invoke();
     }
-    public static IEnumerator FadeIn(Image image, float fadeDuration)
+    public static IEnumerator FadeIn(Image image, float fadeDuration, Action callback = null)
     {
         Color color = image.color;
         float startAlpha = color.a;
@@ -37,8 +38,9 @@ public static class Utils
 
         color.a = 1f;
         image.color = color;
+        callback?.Invoke();
     }
-    public static IEnumerator FadeOut(SpriteRenderer image, float fadeDuration)
+    public static IEnumerator FadeOut(SpriteRenderer image, float fadeDuration, Action callback = null)
     {
         Color color = image.color;
         float startAlpha = color.a;
@@ -53,8 +55,9 @@ public static class Utils
 
         color.a = 0f;
         image.color = color;
+        callback?.Invoke();
     }
-    public static IEnumerator FadeIn(SpriteRenderer image, float fadeDuration)
+    public static IEnumerator FadeIn(SpriteRenderer image, float fadeDuration, Action callback = null)
     {
         Color color = image.color;
         float startAlpha = color.a;
@@ -70,6 +73,7 @@ public static class Utils
 
         color.a = 1f;
         image.color = color;
+        callback?.Invoke();
     }
     public static float EaseOutCubic(float t)
     {

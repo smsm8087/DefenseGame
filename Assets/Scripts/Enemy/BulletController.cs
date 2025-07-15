@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    [SerializeField] public GameObject bulletEffectPrefab;
     public Vector3 serverPosition;
     SpriteRenderer spriteRenderer;
     Animator animator;
 
+    private string bullet_id; 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -21,6 +21,9 @@ public class BulletController : MonoBehaviour
     }
     void Update()
     {
+        //삭제할때 id값 할당됨.
+        if (!string.IsNullOrEmpty(bullet_id)) return;
+        
         Vector3 dir = serverPosition - transform.position;
         if (dir.sqrMagnitude > 0.01f)
         {
@@ -48,19 +51,23 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    public void SpawnBulletEffect()
+    public void PlayBulletExplosionAnim()
     {
-        // GameObject eff_obj =  Instantiate(bulletEffectPrefab, transform.position, Quaternion.identity);
-        // Destroy(eff_obj, 1f);
+        
     }
 
-    public void PlayDeadAnimation()
+    public void PlayDeadAnimation(string pid)
     {
-        animator.Play("dead");
+        bullet_id = pid;
+        transform.rotation = Quaternion.identity;
+        animator.Play("explosion");
     }
 
     public void OnDestroy()
     {
+        if (string.IsNullOrEmpty(bullet_id)) return;
         Destroy(this.gameObject);
+        NetworkManager.Instance.RemoveBullet(bullet_id);
+        Debug.Log($"[BulletSpawnHandler] 총알 삭제됨: {bullet_id}");
     }
 }

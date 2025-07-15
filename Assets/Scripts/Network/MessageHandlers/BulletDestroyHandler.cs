@@ -26,12 +26,8 @@ public class BulletDestroyHandler : INetworkMessageHandler
             BulletController bulletController = bullets[pid].GetComponent<BulletController>();
             if (bulletController != null)
             {
-                bulletController.SpawnBulletEffect();
-                bulletController.PlayDeadAnimation();
+                bulletController.PlayDeadAnimation(pid);
             }
-             
-            NetworkManager.Instance.RemoveBullet(pid);
-            Debug.Log($"[BulletSpawnHandler] 총알 삭제됨: {pid}");
         }
     }
 }

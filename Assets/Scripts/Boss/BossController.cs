@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class BossController : MonoBehaviour
     [SerializeField] private Transform facePos;
     [SerializeField] private Transform bodyPos;
     [SerializeField] private Transform textShowPos;
-    [SerializeField] private GameObject magicCircleEffect;
+    [SerializeField] private GameObject summonEffect;
 
     private bool isSync = false;
     void Start()
@@ -43,43 +44,30 @@ public class BossController : MonoBehaviour
 
     public void PlayDustSummonEffect(float spawnPosX, float spawnPosY)
     {
-        Quaternion rotation = Quaternion.Euler(20f, 0f, 0f);
-        GameObject eff_obj = Instantiate(magicCircleEffect, new Vector3(spawnPosX, spawnPosY, -1f), rotation);
-        StartCoroutine(FadeOutParticle(eff_obj, 0.2f));
+        StartCoroutine(FadeOutSummonEffect(spawnPosX, spawnPosY, 1.5f));
     }
-    IEnumerator FadeOutParticle(GameObject obj, float duration)
+
+    private IEnumerator FadeOutSummonEffect(float spawnPosX, float spawnPosY, float duration)
     {
-        yield return new WaitForSeconds(2f);
-        var root_renderer = obj.GetComponent<ParticleSystemRenderer>();
-        var renderers = obj.GetComponentsInChildren<ParticleSystemRenderer>();
-        float t = 0f;
-        while (t < duration)
+        yield return new WaitForSeconds(0.5f);
+        GameObject eff_obj = Instantiate(summonEffect, new Vector3(spawnPosX, spawnPosY, -1f), Quaternion.identity);
+        SpriteRenderer base_renderer = eff_obj.transform.Find("base").GetComponent<SpriteRenderer>();
+        SpriteRenderer back_renderer = eff_obj.transform.Find("back").GetComponent<SpriteRenderer>();
+        SpriteRenderer front_renderer = eff_obj.transform.Find("front").GetComponent<SpriteRenderer>();
+        List<SpriteRenderer> renderers = new List<SpriteRenderer>();
+        renderers.Add(base_renderer);
+        renderers.Add(back_renderer);
+        renderers.Add(front_renderer);
+        
+        yield return new WaitForSeconds(duration);
+        foreach (SpriteRenderer renderer in renderers)
         {
-            t += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, t / duration);
-
-            foreach (var r in renderers)
-            {
-                if (r.material.HasProperty("_Color"))
-                {
-                    r.material = new Material(r.material);
-                    Color c = r.material.color;
-                    c.a = alpha;
-                    r.material.color = c;
-                }
-            }
-            if (root_renderer.material.HasProperty("_Color"))
-            {
-                root_renderer.material = new Material(root_renderer.material);
-                Color c = root_renderer.material.color;
-                c.a = alpha;
-                root_renderer.material.color = c;
-            }
-            yield return null;
+            StartCoroutine(Utils.FadeOut(renderer, 0.2f));
         }
-
-        Destroy(obj);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(eff_obj);
     }
+    
     
     private IEnumerator WaitForAnimationThenIdle(string currentAnim, string nextAnim)
     {
@@ -146,8 +134,8 @@ public class BossController : MonoBehaviour
         Vector2 titleStartPos = titleRT.anchoredPosition;
         Vector2 descStartPos = descRT.anchoredPosition;
 
-        Vector2 titleDestPos = new Vector2(370f, -195f);
-        Vector2 descDestPos = new Vector2(382f, -340f);
+        Vector2 titleDestPos = new Vector2(100, 150);
+        Vector2 descDestPos = new Vector2(-150, 0);
         float t = 0f;
         while (t < 0.3f)
         {

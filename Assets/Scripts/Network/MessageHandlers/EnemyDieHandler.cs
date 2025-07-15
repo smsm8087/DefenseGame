@@ -19,6 +19,7 @@ public class EnemyDieHandler : INetworkMessageHandler
         foreach (var deadEnemyId in deadEnemyIds)
         {
             var pid = deadEnemyId;
+            if (!Enemies.ContainsKey(pid)) return;
             if (!Enemies[pid]) return;
             var enemyController = Enemies[pid].GetComponent<EnemyController>();
             if(!enemyController) return;

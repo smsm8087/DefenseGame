@@ -125,8 +125,11 @@ public class EnemyController : MonoBehaviour
     }
     public void OnAttackHit()
     {
-        if (alreadyHit) return;
-        alreadyHit = true;
+        if (!string.IsNullOrEmpty(targetPlayerId))
+        {
+            if (alreadyHit) return;
+            alreadyHit = true;    
+        }
         Debug.Log($"Enemy {guid} 공격 HIT!");
 
         // 서버에 공격 명중 메시지 전송

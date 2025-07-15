@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: bullet_dead
+  m_Name: bullet_explosion
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -31,7 +31,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.4
+        time: 0.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -51,15 +51,27 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -7206793055845616899, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
+      value: {fileID: 7861027048825386268, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.05
+      value: {fileID: 3796656573475415638, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
     - time: 0.1
-      value: {fileID: 5832672238989734737, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
+      value: {fileID: -4978653453099887750, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.15
+      value: {fileID: 8446493310792974964, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
     - time: 0.2
-      value: {fileID: 6318520660405950570, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
+      value: {fileID: 2350735150147306344, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.25
+      value: {fileID: -7577167135738448926, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
     - time: 0.3
-      value: {fileID: -3079868874244677497, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
-    - time: 0.59000003
-      value: {fileID: -3079868874244677497, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
+      value: {fileID: -4907704580668814054, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.35
+      value: {fileID: 1391036256349216632, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.4
+      value: {fileID: 5034387727570162859, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.45
+      value: {fileID: -1160734853293730805, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - time: 0.54
+      value: {fileID: -1160734853293730805, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -91,22 +103,28 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -7206793055845616899, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
-    - {fileID: 5832672238989734737, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
-    - {fileID: 6318520660405950570, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
-    - {fileID: -3079868874244677497, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
-    - {fileID: -3079868874244677497, guid: 54b2be833fa45d74a9353e10fd8a0a94, type: 3}
+    - {fileID: 7861027048825386268, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: 3796656573475415638, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: -4978653453099887750, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: 8446493310792974964, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: 2350735150147306344, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: -7577167135738448926, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: -4907704580668814054, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: 1391036256349216632, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: 5034387727570162859, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: -1160734853293730805, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
+    - {fileID: -1160734853293730805, guid: 7e201c2fc01d7dc48902b1a6e25fc281, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6
+    m_StopTime: 0.55
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -131,7 +149,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.4
+        time: 0.5
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -151,7 +169,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.59
+  - time: 0.4
     functionName: OnDestroy
     data: 
     objectReferenceParameter: {fileID: 0}
