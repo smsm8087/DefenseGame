@@ -56,6 +56,7 @@ public class NetMsg
     public List<CardData> cards;
     public int selectedCardId;
     public int readyCount;
+    public int alivePlayerCount;
     
     //bullet
     public string bulletId;

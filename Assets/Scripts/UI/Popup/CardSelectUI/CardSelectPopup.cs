@@ -23,9 +23,13 @@ public class CardSelectPopup : BasePopup
     private float targetFill = 1f;           
     private float lerpSpeed = 5f;
 
-    public void Init(List<CardData> cardList, float duration)
+    public void Init(List<CardData> cardList, float duration, int alivePlayerCount)  // int 파라미터 추가
     {
         this.duration = duration;
+
+        Debug.Log($"[CardSelectPopup] 살아있는 플레이어: {alivePlayerCount}");
+
+        // 카드 슬롯 초기화
         for (int i = 0; i < cardList.Count; i++)
         {
             var slot = cardSlots[i];
@@ -36,13 +40,14 @@ public class CardSelectPopup : BasePopup
 
         confirmButton?.onClick.AddListener(OnConfirmClicked);
         confirmButton.interactable = false;
-        timeBarImage.fillAmount = Mathf.Clamp01(duration / duration);
-        
+        timeBarImage.fillAmount = 1f;
+
+        // 기존 Ready 슬롯 정리
         foreach (Transform child in readySlotTransform)
             Destroy(child.gameObject);
-        int readySlotCount = NetworkManager.Instance.GetPlayers().Count;
-        
-        for(int i = 0; i < readySlotCount; i++)
+
+        // 서버에서 받은 살아있는 플레이어 수만큼 Ready 슬롯 생성
+        for(int i = 0; i < alivePlayerCount; i++)
         {
             var slot = Instantiate(readyPrefab, readySlotTransform);
             readySlots.Add(slot.GetComponent<ReadyIcon>());

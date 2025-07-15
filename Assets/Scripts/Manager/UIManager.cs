@@ -52,10 +52,10 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region cardSelectPopup
-    public void ShowCardSelectPopup(List<CardData> cards, float duration)
+    public void ShowCardSelectPopup(List<CardData> cards, float duration, int alivePlayerCount) 
     {
         cardSelectPopup = PopupManager.Instance.ShowPopup<CardSelectPopup>(cardSelectPopupPrefab);
-        cardSelectPopup.Init(cards, duration);
+        cardSelectPopup.Init(cards, duration, alivePlayerCount); 
     }
 
     public void UpdateSettlementTimer(float duration)
