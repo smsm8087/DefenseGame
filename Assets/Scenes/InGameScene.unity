@@ -433,7 +433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &149513712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1278,8 +1278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Tank\uC774(\uAC00) Programmer\uC744(\uB97C) \uBD80\uD65C\uC2DC\uD0A4\uB294
-    \uC911..."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5c89e47f7fe119447b48de1b07b9e4bf, type: 2}
   m_sharedMaterial: {fileID: 1801240067366902847, guid: 5c89e47f7fe119447b48de1b07b9e4bf, type: 2}
@@ -1347,7 +1346,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &331762794
@@ -1415,7 +1414,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5b56d9fa0e8bd6e409ed188db38a692c, type: 3}
+  m_Sprite: {fileID: -2766470543067109810, guid: 797814393dab03c41a6fe1b383c08194, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2140,7 +2139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6715163030418360086, guid: 0322515a791393e478590232e85475a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0322515a791393e478590232e85475a7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3585,14 +3584,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.14901961, g: 0.8431373, b: 0.75294125, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5b56d9fa0e8bd6e409ed188db38a692c, type: 3}
+  m_Sprite: {fileID: 3489926352656019885, guid: be7c421d1e7f09f478af14caba94aba1, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5775,7 +5774,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7359540599593311698, guid: 0d1a4ea1e94ef784ab60aba01b7ee71a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d1a4ea1e94ef784ab60aba01b7ee71a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6800,7 +6799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1749965942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6837,7 +6836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7778,7 +7777,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -6941175609839199830, guid: 3d356e8212aac1e449884df46211f935, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3d356e8212aac1e449884df46211f935, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

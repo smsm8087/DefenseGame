@@ -16,7 +16,7 @@ public class CardSlot : MonoBehaviour
     private CardData cardData;
     private CardData cardClientData;
     private System.Action<int> onClick;
-    private string baseResourcePath = "UI/skillcards_ui/";
+    // private string baseResourcePath = "UI/skillcards_ui/";
 
     private bool isDuringAction = true;
     private bool isUILocked = false;
