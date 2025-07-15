@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
     public EnemyMoveState moveState = new ();
     public EnemyAttackState attackState = new ();
     public EnemyDeadState deadState = new ();
+    private bool alreadyHit = false;
 
     void Awake()
     {
@@ -49,6 +50,7 @@ public class EnemyController : MonoBehaviour
     }
     public void OnCheckFlip()
     {
+        alreadyHit = false;
         var players = NetworkManager.Instance.GetPlayers();
         if (!players.ContainsKey(targetPlayerId)) return;
         
@@ -123,6 +125,8 @@ public class EnemyController : MonoBehaviour
     }
     public void OnAttackHit()
     {
+        if (alreadyHit) return;
+        alreadyHit = true;
         Debug.Log($"Enemy {guid} 공격 HIT!");
 
         // 서버에 공격 명중 메시지 전송
