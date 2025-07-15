@@ -110,6 +110,11 @@ public class SpectatorManager : MonoBehaviour
         isSpectating = true;
         UpdateAlivePlayersList();
         
+        if (MobileInputUI.Instance != null)
+        {
+            MobileInputUI.Instance.SetInputEnabled(false);
+        }
+        
         if (alivePlayerIds.Count > 0)
         {
             currentSpectatorIndex = 0;
@@ -133,6 +138,11 @@ public class SpectatorManager : MonoBehaviour
         
         isSpectating = false;
         SetSpectatorUI(false);
+        
+        if (MobileInputUI.Instance != null)
+        {
+            MobileInputUI.Instance.SetInputEnabled(true);
+        }
         
         // 자신의 캐릭터로 카메라 복귀
         if (players != null && players.TryGetValue(NetworkManager.Instance.MyGUID, out GameObject myPlayer) && myPlayer != null)
@@ -262,9 +272,7 @@ public class SpectatorManager : MonoBehaviour
     {
         if (spectatorInfoText != null && targetPlayer != null)
         {
-            spectatorInfoText.text = $"관전 중: {targetPlayer.job_type} ({currentSpectatorIndex + 1}/{alivePlayerIds.Count})\n" +
-                                   $"HP: {targetPlayer.currentHp}/{targetPlayer.maxHp}\n" +
-                                   $"Q/E 또는 버튼으로 플레이어 전환";
+            spectatorInfoText.text = $"닉네임은여덟글자\n<size=50%>관전중</size>";
         }
     }
     

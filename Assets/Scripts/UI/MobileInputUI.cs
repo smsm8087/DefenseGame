@@ -15,6 +15,18 @@ public class MobileInputUI : MonoBehaviour
     {
         Instance = this;
     }
+    
+    public void SetInputEnabled(bool enabled)
+    {
+        if (fixedJoystick != null)
+            fixedJoystick.gameObject.SetActive(enabled);
+        
+        if (jumpButton != null)
+            jumpButton.gameObject.SetActive(enabled);
+            
+        if (attackButton != null)
+            attackButton.gameObject.SetActive(enabled);
+    }
 
     public void RegisterPlayer(BasePlayer player)
     {

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 3d356e8212aac1e449884df46211f935
+=======
 guid: 16fc3ea622b325845a37f0201bf17dab
+>>>>>>> origin/master
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -109,6 +113,8 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<< HEAD
+=======
   - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
@@ -122,6 +128,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+>>>>>>> origin/master
   spriteSheet:
     serializedVersion: 2
     sprites:
