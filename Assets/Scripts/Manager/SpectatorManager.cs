@@ -77,9 +77,8 @@ public class SpectatorManager : MonoBehaviour
         }
         
         if (cameraFollow == null)
-        {
-            // Instance가 없으면 FindObjectOfType으로 찾기
-            cameraFollow = FindObjectOfType<CameraFollow>();
+        { 
+            cameraFollow = FindFirstObjectByType<CameraFollow>();
         }
         
         return cameraFollow;
