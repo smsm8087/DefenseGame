@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1595d153708bdbe4586c885a3597b3ea, type: 3}
   m_Name: ServerConfig
   m_EditorClassIdentifier: 
-  serverMode: 0
+  serverMode: 2
   TestLocalIp: 59.12.167.192
   renderServerIp: wss://defensegamewebsocketserver.onrender.com/ws
   port: 5215
