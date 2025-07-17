@@ -205,7 +205,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 3.87
+  m_Mass: 3.992869
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 2.5
@@ -267,7 +267,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.015791178, y: 0.53}
+  m_Offset: {x: 0.015791178, y: 0.5141254}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.47872338, y: 0}
@@ -277,7 +277,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.43, y: 1}
+  m_Size: {x: 0.43, y: 1.0317491}
   m_EdgeRadius: 0
 --- !u!114 &8635051231688847663
 MonoBehaviour:
@@ -310,3 +310,8 @@ MonoBehaviour:
   _isGrounded: 1
   attackRangeTransform: {fileID: 0}
   attackRangeCollider: {fileID: 0}
+  isDead: 0
+  isBeingRevived: 0
+  isInvulnerable: 0
+  revivedBy: 
+  deathPosition: {x: 0, y: 0, z: 0}
