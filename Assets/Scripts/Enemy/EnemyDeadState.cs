@@ -6,7 +6,7 @@ public class EnemyDeadState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        enemy.animator.Play("dead");
+        enemy.AnimationPlay("dead");
         enemy.StartKnockBack();
     }
 

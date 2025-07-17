@@ -28,11 +28,10 @@ public class BulletSpawnHandler : INetworkMessageHandler
         var bulletController = bullet.GetComponent<BulletController>();
         if (bulletController)
         {
-            bulletController.StartFadeIn();
-            bulletController.SyncFromServer(msg.x, msg.y);
-            bullets.Add(pid, bullet);
+            bulletController.Init(msg.x,msg.y, pid);
             bullet.GetComponent<SpriteRenderer>().sortingOrder = 500 + bullets.Count * 2;
-            Debug.Log($"[BulletSpawnHandler] 총알 생성됨: {pid}");    
+            Debug.Log($"[BulletSpawnHandler] 총알 생성됨: {pid}"); 
+            bullets.Add(pid, bullet);
         }
     }
 }

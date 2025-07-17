@@ -9,21 +9,26 @@ public class BulletController : MonoBehaviour
     Animator animator;
 
     private string bullet_id; 
+    private bool isDead = false;
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator =  GetComponent<Animator>();
     }
 
+    public void Init(float posX, float posY, string pid)
+    {
+        SyncFromServer(posX, posY);
+        StartFadeIn();
+        bullet_id = pid;
+    }
     public void SyncFromServer(float posX, float posY)
     {
         serverPosition = new Vector3(posX, posY,transform.position.z);
     }
     void Update()
     {
-        //삭제할때 id값 할당됨.
-        if (!string.IsNullOrEmpty(bullet_id)) return;
-        
+        if (isDead) return;
         Vector3 dir = serverPosition - transform.position;
         if (dir.sqrMagnitude > 0.01f)
         {
@@ -50,23 +55,21 @@ public class BulletController : MonoBehaviour
             yield return null;
         }
     }
-
-    public void PlayBulletExplosionAnim()
+    public void PlayDeadAnimation()
     {
-        
-    }
-
-    public void PlayDeadAnimation(string pid)
-    {
-        bullet_id = pid;
+        isDead = true;
         transform.rotation = Quaternion.identity;
-        animator.Play("explosion");
+        AnimationPlay("explosion");
     }
 
     public void OnDestroy()
     {
-        if (string.IsNullOrEmpty(bullet_id)) return;
         NetworkManager.Instance.RemoveBullet(bullet_id);
         Debug.Log($"[BulletSpawnHandler] 총알 삭제됨: {bullet_id}");
+    }
+    public void AnimationPlay(string name)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(name)) return;
+        animator.Play(name);
     }
 }

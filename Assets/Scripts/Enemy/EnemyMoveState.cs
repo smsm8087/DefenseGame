@@ -5,7 +5,7 @@ public class EnemyMoveState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        enemy.animator.Play("idle");
+        enemy.AnimationPlay("idle");
     }
 
     public void Update(EnemyController enemy)

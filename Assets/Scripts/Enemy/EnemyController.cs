@@ -214,4 +214,10 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+
+    public void AnimationPlay(string name)
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(name)) return;
+        animator.Play(name);
+    }
 }

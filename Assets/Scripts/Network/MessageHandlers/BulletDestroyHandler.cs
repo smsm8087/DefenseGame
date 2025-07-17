@@ -26,7 +26,7 @@ public class BulletDestroyHandler : INetworkMessageHandler
             BulletController bulletController = bullets[pid].GetComponent<BulletController>();
             if (bulletController != null)
             {
-                bulletController.PlayDeadAnimation(pid);
+                bulletController.PlayDeadAnimation();
             }
         }
     }

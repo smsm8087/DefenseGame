@@ -5,7 +5,7 @@ public class EnemyAttackState : IEnemyState
 {
     public void Enter(EnemyController enemy)
     {
-        enemy.animator.Play("attack");
+        enemy.AnimationPlay("attack");
     }
 
     public void Update(EnemyController enemy)
