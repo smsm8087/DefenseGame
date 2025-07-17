@@ -208,6 +208,12 @@ public abstract class BasePlayer : MonoBehaviour
         deathPosition = transform.position;
         // 무적 상태 해제
         StopInvulnerability();
+        // 부활 이펙트 중단 (혹시 진행 중이었다면)
+        if (RevivalEffectManager.Instance != null)
+        {
+            RevivalEffectManager.Instance.StopRevivalEffect(playerGUID);
+        }
+        
         SpectatorManager.Instance.OnPlayerDied(playerGUID);
 
         if (IsMyPlayer)
@@ -225,6 +231,12 @@ public abstract class BasePlayer : MonoBehaviour
         isDead = false;
         isBeingRevived = false;
         revivedBy = "";
+        
+        // 부활 완료 이펙트 재생
+        if (RevivalEffectManager.Instance != null)
+        {
+            RevivalEffectManager.Instance.PlayRevivalCompleteEffect(transform.position);
+        }
 
         if (IsMyPlayer)
         {
@@ -472,7 +484,17 @@ public abstract class BasePlayer : MonoBehaviour
     /// </summary>
     public void SetRevivalState(bool beingRevived, string reviverPlayerId = "")
     {
+        bool wasBeingRevived = isBeingRevived;
         isBeingRevived = beingRevived;
         revivedBy = reviverPlayerId;
+        
+        // 부활 중단 시 이펙트 정지
+        if (!beingRevived && wasBeingRevived)
+        {
+            if (RevivalEffectManager.Instance != null)
+            {
+                RevivalEffectManager.Instance.StopRevivalEffect(playerGUID);
+            }
+        }
     }
 }

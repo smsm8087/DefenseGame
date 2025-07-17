@@ -24,6 +24,13 @@ public class RevivalCancelledHandler : INetworkMessageHandler
             }
         }
         
+        //부활 이펙트 중단
+        if (RevivalEffectManager.Instance != null)
+        {
+            RevivalEffectManager.Instance.StopRevivalEffect(msg.targetId);
+            Debug.Log($"[RevivalCancelledHandler] 부활 이펙트 중단: {msg.targetId}");
+        }
+        
         // UI 업데이트
         if (RevivalUI.Instance != null)
         {
