@@ -66,7 +66,6 @@ public class BulletController : MonoBehaviour
     public void OnDestroy()
     {
         if (string.IsNullOrEmpty(bullet_id)) return;
-        Destroy(this.gameObject);
         NetworkManager.Instance.RemoveBullet(bullet_id);
         Debug.Log($"[BulletSpawnHandler] 총알 삭제됨: {bullet_id}");
     }

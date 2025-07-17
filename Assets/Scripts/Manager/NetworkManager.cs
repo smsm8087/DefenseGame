@@ -94,6 +94,7 @@ public class NetworkManager : MonoBehaviour
     public void RemoveBullet(string guid)
     {
         if (!bullets.ContainsKey(guid)) return;
+        Destroy(bullets[guid]);
         bullets.Remove(guid);
     }
 
@@ -151,6 +152,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new BossDamagedHandler(bossDict,DamageTextPrefab));
         AddHandler(new BossSyncHandler(bossDict));
         AddHandler(new BossDustWarningHandler(bossDict));
+        AddHandler(new BossDeadHandler(bossDict));
         AddHandler(new RevivalStartedHandler());
         AddHandler(new RevivalProgressHandler());
         AddHandler(new RevivalCompletedHandler(players, profileUI));
