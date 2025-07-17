@@ -6,7 +6,7 @@ public class BossDeadHandler : INetworkMessageHandler
 {
     private readonly Dictionary<string, GameObject> bossDict = new ();
 
-    public string Type => "boss_damaged";
+    public string Type => "boss_dead";
 
     public BossDeadHandler(Dictionary<string, GameObject> bossDict)
     {
