@@ -128,7 +128,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new SharedHpUpdateHandler());
         AddHandler(new CountDownHandler(centerText));
         AddHandler(new WaveStartHandler(centerText));
-        AddHandler(new GameOverHandler(centerText));
+        AddHandler(new GameResultHandler(centerText));
         AddHandler(new RestartHandler());
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));

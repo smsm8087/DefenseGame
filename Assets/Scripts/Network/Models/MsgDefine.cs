@@ -50,6 +50,7 @@ public class NetMsg
     public float maxHp;
     public int countDown;
     public string message;
+    public string result_type;
     
     //settlementPhase
     public float duration;
