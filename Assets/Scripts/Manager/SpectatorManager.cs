@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro; // TextMeshPro 사용을 위해 추가
+using TMPro;
 
 /// <summary>
 /// 사망한 플레이어가 다른 살아있는 플레이어들을 관전할 수 있도록 하는 시스템
@@ -10,7 +10,7 @@ public class SpectatorManager : MonoBehaviour
 {
     public static SpectatorManager Instance;
     [Header("Spectator Settings")]
-    public float switchCooldown = 1f; // 플레이어 전환 쿨다운
+    public float switchCooldown = 1f;
     
     private bool isSpectating = false;
     private int currentSpectatorIndex = 0;
@@ -19,7 +19,7 @@ public class SpectatorManager : MonoBehaviour
     
     [Header("UI References")]
     public GameObject spectatorUI;
-    public TextMeshProUGUI spectatorInfoText; // Legacy Text에서 TextMeshPro로 변경
+    public TextMeshProUGUI spectatorInfoText;
     public UnityEngine.UI.Button nextPlayerButton;
     public UnityEngine.UI.Button prevPlayerButton;
     
@@ -129,7 +129,7 @@ public class SpectatorManager : MonoBehaviour
     }
     
     /// <summary>
-    /// 관전 모드 종료 (부활 시)
+    /// 관전 모드 종료
     /// </summary>
     public void StopSpectating()
     {

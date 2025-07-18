@@ -34,6 +34,14 @@ public class RevivalCompletedHandler : INetworkMessageHandler
                     Debug.Log($"[RevivalCompletedHandler] 부활 이펙트 시작: {msg.targetId}");
                 }
                 
+                // 내 플레이어라면 부활 이펙트 시작과 동시에 관전 모드 종료
+                bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyGUID;
+                if (isMyPlayer && SpectatorManager.Instance != null)
+                {
+                    SpectatorManager.Instance.StopSpectating();
+                    Debug.Log($"[RevivalCompletedHandler] 내 플레이어 부활 이펙트 시작 - 관전 모드 종료");
+                }
+                
                 // 부활 처리
                 NetworkManager.Instance.StartCoroutine(DelayedRevive(player, msg, 2.7f));
                 
