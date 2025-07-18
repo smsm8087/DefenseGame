@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DataModels;
+
 public class PartyMemberData
 {
     public string id { get; set; }
@@ -17,6 +18,7 @@ public class PartyMemberData
     public float? death_position_x { get; set; }
     public float? death_position_y { get; set; }
 }
+
 public class PartyMemberUI : MonoBehaviour
 {
     [Header("References")]
@@ -27,9 +29,6 @@ public class PartyMemberUI : MonoBehaviour
     [SerializeField] private Sprite tankIcon;
     [SerializeField] private Sprite programmerIcon;
     [SerializeField] private Sprite sniperIcon;
-
-    [Header("Test")]
-    [SerializeField] private bool enableTestMode = false;
 
     private Dictionary<string, PartyMemberIcon> partyMembers = new Dictionary<string, PartyMemberIcon>();
     private Dictionary<string, Sprite> jobIcons = new Dictionary<string, Sprite>();
@@ -58,41 +57,6 @@ public class PartyMemberUI : MonoBehaviour
         }
 
         InitializeJobIcons();
-    }
-
-    private void Update()
-    {
-        if (!enableTestMode) return;
-
-        // 테스트 단축키들
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            TestAddPlayer("player1", "tank");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            TestAddPlayer("player2", "programmer");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            TestUpdateHealth("player1", 50f, 100f);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            TestUpdateUlt("player1", 75f, 100f);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            TestRemovePlayer("player1");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            TestPartyInfo();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            ClearAllMembers();
-        }
     }
 
     private void InitializeJobIcons()
@@ -177,25 +141,6 @@ public class PartyMemberUI : MonoBehaviour
         if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
         {
             memberIcon.SetStatus(status);
-            
-            // ===== 부활 관련 상태별 추가 처리 =====
-            switch (status)
-            {
-                case "dead":
-                    memberIcon.SetDeadState(true);
-                    break;
-                case "being_revived":
-                    memberIcon.SetRevivingState(true);
-                    break;
-                case "invulnerable":
-                    memberIcon.SetInvulnerableState(true);
-                    break;
-                case "normal":
-                    memberIcon.SetDeadState(false);
-                    memberIcon.SetRevivingState(false);
-                    memberIcon.SetInvulnerableState(false);
-                    break;
-            }
         }
     }
 
@@ -227,67 +172,19 @@ public class PartyMemberUI : MonoBehaviour
             UpdateMemberHealth(member.id, member.current_health, member.max_health);
             UpdateMemberUlt(member.id, member.current_ult, member.max_ult);
             
-            // 부활 상태 정보 업데이트
-            if (partyMembers.TryGetValue(member.id, out PartyMemberIcon memberIcon))
-            {
-                memberIcon.SetDeadState(member.is_dead);
-                memberIcon.SetRevivingState(member.is_being_revived);
-                memberIcon.SetInvulnerableState(member.is_invulnerable);
+            // 상태 업데이트
+            string status = "normal";
+            if (member.is_dead)
+                status = "dead";
+            else if (member.is_being_revived)
+                status = "being_revived";
+            else if (member.is_invulnerable)
+                status = "invulnerable";
                 
-                if (member.is_being_revived && !string.IsNullOrEmpty(member.revived_by))
-                {
-                    memberIcon.SetReviverInfo(member.revived_by);
-                }
-                
-                if (member.is_dead && member.death_position_x.HasValue && member.death_position_y.HasValue)
-                {
-                    memberIcon.SetDeathPosition(member.death_position_x.Value, member.death_position_y.Value);
-                }
-            }
+            UpdateMemberStatus(member.id, status);
         }
     }
     
-    /// <summary>
-    /// 특정 플레이어의 부활 상태 업데이트
-    /// </summary>
-    public void UpdateMemberRevivalState(string playerId, bool isBeingRevived, string revivedBy = "")
-    {
-        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
-        {
-            memberIcon.SetRevivingState(isBeingRevived);
-            if (isBeingRevived && !string.IsNullOrEmpty(revivedBy))
-            {
-                memberIcon.SetReviverInfo(revivedBy);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 특정 플레이어의 무적 상태 업데이트
-    /// </summary>
-    public void UpdateMemberInvulnerability(string playerId, bool isInvulnerable)
-    {
-        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
-        {
-            memberIcon.SetInvulnerableState(isInvulnerable);
-        }
-    }
-
-    /// <summary>
-    /// 특정 플레이어의 죽음 상태 업데이트
-    /// </summary>
-    public void UpdateMemberDeathState(string playerId, bool isDead, float deathX = 0, float deathY = 0)
-    {
-        if (partyMembers.TryGetValue(playerId, out PartyMemberIcon memberIcon))
-        {
-            memberIcon.SetDeadState(isDead);
-            if (isDead)
-            {
-                memberIcon.SetDeathPosition(deathX, deathY);
-            }
-        }
-    }
-
     public void ClearAllMembers()
     {
         foreach (var kvp in partyMembers)
@@ -301,77 +198,5 @@ public class PartyMemberUI : MonoBehaviour
     public int GetMemberCount()
     {
         return partyMembers.Count;
-    }
-
-    // ====== 테스트 메서드들 ======
-    [ContextMenu("Test Add Tank Player")]
-    public void TestAddTankPlayer()
-    {
-        TestAddPlayer("tank_player", "tank");
-    }
-
-    [ContextMenu("Test Add Programmer Player")]
-    public void TestAddProgrammerPlayer()
-    {
-        TestAddPlayer("programmer_player", "programmer");
-    }
-
-    [ContextMenu("Test Update Health")]
-    public void TestUpdateHealthMenu()
-    {
-        TestUpdateHealth("tank_player", 50f, 100f);
-    }
-
-    [ContextMenu("Test Update Ult")]
-    public void TestUpdateUltMenu()
-    {
-        TestUpdateUlt("tank_player", 75f, 100f);
-    }
-
-    [ContextMenu("Test Party Info")]
-    public void TestPartyInfoMenu()
-    {
-        TestPartyInfo();
-    }
-
-    [ContextMenu("Clear All Members")]
-    public void ClearAllMembersMenu()
-    {
-        ClearAllMembers();
-    }
-
-    public void TestAddPlayer(string playerId, string jobType)
-    {
-        AddPartyMember(playerId, jobType);
-        Debug.Log($"[TEST] 플레이어 추가: {playerId} ({jobType})");
-    }
-
-    public void TestUpdateHealth(string playerId, float hp, float maxHp)
-    {
-        UpdateMemberHealth(playerId, hp, maxHp);
-        Debug.Log($"[TEST] 체력 업데이트: {playerId} -> {hp}/{maxHp}");
-    }
-
-    public void TestUpdateUlt(string playerId, float ult, float maxUlt)
-    {
-        UpdateMemberUlt(playerId, ult, maxUlt);
-        Debug.Log($"[TEST] 궁극기 업데이트: {playerId} -> {ult}/{maxUlt}");
-    }
-
-    public void TestRemovePlayer(string playerId)
-    {
-        RemovePartyMember(playerId);
-        Debug.Log($"[TEST] 플레이어 제거: {playerId}");
-    }
-
-    public void TestPartyInfo()
-    {
-        var testMembers = new List<PartyMemberData>
-        {
-            new PartyMemberData { id = "test1", job_type = "tank", current_health = 80, max_health = 100, current_ult = 30, max_ult = 100 },
-            new PartyMemberData { id = "test2", job_type = "programmer", current_health = 60, max_health = 100, current_ult = 90, max_ult = 100 }
-        };
-        UpdatePartyInfo(testMembers);
-        Debug.Log("[TEST] 파티 정보 업데이트 완료");
     }
 }

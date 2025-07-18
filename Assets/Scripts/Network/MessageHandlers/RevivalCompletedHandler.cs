@@ -35,7 +35,7 @@ public class RevivalCompletedHandler : INetworkMessageHandler
                 }
                 
                 // 부활 처리
-                NetworkManager.Instance.StartCoroutine(DelayedRevive(player, msg, 3f));
+                NetworkManager.Instance.StartCoroutine(DelayedRevive(player, msg, 2.7f));
                 
                 // 내 플레이어라면 ProfileUI는 부활 후 업데이트됨
                 Debug.Log($"[RevivalCompletedHandler] {msg.targetId} 부활 준비 완료, 3초 후 부활");
@@ -62,6 +62,34 @@ public class RevivalCompletedHandler : INetworkMessageHandler
             player.currentHp = (int)msg.currentHp;
             player.maxHp = (int)msg.maxHp;
             player.StartInvulnerability(msg.invulnerabilityDuration);
+            
+            // 내 플레이어인지 확인
+            bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyGUID;
+            
+            if (isMyPlayer)
+            {
+                // ProfileUI 업데이트
+                if (profileUI != null)
+                {
+                    profileUI.UpdateHp((int)msg.currentHp, (int)msg.maxHp);
+                    Debug.Log($"[RevivalCompletedHandler] 내 플레이어 ProfileUI 체력 업데이트: {msg.currentHp}/{msg.maxHp}");
+                }
+            }
+            else
+            {
+                // 파티 UI 업데이트
+                if (PartyMemberUI.Instance != null)
+                {
+                    PartyMemberUI.Instance.UpdateMemberHealth(msg.targetId, msg.currentHp, msg.maxHp);
+                    if (msg.currentUlt > 0)
+                    {
+                        PartyMemberUI.Instance.UpdateMemberUlt(msg.targetId, msg.currentUlt, 100f);
+                    }
+                    PartyMemberUI.Instance.UpdateMemberStatus(msg.targetId, "invulnerable");
+                    
+                    Debug.Log($"[RevivalCompletedHandler] 파티 UI 업데이트: {msg.targetId} - 부활 완료, 무적 상태");
+                }
+            }
             
             Debug.Log($"[RevivalCompletedHandler] {player.playerGUID} 타이머 부활 완료! HP: {msg.currentHp}/{msg.maxHp}");
         }
