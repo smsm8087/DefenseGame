@@ -2,19 +2,21 @@
 using System;
 using UnityEngine;
 
-public class GameOverHandler : INetworkMessageHandler
+public class GameResultHandler : INetworkMessageHandler
 {
     private CenterText centerText;
-    public string Type => "game_over";
+    public string Type => "game_result";
 
-    public GameOverHandler(CenterText centerText)
+    public GameResultHandler(CenterText centerText)
     {
         this.centerText = centerText;
     }
 
     public void Handle(NetMsg msg)
     {
-        centerText.UpdateText(-1, msg.message);
+        //TODO: result_Type -> clear | gameover
+        //ui 띄워주고 액션 시작
+        centerText.UpdateText(-1, msg.result_type);
         GameManager.Instance.PauseGame();
     }
 }

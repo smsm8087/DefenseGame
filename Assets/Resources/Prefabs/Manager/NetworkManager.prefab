@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6792146688662653784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2940239551560444071}
+  - component: {fileID: 230718247098804656}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2940239551560444071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792146688662653784}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.15, y: -2.2688985, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230718247098804656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792146688662653784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a3f7bee13c4d759f04cb14ad728e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankPrefab: {fileID: 6323616739901478146, guid: 1428436b24a75e34ca413f0872c729aa, type: 3}
+  sniperPrefab: {fileID: 6323616739901478146, guid: 76f5b3fe2a5beb2498f1f30f7fb10a57, type: 3}
+  programmerPrefab: {fileID: 6323616739901478146, guid: 0a0bea37e6e2e904f9421bf5d0aa9a19, type: 3}
+  bulletPrefab: {fileID: 5475192822370675610, guid: 9d28b02a24c7d7a4387c49e6655715d3, type: 3}
+  waveManager: {fileID: 5946579316605225597, guid: d78744cbd048644499190bd485653f02, type: 3}
+  centerText: {fileID: 2833604825181286896, guid: 009e44dacad2ac642ace65426a7f51fa, type: 3}
+  DamageTextPrefab: {fileID: 6224278285089542279, guid: face83d47adf43743adf59030ced7397, type: 3}
+  profileUI: {fileID: 6264315688626843957, guid: 39e7d6b88294bf54ab3025fd8a0bc4d4, type: 3}
+  bossPrefab: {fileID: 5628018141983903104, guid: 1aed93a8f8b14db47958f472b3fa3c9c, type: 3}

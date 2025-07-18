@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9186355463820145592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1106098042656747706}
+  - component: {fileID: 3153473333265153978}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1106098042656747706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186355463820145592}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 345.59027, y: 289.57864, z: 0.0037712902}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3153473333265153978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9186355463820145592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c5f2b99da1b4ddca86350ec2adaf2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameUICanvas: {fileID: 6028497453063070174, guid: 0c663d67fe075d5449e4d7dad0c66d86, type: 3}
+  IntroUICanvas: {fileID: 3869939363468279345, guid: a0775b9a7d59f634f8f1579594989bc3, type: 3}
+  BossHpUI: {fileID: 3644024632537894556, guid: 064b8d54d9c83c443b663e9fb649e0d2, type: 3}
+  cardSelectPopupPrefab: {fileID: 8207668002898916634, guid: cb1c4965f3b9c064394c2c47b5f6a28f, type: 3}
+  statUIPrefab: {fileID: 4655644722412314644, guid: 908531e8cc58b11408512475d9cf202b, type: 3}

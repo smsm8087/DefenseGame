@@ -202,3 +202,7 @@ defenseGameApk_new.zip
 DefenseGame_BurstDebugInformation_DoNotShip/tempburstlibs/arm64-v8a/lib_burst_generated.txt
 
 Assets/Resources/ServerConfig.asset
+
+Assets/Resources/Font/damageFont.asset
+
+Assets/Resources/Font/ssanaiFont.asset
