@@ -51,6 +51,10 @@ public class NetworkManager : MonoBehaviour
         };
         
         RegisterHandlers();
+    }
+
+    private void Start()
+    {
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
     }
 

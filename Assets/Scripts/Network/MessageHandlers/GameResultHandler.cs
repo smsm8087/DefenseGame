@@ -16,7 +16,7 @@ public class GameResultHandler : INetworkMessageHandler
     {
         //TODO: result_Type -> clear | gameover
         //ui 띄워주고 액션 시작
-        centerText.UpdateText(-1, msg.result_type);
         GameManager.Instance.PauseGame();
+        UIManager.Instance.ShowGameResultPopup(msg.result_type);
     }
 }

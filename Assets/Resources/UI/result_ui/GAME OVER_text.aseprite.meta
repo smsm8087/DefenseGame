@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: GAME OVER_text
     originalName: 
-    pivot: {x: 0.48000002, y: -0.2178771}
+    pivot: {x: 0.48863637, y: -0.15625}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -133,8 +133,8 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 225
-      height: 179
+      width: 440
+      height: 96
     spriteID: 6400fa192b061a943928d3514f894b51
     spriteBone: []
     spriteOutline: []
@@ -162,10 +162,10 @@ ScriptedImporter:
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 42
-        y: 39
-        width: 225
-        height: 179
+        x: 35
+        y: 15
+        width: 440
+        height: 96
       spriteId: 6400fa192b061a943928d3514f894b51
     linkedCells: []
     parentIndex: -1
@@ -185,5 +185,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 300, y: 250}
-  previousTextureSize: {x: 256, y: 256}
+  canvasSize: {x: 500, y: 120}
+  previousTextureSize: {x: 512, y: 128}

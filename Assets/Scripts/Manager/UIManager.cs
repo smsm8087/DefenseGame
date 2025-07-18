@@ -12,9 +12,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject BossHpUI;
     [SerializeField] private GameObject cardSelectPopupPrefab;
     [SerializeField] private GameObject statUIPrefab;
+    [SerializeField] private GameObject gameResultPopupPrefab;
     private CardSelectPopup cardSelectPopup;
     private StatPopup statUIPopup;
-
+    private GameResultPoup gameResultPoup;
     private void Awake()
     {
         if (Instance != null)
@@ -72,6 +73,14 @@ public class UIManager : MonoBehaviour
     {
         statUIPopup = PopupManager.Instance.ShowPopup<StatPopup>(statUIPrefab);
         statUIPopup.Init(playerinfo);
+    }
+    #endregion
+
+    #region GameResultPopup
+    public void ShowGameResultPopup(string resultType) 
+    {
+        gameResultPoup = PopupManager.Instance.ShowPopup<GameResultPoup>(gameResultPopupPrefab);
+        gameResultPoup.Init(resultType); 
     }
     #endregion
     

@@ -49,3 +49,4 @@ MonoBehaviour:
   BossHpUI: {fileID: 3644024632537894556, guid: 064b8d54d9c83c443b663e9fb649e0d2, type: 3}
   cardSelectPopupPrefab: {fileID: 8207668002898916634, guid: cb1c4965f3b9c064394c2c47b5f6a28f, type: 3}
   statUIPrefab: {fileID: 4655644722412314644, guid: 908531e8cc58b11408512475d9cf202b, type: 3}
+  gameResultPopupPrefab: {fileID: 755367681358835117, guid: d42379c7f9b98384aaeaf09c8997cfde, type: 3}
