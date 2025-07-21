@@ -51,6 +51,7 @@ public class ApiManager : MonoBehaviour
 
         string url = $"{BaseUrl}/{endpoint}";
         UnityWebRequest www = UnityWebRequest.Post(url, form);
+        www.useHttpContinue = false;
         yield return www.SendWebRequest();
 
         if (www.result != UnityWebRequest.Result.Success)
