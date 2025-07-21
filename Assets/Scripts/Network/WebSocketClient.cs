@@ -1,6 +1,8 @@
 using UnityEngine;
 using NativeWebSocket;
 using System;
+using System.Threading.Tasks;
+
 public class WebSocketClient : MonoBehaviour
 {
     public static WebSocketClient Instance { get; private set; }
@@ -36,7 +38,7 @@ public class WebSocketClient : MonoBehaviour
  return "wss://defensegamewebsocketserver.onrender.com/ws";
 #endif
     }
-    private async void Start()
+    public async Task TryConnect()
     {
         string url = getUrl();
         Debug.Log($"웹소켓 연결 시도: {url}");
@@ -73,7 +75,6 @@ public class WebSocketClient : MonoBehaviour
             Debug.LogError($"연결 실패: {ex.Message}");
         }
     }
-
     private void Update()
     {
 #if !UNITY_WEBGL || UNITY_EDITOR

@@ -5,6 +5,7 @@ public class ServerConfigEditorWindow : EditorWindow
 {
     private ServerConfig config;
     private ServerMode mode;
+    private ServerAPIMode apiMode;
     private string multiplayerIP;
     private string testPlayIP;
     private int port;
@@ -25,6 +26,7 @@ public class ServerConfigEditorWindow : EditorWindow
         }
         else
         {
+            apiMode = config.serverAPIMode;
             mode = config.serverMode;
             testPlayIP = config.TestLocalIp;
             multiplayerIP = config.renderServerIp;
@@ -41,6 +43,7 @@ public class ServerConfigEditorWindow : EditorWindow
         }
 
         EditorGUILayout.LabelField("서버 설정", EditorStyles.boldLabel);
+        apiMode = (ServerAPIMode)EditorGUILayout.EnumPopup("API모드", apiMode);
         mode = (ServerMode)EditorGUILayout.EnumPopup("모드", mode);
 
         if (mode == ServerMode.TestLocal)
@@ -52,6 +55,7 @@ public class ServerConfigEditorWindow : EditorWindow
 
         if (GUILayout.Button("적용하기"))
         {
+            config.serverAPIMode = apiMode;
             config.serverMode = mode;
             config.TestLocalIp = testPlayIP;
             config.port = port;

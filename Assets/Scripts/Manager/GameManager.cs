@@ -22,13 +22,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image bossHpImg;
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
             Destroy(gameObject);
-            return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         GameDataManager.Instance.LoadAllData();
     }
 

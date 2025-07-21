@@ -1,24 +1,30 @@
-﻿namespace NativeWebSocket.Models
+﻿using System;
+
+namespace NativeWebSocket.Models
 {
     public class ApiResponse
     {
-        [System.Serializable]
+        [Serializable]
         public class LoginResponse
         {
-            public string message;
-            public int userId;
+            public string userId;
             public string nickname;
         }
-        [System.Serializable]
+        [Serializable]
         public class CreateRoomResponse
         {
             public string roomCode;
         }
 
-        [System.Serializable]
+        [Serializable]
         public class JoinRoomResponse
         {
             public string roomCode;
+        }
+        [Serializable]
+        public class RoomStatusResponse
+        {
+            public int playerCount;
         }
     }
 }

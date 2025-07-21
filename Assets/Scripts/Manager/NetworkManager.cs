@@ -19,9 +19,7 @@ public class NetworkManager : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     
     [SerializeField] private WaveManager waveManager;
-    [SerializeField] private CenterText centerText;
     [SerializeField] private GameObject DamageTextPrefab;
-    [SerializeField] private ProfileUI profileUI;
     
     [Header("보스")]
     [SerializeField] private GameObject bossPrefab;
@@ -42,6 +40,7 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
         
         prefabMap = new Dictionary<string, GameObject>()
         {
@@ -53,6 +52,16 @@ public class NetworkManager : MonoBehaviour
         RegisterHandlers();
     }
 
+    public void Reset()
+    {
+        Time.timeScale = 1;
+        onGameOver = null;
+        RemoveAllEnemies();
+        RemoveAllBullets();
+        RemoveAllPlayers();
+        RemoveAllBoss();
+    }
+    
     private void Start()
     {
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
@@ -111,6 +120,33 @@ public class NetworkManager : MonoBehaviour
         }
         enemies.Clear();
     }
+    public void RemoveAllBoss()
+    {
+        foreach (var boss in bossDict)
+        {
+            GameObject bossObj = boss.Value;
+            Destroy(bossObj);
+        }
+        bossDict.Clear();
+    }
+    public void RemoveAllPlayers()
+    {
+        foreach (var player in players)
+        {
+            GameObject playerObj = player.Value;
+            Destroy(playerObj);
+        }
+        players.Clear();
+    }
+    public void RemoveAllBullets()
+    {
+        foreach (var bullet in bullets)
+        {
+            GameObject bulletObj = bullet.Value;
+            Destroy(bulletObj);
+        }
+        bullets.Clear();
+    }
 
     public void ResetHp()
     {
@@ -122,7 +158,7 @@ public class NetworkManager : MonoBehaviour
     private void RegisterHandlers()
     {
         //서버 리시브 처리 부분.
-        AddHandler(new PlayerJoinHandler(prefabMap,players, this,profileUI));
+        AddHandler(new PlayerJoinHandler(prefabMap,players, this));
         AddHandler(new PlayerMoveHandler(players));
         AddHandler(new PlayerListHandler(prefabMap, players));
         AddHandler(new PlayerLeaveHandler());
@@ -130,24 +166,24 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new EnemySyncHandler(enemies));
         AddHandler(new EnemyDieHandler(enemies));
         AddHandler(new SharedHpUpdateHandler());
-        AddHandler(new CountDownHandler(centerText));
-        AddHandler(new WaveStartHandler(centerText));
-        AddHandler(new GameResultHandler(centerText));
+        AddHandler(new CountDownHandler());
+        AddHandler(new WaveStartHandler());
+        AddHandler(new GameResultHandler());
         AddHandler(new RestartHandler());
         AddHandler(new PlayerAnimationHandler(players));
         AddHandler(new EnemyDamagedHandler(enemies,DamageTextPrefab));
         AddHandler(new EnemyChangeStateHandler(enemies));
-        AddHandler(new SettlementStartHandler(UIManager.Instance.ShowCardSelectPopup));
+        AddHandler(new SettlementStartHandler());
         AddHandler(new SettlementTimerUpdateHandler());
-        AddHandler(new UpdateUltGaugeHandler(profileUI));
-        AddHandler(new UpdatePlayerDataHandler(players, profileUI));
+        AddHandler(new UpdateUltGaugeHandler());
+        AddHandler(new UpdatePlayerDataHandler(players));
         AddHandler(new PartyMemberHealthHandler());
         AddHandler(new PartyMemberUltHandler());
         AddHandler(new PartyMemberStatusHandler());
         AddHandler(new PartyInfoHandler());
         AddHandler(new PartyMemberLeftHandler());
         AddHandler(new InitialGameHandler());
-        AddHandler(new PlayerUpdateHpHandler(players, profileUI));
+        AddHandler(new PlayerUpdateHpHandler(players));
         AddHandler(new BulletSpawnHandler(bullets, bulletPrefab));
         AddHandler(new BulletTickHandler(bullets));
         AddHandler(new BulletDestroyHandler(bullets));
@@ -159,10 +195,12 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new BossDeadHandler(bossDict));
         AddHandler(new RevivalStartedHandler());
         AddHandler(new RevivalProgressHandler());
-        AddHandler(new RevivalCompletedHandler(players, profileUI));
+        AddHandler(new RevivalCompletedHandler(players));
         AddHandler(new RevivalCancelledHandler(players));
         AddHandler(new InvulnerabilityEndedHandler(players));
-        Debug.Log("[NetworkManager] 부활 핸들러들 등록 완료");
+        AddHandler(new CreateRoomHandler());
+        AddHandler(new JoinRoomHandler());
+        AddHandler(new StartGameHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)

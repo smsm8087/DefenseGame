@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using DataModels;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerJoinHandler : INetworkMessageHandler
@@ -8,23 +9,63 @@ public class PlayerJoinHandler : INetworkMessageHandler
     private readonly Dictionary<string, GameObject> players;
     private readonly NetworkManager networkManager;
     private readonly Dictionary<string, GameObject> prefabMap;
-    private readonly ProfileUI profileUI;
 
     public string Type => "player_join";
 
+    private string pid = "";
+    private PlayerInfo playerInfo;
     public PlayerJoinHandler(
         Dictionary<string, GameObject> prefabMap,
         Dictionary<string, GameObject> players,
-        NetworkManager networkManager,
-        ProfileUI profileUI
+        NetworkManager networkManager
     )
     {
         this.prefabMap = prefabMap;
         this.players = players;
         this.networkManager = networkManager;
-        this.profileUI = profileUI;
     }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "InGameScene")
+        {
+            // 내 플레이어인지 확인
+            bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
+    
+            if (isMyPlayer)
+            {
+                // 내 플레이어 설정
+                networkManager.SetMyGUID(pid);
+        
+                // 내 플레이어 프리팹 생성
+                var myPlayerObj = PlayerSpawn(playerInfo);
 
+                if (myPlayerObj == null) return;
+                players[pid] = myPlayerObj;
+            
+                // 내 캐릭터 설정
+                CameraFollow.Instance.setTarget(myPlayerObj.transform);
+                BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
+                playerController.enabled = true;
+                myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 1000;
+        
+                // 모바일 입력 등록
+                MobileInputUI.Instance.RegisterPlayer(playerController);
+        
+                // ProfileUI 업데이트
+                UpdateProfileUIForMyPlayer(playerInfo, myPlayerObj);
+            }
+            else
+            {
+                // 다른 플레이어 생성
+                var playerObj = PlayerSpawn(playerInfo);
+        
+                players[pid] = playerObj;
+                playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
+            }
+            
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+    }
     public void Handle(NetMsg msg)
     {
         var pid = msg.playerInfo.id;
@@ -33,46 +74,18 @@ public class PlayerJoinHandler : INetworkMessageHandler
             Debug.LogError("이미 존재하는 플레이어 id 입니다.");
             return;
         }
-    
-        // 내 플레이어인지 확인
-        bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
-    
-        if (isMyPlayer)
-        {
-            // 내 플레이어 설정
-            networkManager.SetMyGUID(pid);
-        
-            // 내 플레이어 프리팹 생성
-            var myPlayerObj = PlayerSpawn(msg.playerInfo);
-
-            if (myPlayerObj == null) return;
-            players[pid] = myPlayerObj;
-            
-            // 내 캐릭터 설정
-            CameraFollow.Instance.setTarget(myPlayerObj.transform);
-            BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
-            playerController.enabled = true;
-            myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 1000;
-        
-            // 모바일 입력 등록
-            MobileInputUI.Instance.RegisterPlayer(playerController);
-        
-            // ProfileUI 업데이트
-            UpdateProfileUIForMyPlayer(msg.playerInfo, myPlayerObj);
-        }
-        else
-        {
-            // 다른 플레이어 생성
-            var playerObj = PlayerSpawn(msg.playerInfo);
-        
-            players[pid] = playerObj;
-            playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
-        }
+        this.pid = pid;
+        this.playerInfo = msg.playerInfo;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // ProfileUI 업데이트를 별도 메서드로 분리
     private void UpdateProfileUIForMyPlayer(PlayerInfo playerinfo, GameObject myPlayerObj)
     {
+        GameObject profileObj = GameObject.Find("ProfileUI");
+        if (!profileObj) return;
+        ProfileUI profileUI = profileObj.GetComponent<ProfileUI>();
+        if(!profileUI) return;
         profileUI.InitializeProfile(playerinfo, myPlayerObj);
     }
 

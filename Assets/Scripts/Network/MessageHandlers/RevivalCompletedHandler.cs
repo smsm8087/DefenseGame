@@ -5,14 +5,12 @@ using System.Collections.Generic;
 public class RevivalCompletedHandler : INetworkMessageHandler
 {
     private readonly Dictionary<string, GameObject> players;
-    private readonly ProfileUI profileUI;
     
     public string Type => "revival_completed";
     
-    public RevivalCompletedHandler(Dictionary<string, GameObject> players, ProfileUI profileUI)
+    public RevivalCompletedHandler(Dictionary<string, GameObject> players)
     {
         this.players = players;
-        this.profileUI = profileUI;
     }
     
     public void Handle(NetMsg msg)
@@ -77,10 +75,15 @@ public class RevivalCompletedHandler : INetworkMessageHandler
             if (isMyPlayer)
             {
                 // ProfileUI 업데이트
-                if (profileUI != null)
+                GameObject profileObj = GameObject.Find("ProfileUI");
+                if (profileObj)
                 {
-                    profileUI.UpdateHp((int)msg.currentHp, (int)msg.maxHp);
-                    Debug.Log($"[RevivalCompletedHandler] 내 플레이어 ProfileUI 체력 업데이트: {msg.currentHp}/{msg.maxHp}");
+                    ProfileUI profileUI = profileObj.GetComponent<ProfileUI>();
+                    if (profileUI != null)
+                    {
+                        profileUI.UpdateHp((int)msg.currentHp, (int)msg.maxHp);
+                        Debug.Log($"[RevivalCompletedHandler] 내 플레이어 ProfileUI 체력 업데이트: {msg.currentHp}/{msg.maxHp}");
+                    }
                 }
             }
             else

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,16 +16,16 @@ public class CameraFollow : MonoBehaviour
     
     private Transform target;
 
+    private void Awake()
+    {
+        if(Instance != null) Destroy(this);
+        Instance = this;
+    }
+
     public void setTarget(Transform _target)
     {
         target = _target;
     }
-    
-    void Start()
-    {
-        Instance = this;
-    }
-
     private void Update()
     {
         if (target == null) return;

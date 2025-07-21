@@ -14,7 +14,6 @@ public class PopupManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public T ShowPopup<T>(GameObject popupPrefab) where T : BasePopup

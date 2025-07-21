@@ -470,7 +470,6 @@ namespace NativeWebSocket
 
                 await m_Socket.ConnectAsync(uri, m_CancellationToken);
                 OnOpen?.Invoke();
-
                 await Receive();
             }
             catch (Exception ex)
@@ -480,14 +479,13 @@ namespace NativeWebSocket
             }
             finally
             {
-                if (m_Socket != null)
+                if (m_Socket != null && State != WebSocketState.Open)
                 {
                     m_TokenSource.Cancel();
                     m_Socket.Dispose();
                 }
             }
         }
-
         public WebSocketState State
         {
             get

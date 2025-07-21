@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class GameResultHandler : INetworkMessageHandler
 {
-    private CenterText centerText;
     public string Type => "game_result";
-
-    public GameResultHandler(CenterText centerText)
-    {
-        this.centerText = centerText;
-    }
 
     public void Handle(NetMsg msg)
     {

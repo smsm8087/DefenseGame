@@ -7,11 +7,17 @@ public enum ServerMode
     TestLocal,
     MultiPlay
 }
+public enum ServerAPIMode
+{
+    Local,
+    MultiPlay
+}
 
 [CreateAssetMenu(menuName = "Network/Server Config")]
 public class ServerConfig : ScriptableObject
 {
     public ServerMode serverMode = ServerMode.Local;
+    public ServerAPIMode serverAPIMode = ServerAPIMode.Local;
     public string TestLocalIp = "59.12.167.192";
     public string renderServerIp = "wss://defensegamewebsocketserver.onrender.com/ws";        
 
@@ -32,11 +38,11 @@ public class ServerConfig : ScriptableObject
     }
     public string GetApiServerIP()
     {
-        switch (serverMode)
+        switch (serverAPIMode)
         {
-            case ServerMode.TestLocal:
-                return $"http://127.0.0.1:5000/api";
-            case ServerMode.MultiPlay:
+            case ServerAPIMode.Local:
+                return $"http://127.0.0.1:5000/api";       
+            case ServerAPIMode.MultiPlay:
                 return $"http://{TestLocalIp}:5000/api";
         }
         return $"http://{TestLocalIp}:5000/api";

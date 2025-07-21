@@ -7,11 +7,9 @@ public class UpdatePlayerDataHandler : INetworkMessageHandler
 {
     public string Type => "update_player_data";
     private readonly Dictionary<string, GameObject> players;
-    private readonly ProfileUI profileUI;
-    public UpdatePlayerDataHandler(Dictionary<string, GameObject> players, ProfileUI profileUI)
+    public UpdatePlayerDataHandler(Dictionary<string, GameObject> players)
     {
         this.players =  players;
-        this.profileUI = profileUI;
     }
     public void Handle(NetMsg msg)
     {
@@ -25,7 +23,10 @@ public class UpdatePlayerDataHandler : INetworkMessageHandler
         }
         BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
         playerController.ApplyPlayerInfo(msg.playerInfo);
-        
+        GameObject profileObj = GameObject.Find("ProfileUI");
+        if (!profileObj) return;
+        ProfileUI profileUI = profileObj.GetComponent<ProfileUI>();
+        if(!profileUI) return;
         profileUI.UpdatePlayerInfo(msg.playerInfo);
     }
 }

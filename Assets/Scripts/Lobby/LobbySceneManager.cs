@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using NativeWebSocket.Models;
+using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 
 public class LobbySceneManager : MonoBehaviour
@@ -13,10 +15,11 @@ public class LobbySceneManager : MonoBehaviour
     public Button joinRoomButton;
     private bool ui_lock = false;
 
-    private void Start()
+    private async void Start()
     {
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
+        await WebSocketClient.Instance.TryConnect();
     }
 
     IEnumerator CreateRoom()
@@ -25,7 +28,7 @@ public class LobbySceneManager : MonoBehaviour
         ui_lock = true;
         var data = new Dictionary<string, string>
         {
-            { "userId", UserSession.UserId.ToString() }
+            { "userId", UserSession.UserId }
         };
 
         yield return ApiManager.Instance.Post(
@@ -36,7 +39,7 @@ public class LobbySceneManager : MonoBehaviour
                 var parsed = JsonUtility.FromJson<ApiResponse.CreateRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode);
                 Debug.Log($"방 생성 성공! 코드: {parsed.roomCode}");
-                SceneManager.LoadScene("CharacterSelectScene");
+                TryConnectAndEnterLobby(true);
             },
             onError: (err) =>
             {
@@ -45,7 +48,29 @@ public class LobbySceneManager : MonoBehaviour
         );
         ui_lock = false;
     }
-
+    void TryConnectAndEnterLobby(bool isCreateRoom = false)
+    {
+        if (isCreateRoom)
+        {
+            var message = new
+            {
+                type = "create_room",         // 첫 메시지 타입
+                playerId = UserSession.UserId,
+                roomCode = RoomSession.RoomCode
+            };
+            NetworkManager.Instance.SendMsg(message);
+        }
+        else
+        {
+            var message = new
+            {
+                type = "join_room",         // 첫 메시지 타입
+                playerId = UserSession.UserId,
+                roomCode = RoomSession.RoomCode
+            };
+            NetworkManager.Instance.SendMsg(message);
+        }
+    }
     IEnumerator JoinRoom()
     {
         if(ui_lock) yield break;
@@ -64,7 +89,7 @@ public class LobbySceneManager : MonoBehaviour
                 var parsed = JsonUtility.FromJson<ApiResponse.JoinRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode);
                 Debug.Log($"입장 성공! 코드: {parsed.roomCode}");
-                SceneManager.LoadScene("CharacterSelectScene");
+                TryConnectAndEnterLobby(false);
             },
             onError: (err) =>
             {

@@ -8,12 +8,6 @@ namespace NativeWebSocket.MessageHandlers
     public class SettlementStartHandler : INetworkMessageHandler
     {
         public string Type => "settlement_start";
-        private readonly System.Action<List<CardData>, float, int> onSettlementStart;
-
-        public SettlementStartHandler(System.Action<List<CardData>, float, int> onSettlementStart)
-        {
-            this.onSettlementStart = onSettlementStart;
-        }
 
         public void Handle(NetMsg msg)
         {
@@ -38,7 +32,7 @@ namespace NativeWebSocket.MessageHandlers
             float duration = msg.duration;
             int alivePlayerCount = msg.alivePlayerCount;
         
-            onSettlementStart?.Invoke(cards, duration, alivePlayerCount);
+            UIManager.Instance.ShowCardSelectPopup(cards, duration, alivePlayerCount);
         }
     }
 }

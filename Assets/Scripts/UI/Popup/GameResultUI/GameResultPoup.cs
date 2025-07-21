@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -36,6 +37,8 @@ public class GameResultPoup : BasePopup
         outButton.onClick.AddListener(()=>
         {
             base.Close();
+            NetworkManager.Instance.Reset();
+            SceneManager.LoadScene("LobbyScene");
         });
         TitleObj.transform.localPosition += new Vector3(0f, 270f, 0f);
         StartCoroutine(TitleObj.transform.localPosition, titlePos, TitleObj);
