@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using UnityEngine;
 
 public enum ServerMode
@@ -28,5 +29,16 @@ public class ServerConfig : ScriptableObject
                 return renderServerIp;
         }
         return $"ws://{TestLocalIp}:{port}/ws";
+    }
+    public string GetApiServerIP()
+    {
+        switch (serverMode)
+        {
+            case ServerMode.TestLocal:
+                return $"http://127.0.0.1:5000/api";
+            case ServerMode.MultiPlay:
+                return $"http://{TestLocalIp}:5000/api";
+        }
+        return $"http://{TestLocalIp}:5000/api";
     }
 }
