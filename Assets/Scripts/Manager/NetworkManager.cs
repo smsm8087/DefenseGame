@@ -15,6 +15,7 @@ public class NetworkManager : MonoBehaviour
     public GameObject tankPrefab;
     public GameObject sniperPrefab;
     public GameObject programmerPrefab;
+    public GameObject maidPrefab;
     
     [Header("총알")]
     [SerializeField] private GameObject bulletPrefab;
@@ -46,7 +47,8 @@ public class NetworkManager : MonoBehaviour
         {
             { "tank", tankPrefab },
             { "sniper", sniperPrefab },
-            { "programmer", programmerPrefab }
+            { "programmer", programmerPrefab },
+            { "maid", maidPrefab }
         };
         
         RegisterHandlers();
