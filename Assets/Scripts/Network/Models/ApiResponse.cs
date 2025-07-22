@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace NativeWebSocket.Models
 {
@@ -14,17 +15,19 @@ namespace NativeWebSocket.Models
         public class CreateRoomResponse
         {
             public string roomCode;
+            public string hostId;
         }
 
         [Serializable]
         public class JoinRoomResponse
         {
             public string roomCode;
+            public string hostId;
         }
         [Serializable]
         public class RoomStatusResponse
         {
-            public int playerCount;
+            public List<string> playerIds;
         }
     }
 }

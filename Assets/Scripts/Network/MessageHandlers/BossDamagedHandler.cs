@@ -18,6 +18,7 @@ public class BossDamagedHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         BossDamageInfo damagedBoss = msg.damagedBoss;
+        if (!bossDict.ContainsKey("boss")) return;
         GameObject boss = bossDict["boss"];
         if (boss == null)
         {

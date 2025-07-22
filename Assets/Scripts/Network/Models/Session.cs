@@ -1,10 +1,12 @@
 ﻿public static class RoomSession
 {
     public static string RoomCode { get; private set; }
+    public static string HostId { get; private set; }
 
-    public static void Set(string code)
+    public static void Set(string code, string  hostId)
     {
         RoomCode = code;
+        HostId = hostId;
     }
 }
 public class UserSession

@@ -12,7 +12,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
 {
     [SerializeField] private Button StartButton;
     private bool ui_lock = false;
-    private int playerCount;
     void Awake()
     {
         StartButton.onClick.AddListener(OnClickStart);
@@ -58,7 +57,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 {
                     type = "start_game",
                     playerId = UserSession.UserId,
-                    playerCount = roomStatusResponse.playerCount,
+                    players = roomStatusResponse.playerIds,
                     roomCode = RoomSession.RoomCode,
                 };
                 string json = JsonConvert.SerializeObject(message);

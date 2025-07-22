@@ -50,7 +50,6 @@ public class NetworkManager : MonoBehaviour
         };
         
         RegisterHandlers();
-        Debug.Log("networkmanager awake");
     }
 
     public void Reset()
@@ -61,12 +60,12 @@ public class NetworkManager : MonoBehaviour
         RemoveAllBullets();
         RemoveAllPlayers();
         RemoveAllBoss();
+        PartyMemberUI.Instance.ClearAllMembers();
         WebSocketClient.Instance.OnMessageReceived -= HandleMessage;
     }
     
     private void Start()
     {
-        Debug.Log("networkmanager start");
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
     }
 
