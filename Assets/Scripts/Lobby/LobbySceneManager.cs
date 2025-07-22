@@ -19,29 +19,6 @@ public class LobbySceneManager : MonoBehaviour
     {
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
-        WebSocketClient.Instance.OnMessageReceived += Handle;
-    }
-
-    void Handle(string message)
-    {
-        NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(message);
-        switch (netMsg.type)
-        {
-            case "room_created":
-            {
-                var handler = new CreateRoomHandler();
-                handler.Handle(netMsg);
-                WebSocketClient.Instance.OnMessageReceived -=  Handle;
-            }
-            break;
-            case "room_joined":
-            {
-                var handler = new JoinRoomHandler();
-                handler.Handle(netMsg);
-                WebSocketClient.Instance.OnMessageReceived -=  Handle;
-            }
-            break;
-        }
     }
 
     IEnumerator CreateRoom()
@@ -59,9 +36,9 @@ public class LobbySceneManager : MonoBehaviour
             onSuccess: (res) =>
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.CreateRoomResponse>(res);
-                RoomSession.Set(parsed.roomCode);
+                RoomSession.Set(parsed.roomCode, parsed.hostId);
                 Debug.Log($"방 생성 성공! 코드: {parsed.roomCode}");
-                TryConnectAndEnterLobby(true);
+                SceneLoader.Instance.LoadScene("CharacterSelectScene");
             },
             onError: (err) =>
             {
@@ -70,38 +47,13 @@ public class LobbySceneManager : MonoBehaviour
         );
         ui_lock = false;
     }
-    void TryConnectAndEnterLobby(bool isCreateRoom = false)
-    {
-        if (isCreateRoom)
-        {
-            var message = new
-            {
-                type = "create_room",         // 첫 메시지 타입
-                playerId = UserSession.UserId,
-                roomCode = RoomSession.RoomCode
-            };
-            string json = JsonConvert.SerializeObject(message);
-            WebSocketClient.Instance.Send(json);
-        }
-        else
-        {
-            var message = new
-            {
-                type = "join_room",         // 첫 메시지 타입
-                playerId = UserSession.UserId,
-                roomCode = RoomSession.RoomCode
-            };
-            string json = JsonConvert.SerializeObject(message);
-            WebSocketClient.Instance.Send(json);
-        }
-    }
     IEnumerator JoinRoom()
     {
         if(ui_lock) yield break;
         ui_lock = true;
         var data = new Dictionary<string, string>
         {
-            { "userId", UserSession.UserId.ToString() },
+            { "userId", UserSession.UserId },
             { "roomCode", roomCodeInput.text.Trim().ToUpper() }
         };
 
@@ -111,9 +63,9 @@ public class LobbySceneManager : MonoBehaviour
             onSuccess: (res) =>
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.JoinRoomResponse>(res);
-                RoomSession.Set(parsed.roomCode);
+                RoomSession.Set(parsed.roomCode, parsed.hostId);
                 Debug.Log($"입장 성공! 코드: {parsed.roomCode}");
-                TryConnectAndEnterLobby(false);
+                SceneLoader.Instance.LoadScene("CharacterSelectScene");
             },
             onError: (err) =>
             {
