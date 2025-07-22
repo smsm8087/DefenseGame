@@ -72,7 +72,7 @@ public class PartyMemberUI : MonoBehaviour
     public void AddPartyMember(string playerId, string jobType)
     {
         // 내 플레이어는 파티 UI에 추가하지 않음
-        if (playerId == NetworkManager.Instance.MyGUID)
+        if (playerId == NetworkManager.Instance.MyUserId)
         {
             Debug.Log($"내 플레이어({playerId})는 파티 UI에서 제외");
             return;
@@ -147,7 +147,7 @@ public class PartyMemberUI : MonoBehaviour
     public void UpdatePartyInfo(List<PartyMemberData> members)
     {
         // 내 플레이어 제외한 멤버들만 필터링
-        var otherMembers = members.Where(m => m.id != NetworkManager.Instance.MyGUID).ToList();
+        var otherMembers = members.Where(m => m.id != NetworkManager.Instance.MyUserId).ToList();
         
         // 기존 멤버들과 비교하여 추가/제거
         var currentMemberIds = partyMembers.Keys.ToHashSet();

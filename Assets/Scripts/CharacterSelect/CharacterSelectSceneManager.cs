@@ -43,7 +43,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
     {
         if (ui_lock) yield break;
         ui_lock = true;
-        bool isSuccess = false;
         var data = new Dictionary<string, string>
         {
             { "roomcode", RoomSession.RoomCode},

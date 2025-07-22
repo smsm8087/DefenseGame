@@ -87,10 +87,10 @@ public class RevivalUI : MonoBehaviour
     /// </summary>
     private void UpdateInteractionUI()
     {
-        if (NetworkManager.Instance?.MyGUID == null) return;
+        if (NetworkManager.Instance?.MyUserId == null) return;
 
         var players = NetworkManager.Instance.GetPlayers();
-        if (!players.TryGetValue(NetworkManager.Instance.MyGUID, out GameObject myPlayerObj))
+        if (!players.TryGetValue(NetworkManager.Instance.MyUserId, out GameObject myPlayerObj))
             return;
 
         BasePlayer myPlayer = myPlayerObj.GetComponent<BasePlayer>();
@@ -118,7 +118,7 @@ public class RevivalUI : MonoBehaviour
         
         foreach (var kvp in players)
         {
-            if (kvp.Key == NetworkManager.Instance.MyGUID) continue;
+            if (kvp.Key == NetworkManager.Instance.MyUserId) continue;
             
             GameObject playerObj = kvp.Value;
             if (playerObj == null) continue;
