@@ -12,8 +12,6 @@ public class PlayerJoinHandler : INetworkMessageHandler
 
     public string Type => "player_join";
 
-    private string pid = "";
-    private PlayerInfo playerInfo;
     public PlayerJoinHandler(
         Dictionary<string, GameObject> prefabMap,
         Dictionary<string, GameObject> players,
@@ -41,7 +39,7 @@ public class PlayerJoinHandler : INetworkMessageHandler
             networkManager.SetMyGUID(pid);
         
             // 내 플레이어 프리팹 생성
-            var myPlayerObj = PlayerSpawn(playerInfo);
+            var myPlayerObj = PlayerSpawn(msg.playerInfo);
 
             if (myPlayerObj == null) return;
             players[pid] = myPlayerObj;
@@ -56,12 +54,12 @@ public class PlayerJoinHandler : INetworkMessageHandler
             MobileInputUI.Instance.RegisterPlayer(playerController);
         
             // ProfileUI 업데이트
-            UpdateProfileUIForMyPlayer(playerInfo, myPlayerObj);
+            UpdateProfileUIForMyPlayer(msg.playerInfo, myPlayerObj);
         }
         else
         {
             // 다른 플레이어 생성
-            var playerObj = PlayerSpawn(playerInfo);
+            var playerObj = PlayerSpawn(msg.playerInfo);
         
             players[pid] = playerObj;
             playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
