@@ -29,11 +29,9 @@ public class PlayerJoinHandler : INetworkMessageHandler
         var pid = msg.playerInfo.id;
         if (players.ContainsKey(pid))
         {
-            Debug.LogError("이미 존재하는 플레이어 id 입니다.");
+            Debug.Log($"이미 존재하는 플레이어 {pid} 입니다.");
             return;
         }
-        this.pid = pid;
-        this.playerInfo = msg.playerInfo;
         // 내 플레이어인지 확인
         bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
     
