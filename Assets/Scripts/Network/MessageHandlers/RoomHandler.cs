@@ -38,6 +38,7 @@ public class StartGameHandler : INetworkMessageHandler
             var message = new
             {
                 type = "scene_loaded",
+                playerId = UserSession.UserId,
                 roomCode = RoomSession.RoomCode,
             };
             string json = JsonConvert.SerializeObject(message);
