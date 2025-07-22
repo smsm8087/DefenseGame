@@ -15,11 +15,33 @@ public class LobbySceneManager : MonoBehaviour
     public Button joinRoomButton;
     private bool ui_lock = false;
 
-    private async void Start()
+    private void Start()
     {
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
-        await WebSocketClient.Instance.TryConnect();
+        WebSocketClient.Instance.OnMessageReceived += Handle;
+    }
+
+    void Handle(string message)
+    {
+        NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(message);
+        switch (netMsg.type)
+        {
+            case "room_created":
+            {
+                var handler = new CreateRoomHandler();
+                handler.Handle(netMsg);
+                WebSocketClient.Instance.OnMessageReceived -=  Handle;
+            }
+            break;
+            case "room_joined":
+            {
+                var handler = new JoinRoomHandler();
+                handler.Handle(netMsg);
+                WebSocketClient.Instance.OnMessageReceived -=  Handle;
+            }
+            break;
+        }
     }
 
     IEnumerator CreateRoom()
@@ -58,7 +80,8 @@ public class LobbySceneManager : MonoBehaviour
                 playerId = UserSession.UserId,
                 roomCode = RoomSession.RoomCode
             };
-            NetworkManager.Instance.SendMsg(message);
+            string json = JsonConvert.SerializeObject(message);
+            WebSocketClient.Instance.Send(json);
         }
         else
         {
@@ -68,7 +91,8 @@ public class LobbySceneManager : MonoBehaviour
                 playerId = UserSession.UserId,
                 roomCode = RoomSession.RoomCode
             };
-            NetworkManager.Instance.SendMsg(message);
+            string json = JsonConvert.SerializeObject(message);
+            WebSocketClient.Instance.Send(json);
         }
     }
     IEnumerator JoinRoom()

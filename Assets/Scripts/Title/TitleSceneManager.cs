@@ -18,10 +18,11 @@ public class TitleSceneManager : MonoBehaviour
     public ToastMessage toastMessage;
     private bool ui_lock = false;
 
-    private void Start()
+    private async void Start()
     {
         loginButton.onClick.AddListener(() => StartCoroutine(Login()));
         signupButton.onClick.AddListener(() => StartCoroutine(Signup()));
+        await WebSocketClient.Instance.TryConnect();
     }
 
     void showMessage(string msg)
@@ -47,7 +48,7 @@ public class TitleSceneManager : MonoBehaviour
             {
                 var loginRes = JsonUtility.FromJson<ApiResponse.LoginResponse>(res);
                 UserSession.Set(loginRes.userId, loginRes.nickname);
-                SceneManager.LoadScene("LobbyScene");
+                SceneLoader.Instance.LoadScene("LobbyScene");
             },
             onError: (err) =>
             {
@@ -75,7 +76,7 @@ public class TitleSceneManager : MonoBehaviour
             {
                 var loginRes = JsonUtility.FromJson<ApiResponse.LoginResponse>(res);
                 UserSession.Set(loginRes.userId, loginRes.nickname);
-                SceneManager.LoadScene("LobbyScene");
+                SceneLoader.Instance.LoadScene("LobbyScene");
             },
             onError: (err) =>
             {

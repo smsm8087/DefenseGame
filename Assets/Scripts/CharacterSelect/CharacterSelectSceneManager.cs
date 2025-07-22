@@ -16,6 +16,22 @@ public class CharacterSelectSceneManager : MonoBehaviour
     void Awake()
     {
         StartButton.onClick.AddListener(OnClickStart);
+        WebSocketClient.Instance.OnMessageReceived += Handle;
+    }
+
+    void Handle(string message)
+    {
+        NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(message);
+        switch (netMsg.type)
+        {
+            case "started_game":
+            {
+                var handler = new StartGameHandler();
+                handler.Handle(netMsg);
+            }
+            break;
+        }
+        WebSocketClient.Instance.OnMessageReceived -=  Handle;
     }
 
     private void OnClickStart()
@@ -46,7 +62,8 @@ public class CharacterSelectSceneManager : MonoBehaviour
                     playerCount = roomStatusResponse.playerCount,
                     roomCode = RoomSession.RoomCode,
                 };
-                NetworkManager.Instance.SendMsg(message);
+                string json = JsonConvert.SerializeObject(message);
+                WebSocketClient.Instance.Send(json);
             },
             onError: (err) =>
             {

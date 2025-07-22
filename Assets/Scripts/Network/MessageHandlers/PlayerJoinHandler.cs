@@ -24,48 +24,6 @@ public class PlayerJoinHandler : INetworkMessageHandler
         this.players = players;
         this.networkManager = networkManager;
     }
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "InGameScene")
-        {
-            // 내 플레이어인지 확인
-            bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
-    
-            if (isMyPlayer)
-            {
-                // 내 플레이어 설정
-                networkManager.SetMyGUID(pid);
-        
-                // 내 플레이어 프리팹 생성
-                var myPlayerObj = PlayerSpawn(playerInfo);
-
-                if (myPlayerObj == null) return;
-                players[pid] = myPlayerObj;
-            
-                // 내 캐릭터 설정
-                CameraFollow.Instance.setTarget(myPlayerObj.transform);
-                BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
-                playerController.enabled = true;
-                myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 1000;
-        
-                // 모바일 입력 등록
-                MobileInputUI.Instance.RegisterPlayer(playerController);
-        
-                // ProfileUI 업데이트
-                UpdateProfileUIForMyPlayer(playerInfo, myPlayerObj);
-            }
-            else
-            {
-                // 다른 플레이어 생성
-                var playerObj = PlayerSpawn(playerInfo);
-        
-                players[pid] = playerObj;
-                playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
-            }
-            
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
-    }
     public void Handle(NetMsg msg)
     {
         var pid = msg.playerInfo.id;
@@ -76,7 +34,40 @@ public class PlayerJoinHandler : INetworkMessageHandler
         }
         this.pid = pid;
         this.playerInfo = msg.playerInfo;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        // 내 플레이어인지 확인
+        bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
+    
+        if (isMyPlayer)
+        {
+            // 내 플레이어 설정
+            networkManager.SetMyGUID(pid);
+        
+            // 내 플레이어 프리팹 생성
+            var myPlayerObj = PlayerSpawn(playerInfo);
+
+            if (myPlayerObj == null) return;
+            players[pid] = myPlayerObj;
+            
+            // 내 캐릭터 설정
+            CameraFollow.Instance.setTarget(myPlayerObj.transform);
+            BasePlayer playerController = myPlayerObj.GetComponent<BasePlayer>();
+            playerController.enabled = true;
+            myPlayerObj.GetComponent<SpriteRenderer>().sortingOrder = 1000;
+        
+            // 모바일 입력 등록
+            MobileInputUI.Instance.RegisterPlayer(playerController);
+        
+            // ProfileUI 업데이트
+            UpdateProfileUIForMyPlayer(playerInfo, myPlayerObj);
+        }
+        else
+        {
+            // 다른 플레이어 생성
+            var playerObj = PlayerSpawn(playerInfo);
+        
+            players[pid] = playerObj;
+            playerObj.GetComponent<NetworkCharacterFollower>().enabled = true;
+        }
     }
 
     // ProfileUI 업데이트를 별도 메서드로 분리

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NativeWebSocket;
@@ -40,7 +41,6 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         
         prefabMap = new Dictionary<string, GameObject>()
         {
@@ -50,6 +50,7 @@ public class NetworkManager : MonoBehaviour
         };
         
         RegisterHandlers();
+        Debug.Log("networkmanager awake");
     }
 
     public void Reset()
@@ -60,10 +61,12 @@ public class NetworkManager : MonoBehaviour
         RemoveAllBullets();
         RemoveAllPlayers();
         RemoveAllBoss();
+        WebSocketClient.Instance.OnMessageReceived -= HandleMessage;
     }
     
     private void Start()
     {
+        Debug.Log("networkmanager start");
         WebSocketClient.Instance.OnMessageReceived += HandleMessage;
     }
 
@@ -198,9 +201,6 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RevivalCompletedHandler(players));
         AddHandler(new RevivalCancelledHandler(players));
         AddHandler(new InvulnerabilityEndedHandler(players));
-        AddHandler(new CreateRoomHandler());
-        AddHandler(new JoinRoomHandler());
-        AddHandler(new StartGameHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)

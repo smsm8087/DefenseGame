@@ -100,5 +100,9 @@ public class WebSocketClient : MonoBehaviour
                 Debug.LogWarning("WebSocket not connected.");
             }    
         }
+        else
+        {
+            Debug.LogError("websocket 인스턴스가 null입니다.");
+        }
     }
 }
