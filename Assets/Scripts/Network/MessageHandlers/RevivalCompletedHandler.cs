@@ -33,7 +33,7 @@ public class RevivalCompletedHandler : INetworkMessageHandler
                 }
                 
                 // 내 플레이어라면 부활 이펙트 시작과 동시에 관전 모드 종료
-                bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyGUID;
+                bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyUserId;
                 if (isMyPlayer && SpectatorManager.Instance != null)
                 {
                     SpectatorManager.Instance.StopSpectating();
@@ -70,7 +70,7 @@ public class RevivalCompletedHandler : INetworkMessageHandler
             player.StartInvulnerability(msg.invulnerabilityDuration);
             
             // 내 플레이어인지 확인
-            bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyGUID;
+            bool isMyPlayer = player.playerGUID == NetworkManager.Instance.MyUserId;
             
             if (isMyPlayer)
             {

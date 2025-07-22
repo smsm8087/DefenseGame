@@ -16,7 +16,7 @@ public class PlayerAnimationHandler : INetworkMessageHandler
         //플레이어 애니메이션 브로드캐스팅
         var pid = msg.playerId;
         //내 플레이어는 이걸 할 필요가 없음.
-        if (pid == NetworkManager.Instance.MyGUID) return;
+        if (pid == NetworkManager.Instance.MyUserId) return;
         
         var playerObj = players[pid];
         var animator =  playerObj.GetComponent<Animator>();

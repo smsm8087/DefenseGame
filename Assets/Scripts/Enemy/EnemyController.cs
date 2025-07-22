@@ -136,6 +136,7 @@ public class EnemyController : MonoBehaviour
         var enemy_hit_msg = new NetMsg
         {
             type = "enemy_attack_hit",
+            playerId = NetworkManager.Instance.MyUserId,
             enemyId = guid,
         };
         NetworkManager.Instance.SendMsg(enemy_hit_msg);

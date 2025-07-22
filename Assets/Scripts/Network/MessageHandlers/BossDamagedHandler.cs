@@ -28,7 +28,7 @@ public class BossDamagedHandler : INetworkMessageHandler
         GameManager.Instance.UpdateBossHPBar(damagedBoss.currentHp,damagedBoss.maxHp);
         
         //내 플레이어일때만 아웃라인, 데미지 적용
-        if (NetworkManager.Instance.MyGUID != damagedBoss.playerId) return;
+        if (NetworkManager.Instance.MyUserId != damagedBoss.playerId) return;
         //몬스터 아웃라인 셰이더 적용
         var bossController = boss.GetComponent<BossController>();
         if (bossController != null)

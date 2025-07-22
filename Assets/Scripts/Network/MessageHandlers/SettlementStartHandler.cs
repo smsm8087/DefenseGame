@@ -11,11 +11,11 @@ namespace NativeWebSocket.MessageHandlers
 
         public void Handle(NetMsg msg)
         {
-            if (NetworkManager.Instance.MyGUID != msg.playerId) return;
+            if (NetworkManager.Instance.MyUserId != msg.playerId) return;
 
             // 내 플레이어가 죽었는지 확인
             var players = NetworkManager.Instance.GetPlayers();
-            if (players != null && players.TryGetValue(NetworkManager.Instance.MyGUID, out GameObject myPlayerObj))
+            if (players != null && players.TryGetValue(NetworkManager.Instance.MyUserId, out GameObject myPlayerObj))
             {
                 if (myPlayerObj != null)
                 {

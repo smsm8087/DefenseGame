@@ -18,6 +18,7 @@ public class CheatManager : MonoBehaviour
             var msg = new NetMsg
             {
                 type = "restart",
+                playerId = NetworkManager.Instance.MyUserId,
                 isCheat = true,
             };
             NetworkManager.Instance.SendMsg(msg);

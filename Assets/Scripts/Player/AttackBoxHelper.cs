@@ -21,7 +21,7 @@ public static class AttackBoxHelper
         return new NetMsg
         {
             type = "player_attack",
-            playerId = NetworkManager.Instance.MyGUID,
+            playerId = NetworkManager.Instance.MyUserId,
             attackBoxCenterX = centerWorldPos.x,
             attackBoxCenterY = centerWorldPos.y,
             attackBoxWidth = size.x * lossyScale.x,

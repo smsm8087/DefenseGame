@@ -81,7 +81,7 @@ public class CardSelectPopup : BasePopup
         var msg = new NetMsg
         {
             type = "settlement_ready",
-            playerId = NetworkManager.Instance.MyGUID,
+            playerId = NetworkManager.Instance.MyUserId,
             selectedCardId = selectedCardId
         };
 

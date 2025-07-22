@@ -187,6 +187,7 @@ public class RevivalUI : MonoBehaviour
         var revivalMsg = new NetMsg
         {
             type = "start_revival",
+            playerId = NetworkManager.Instance.MyUserId,
             targetId = currentRevivalTarget
         };
         NetworkManager.Instance.SendMsg(revivalMsg);

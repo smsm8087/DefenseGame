@@ -31,13 +31,10 @@ public class PlayerJoinHandler : INetworkMessageHandler
             return;
         }
         // 내 플레이어인지 확인
-        bool isMyPlayer = string.IsNullOrEmpty(networkManager.MyGUID);
+        bool isMyPlayer = pid == UserSession.UserId;
     
         if (isMyPlayer)
         {
-            // 내 플레이어 설정
-            networkManager.SetMyGUID(pid);
-        
             // 내 플레이어 프리팹 생성
             var myPlayerObj = PlayerSpawn(msg.playerInfo);
 

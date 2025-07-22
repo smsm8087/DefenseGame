@@ -32,7 +32,7 @@ public class NetworkManager : MonoBehaviour
     private Dictionary<string, GameObject> bullets = new();
     private Dictionary<string, GameObject> bossDict = new();
     private event Action onGameOver;
-    public string MyGUID { get; private set; }
+    public string MyUserId => UserSession.UserId;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -89,11 +89,6 @@ public class NetworkManager : MonoBehaviour
     {
         this.onGameOver?.Invoke();
     }
-    public void SetMyGUID(string guid)
-    {
-        MyGUID = guid;
-    }
-
     public void RemovePlayer(string guid)
     {
         if (!players.ContainsKey(guid)) return;

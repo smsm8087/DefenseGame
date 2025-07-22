@@ -144,7 +144,7 @@ public class SpectatorManager : MonoBehaviour
         }
         
         // 자신의 캐릭터로 카메라 복귀
-        if (players != null && players.TryGetValue(NetworkManager.Instance.MyGUID, out GameObject myPlayer) && myPlayer != null)
+        if (players != null && players.TryGetValue(NetworkManager.Instance.MyUserId, out GameObject myPlayer) && myPlayer != null)
         {
             CameraFollow camera = GetCameraFollow();
             if (camera != null)
@@ -206,7 +206,7 @@ public class SpectatorManager : MonoBehaviour
             if (kvp.Value != null)
             {
                 BasePlayer player = kvp.Value.GetComponent<BasePlayer>();
-                if (player != null && !player.isDead && kvp.Key != NetworkManager.Instance.MyGUID)
+                if (player != null && !player.isDead && kvp.Key != NetworkManager.Instance.MyUserId)
                 {
                     alivePlayerIds.Add(kvp.Key);
                 }

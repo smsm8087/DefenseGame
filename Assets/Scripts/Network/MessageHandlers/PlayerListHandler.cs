@@ -25,7 +25,7 @@ public class PlayerListHandler : INetworkMessageHandler
             string pid = playerData.id; // .ToString() 제거
             string jobType = playerData.job_type;
             
-            Debug.Log($"[PlayerListHandler] 처리 중: PID={pid}, JobType={jobType}, MyGUID={NetworkManager.Instance.MyGUID}");
+            Debug.Log($"[PlayerListHandler] 처리 중: PID={pid}, JobType={jobType}, MyGUID={NetworkManager.Instance.MyUserId}");
             
             // 잘못된 데이터 필터링
             if (string.IsNullOrEmpty(pid) || string.IsNullOrEmpty(jobType))

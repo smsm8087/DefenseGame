@@ -14,7 +14,7 @@ public class PlayerUpdateHpHandler : INetworkMessageHandler
     
     public void Handle(NetMsg msg)
     {
-        if (msg.playerId == NetworkManager.Instance.MyGUID)
+        if (msg.playerId == NetworkManager.Instance.MyUserId)
         {
             GameObject profileObj = GameObject.Find("ProfileUI");
             if (!profileObj) return;

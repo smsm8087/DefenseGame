@@ -154,7 +154,7 @@ public abstract class BasePlayer : MonoBehaviour
         var animationMsg = new NetMsg
         {
             type = "player_animation",
-            playerId = NetworkManager.Instance.MyGUID,
+            playerId = NetworkManager.Instance.MyUserId,
             animation = animation
         };
         NetworkManager.Instance.SendMsg(animationMsg);
@@ -167,7 +167,7 @@ public abstract class BasePlayer : MonoBehaviour
         var moveMsg = new NetMsg
         {
             type = "move",
-            playerId = NetworkManager.Instance.MyGUID,
+            playerId = NetworkManager.Instance.MyUserId,
             x = pos.x,
             y = pos.y,
         };
@@ -197,7 +197,7 @@ public abstract class BasePlayer : MonoBehaviour
     
     public virtual bool IsMyPlayer
     {
-        get => playerGUID == NetworkManager.Instance.MyGUID;
+        get => playerGUID == NetworkManager.Instance.MyUserId;
     }
     // 사망 처리 메서드
     public virtual void Die()
@@ -313,6 +313,7 @@ public abstract class BasePlayer : MonoBehaviour
         var revivalMsg = new NetMsg
         {
             type = "start_revival",
+            playerId = NetworkManager.Instance.MyUserId,
             targetId = targetPlayerId
         };
         NetworkManager.Instance.SendMsg(revivalMsg);
@@ -331,6 +332,7 @@ public abstract class BasePlayer : MonoBehaviour
         var cancelMsg = new NetMsg
         {
             type = "cancel_revival",
+            playerId = NetworkManager.Instance.MyUserId,
             targetId = currentRevivalTarget
         };
         NetworkManager.Instance.SendMsg(cancelMsg);
@@ -353,6 +355,7 @@ public abstract class BasePlayer : MonoBehaviour
         var progressMsg = new NetMsg
         {
             type = "update_revival",
+            playerId = NetworkManager.Instance.MyUserId,
             targetId = currentRevivalTarget,
             progress = progress
         };
