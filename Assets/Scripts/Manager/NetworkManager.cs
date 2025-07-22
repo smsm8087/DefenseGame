@@ -215,8 +215,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
     
-    public void SendMsg(object msg)
+    public void SendMsg(NetMsg msg)
     {
+        msg.playerId ??=  UserSession.UserId;
+        msg.roomCode ??= RoomSession.RoomCode;
+        
         string json = JsonConvert.SerializeObject(msg);
         WebSocketClient.Instance.Send(json);
     }

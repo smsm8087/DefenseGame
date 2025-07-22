@@ -5,6 +5,7 @@ using DataModels;
 public class NetMsg
 {
     public string type;
+    public string roomCode;
     public int wave;
     public int wave_id;
     
