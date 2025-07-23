@@ -19,8 +19,30 @@ public class LobbySceneManager : MonoBehaviour
     {
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
+        WebSocketClient.Instance.OnMessageReceived += Handle;
     }
 
+    void Handle(string msg)
+    {
+        NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(msg);
+        switch (netMsg.type)
+        {
+            case "room_created":
+            {
+                var handler = new CreateRoomHandler();
+                handler.Handle(netMsg);
+                WebSocketClient.Instance.OnMessageReceived -= Handle;
+            }
+            break;
+            case "room_joined":
+            {
+                var handler = new JoinRoomHandler();
+                handler.Handle(netMsg);
+                WebSocketClient.Instance.OnMessageReceived -= Handle;
+            }
+            break;
+        }
+    }
     IEnumerator CreateRoom()
     {
         if(ui_lock) yield break;
@@ -37,8 +59,14 @@ public class LobbySceneManager : MonoBehaviour
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.CreateRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode, parsed.hostId);
-                Debug.Log($"방 생성 성공! 코드: {parsed.roomCode}");
-                SceneLoader.Instance.LoadScene("CharacterSelectScene");
+                var msg = new NetMsg
+                {
+                    type = "create_room",
+                    playerId = UserSession.UserId,
+                    roomCode = parsed.roomCode,
+                };
+                string json = JsonConvert.SerializeObject(msg);
+                WebSocketClient.Instance.Send(json);
             },
             onError: (err) =>
             {
@@ -64,8 +92,14 @@ public class LobbySceneManager : MonoBehaviour
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.JoinRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode, parsed.hostId);
-                Debug.Log($"입장 성공! 코드: {parsed.roomCode}");
-                SceneLoader.Instance.LoadScene("CharacterSelectScene");
+                var msg = new NetMsg
+                {
+                    type = "join_room",
+                    playerId = UserSession.UserId,
+                    roomCode = parsed.roomCode,
+                };
+                string json = JsonConvert.SerializeObject(msg);
+                WebSocketClient.Instance.Send(json);
             },
             onError: (err) =>
             {

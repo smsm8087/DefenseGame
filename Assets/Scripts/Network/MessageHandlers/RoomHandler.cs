@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using UnityEngine;
 
 
 public class StartGameHandler : INetworkMessageHandler
@@ -18,5 +19,27 @@ public class StartGameHandler : INetworkMessageHandler
             string json = JsonConvert.SerializeObject(message);
             WebSocketClient.Instance.Send(json);
         });
+    }
+}
+public class CreateRoomHandler : INetworkMessageHandler
+{
+    public string Type => "room_created";
+    public void Handle(NetMsg msg)
+    {
+        SceneLoader.Instance.LoadScene("CharacterSelectScene", () =>
+        {
+            Debug.Log($"방 생성 성공! 코드: {RoomSession.RoomCode}");
+        }); 
+    }
+}
+public class JoinRoomHandler : INetworkMessageHandler
+{
+    public string Type => "room_joined";
+    public void Handle(NetMsg msg)
+    {
+        SceneLoader.Instance.LoadScene("CharacterSelectScene", () =>
+        {
+            Debug.Log($"입장 성공! 코드: {RoomSession.RoomCode}");
+        }); 
     }
 }

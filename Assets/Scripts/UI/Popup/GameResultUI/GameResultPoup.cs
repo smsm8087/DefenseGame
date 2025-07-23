@@ -38,7 +38,7 @@ public class GameResultPoup : BasePopup
         {
             base.Close();
             NetworkManager.Instance.Reset();
-            SceneManager.LoadScene("LobbyScene");
+            SceneLoader.Instance.LoadScene("LobbyScene");
         });
         TitleObj.transform.localPosition += new Vector3(0f, 270f, 0f);
         StartCoroutine(TitleObj.transform.localPosition, titlePos, TitleObj);
