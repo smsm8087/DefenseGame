@@ -37,6 +37,18 @@ public class RevivalCancelledHandler : INetworkMessageHandler
             RevivalUI.Instance.OnRevivalCancelled(msg.targetId, msg.reason);
         }
         
+        string myId = NetworkManager.Instance.MyUserId;
+        if (myId == msg.reviverId)  // reviverId가 나일 때만
+        {
+            var playersDict = NetworkManager.Instance.GetPlayers();
+            if (playersDict.TryGetValue(myId, out GameObject myObj))
+            {
+                var me = myObj.GetComponent<BasePlayer>();
+                me?.CancelLocalRevival(msg.targetId);
+            }
+        }
+        
         Debug.Log($"[RevivalCancelledHandler] {msg.targetId} 부활 취소: {msg.reason}");
+
     }
 }

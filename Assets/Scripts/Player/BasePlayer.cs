@@ -244,6 +244,21 @@ public abstract class BasePlayer : MonoBehaviour
             SpectatorManager.Instance.StopSpectating();
         }
     }
+    
+    /// <summary>
+    /// 서버에서 부활 취소 메시지를 받았을 때 로컬 부활 상태 초기화
+    /// </summary>
+    public void CancelLocalRevival(string targetId)
+    {
+        if (!IsMyPlayer) return;
+        if (!isCurrentlyReviving) return;
+        if (currentRevivalTarget != targetId) return;
+
+        Debug.Log($"[BasePlayer] 서버 취소 신호로 로컬 부활 상태 초기화: {targetId}");
+        isCurrentlyReviving = false;
+        currentRevivalTarget = "";
+    }
+    
     /// <summary>
     /// 부활 입력 체크 (F키)
     /// </summary>
@@ -346,6 +361,24 @@ public abstract class BasePlayer : MonoBehaviour
     private void UpdateRevivalProgress()
     {
         if (!isCurrentlyReviving || string.IsNullOrEmpty(currentRevivalTarget)) return;
+        
+        // 거리 체크
+        const float maxDistance = 2.0f;
+        var playersDict = NetworkManager.Instance.GetPlayers();
+        if (playersDict.TryGetValue(currentRevivalTarget, out GameObject targetObj))
+        {
+            var targetPlayer = targetObj.GetComponent<BasePlayer>();
+            float distance = Vector3.Distance(transform.position, targetPlayer.deathPosition);
+            Debug.Log($"[부활] 대상과 거리: {distance:F2} (최대: {maxDistance})");
+            if (distance > maxDistance)
+            {
+                Debug.Log("[부활] 거리 초과로 부활 취소");
+                TryStopRevival();
+                isCurrentlyReviving = false;
+                currentRevivalTarget = "";
+                return;
+            }
+        }
         
         // 실제 경과 시간 기반 진행률 계산
         float elapsedTime = Time.time - revivalStartTime;
