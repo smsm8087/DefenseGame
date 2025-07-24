@@ -1,20 +1,21 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using NativeWebSocket.Models;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterSelectSceneManager : MonoBehaviour
 {
     [SerializeField] private Button StartButton;
+	[SerializeField] private Button ChattingButton;
+	[SerializeField] private GameObject ChattingObj;
+    
     private bool ui_lock = false;
     void Awake()
     {
         StartButton.onClick.AddListener(OnClickStart);
+        ChattingButton.onClick.AddListener(OnClickChatting);
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }
 
@@ -31,6 +32,11 @@ public class CharacterSelectSceneManager : MonoBehaviour
             break;
         }
         WebSocketClient.Instance.OnMessageReceived -=  Handle;
+    }
+
+    private void OnClickChatting()
+    {
+        ChattingObj.SetActive(!ChattingObj.activeSelf);
     }
 
     private void OnClickStart()
