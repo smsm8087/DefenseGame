@@ -10,13 +10,17 @@ public class CharacterSelectSceneManager : MonoBehaviour
     [SerializeField] private Button StartButton;
 	[SerializeField] private Button ChattingButton;
 	[SerializeField] private GameObject ChattingObj;
+    [SerializeField] private Transform ChattingParent;
+    [SerializeField] private Transform PlayerIconParent;
+    [SerializeField] private GameObject PlayerIconPrefab;
     
     private bool ui_lock = false;
     void Awake()
     {
         StartButton.onClick.AddListener(OnClickStart);
         ChattingButton.onClick.AddListener(OnClickChatting);
-        WebSocketClient.Instance.OnMessageReceived += Handle;
+        //WebSocketClient.Instance.OnMessageReceived += Handle;
+        GameDataManager.Instance.LoadAllData();
     }
 
     void Handle(string message)

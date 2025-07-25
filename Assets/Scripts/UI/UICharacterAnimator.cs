@@ -21,23 +21,8 @@ public class UICharacterAnimator : MonoBehaviour
 
     void Start()
     {
-        // 내가 원하는 UI 기준 위치 (예: 화면 아래쪽 중앙)
-        Vector2 desiredPosition = new Vector2(0, -148.6f);
-
         // Sprite Pivot 기준에 맞게 RectTransform Pivot 설정
-        targetImage.rectTransform.pivot = new Vector2(0.47f, 0f);
-
-        // 위치 설정
-        targetImage.rectTransform.anchoredPosition = desiredPosition;
-
-        // basePosition 저장 (만약 흔들림 줄 거면)
-        baseAnchoredPosition = desiredPosition;
-        
-        float worldScale = 2.5f; // 플레이어가 스케일 3일 경우
-        Vector2 originalSize = targetImage.sprite.rect.size;
-
-        targetImage.SetNativeSize();
-        targetImage.rectTransform.sizeDelta = originalSize * worldScale;
+        targetImage.rectTransform.pivot = new Vector2(0.5f, 0f);
     }
     private void Update()
     {
@@ -58,8 +43,6 @@ public class UICharacterAnimator : MonoBehaviour
             }
 
             targetImage.sprite = nextSprite;
-            Vector2 pivotOffset = new Vector2(0.47f, 0f);
-            targetImage.rectTransform.anchoredPosition = baseAnchoredPosition + pivotOffset;
         }
     }
     public void SetJob(string jobType)

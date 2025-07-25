@@ -448,6 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8429662136484442125}
   - component: {fileID: 2727247299023527254}
+  - component: {fileID: 4883935625409102929}
   m_Layer: 5
   m_Name: PlayerIcon
   m_TagString: Untagged
@@ -485,6 +486,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6196590374873185768}
   m_CullTransparentMesh: 1
+--- !u!114 &4883935625409102929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6196590374873185768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15db08b0c300dd840946f0f77a3eaae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6833246364351160152
 GameObject:
   m_ObjectHideFlags: 0

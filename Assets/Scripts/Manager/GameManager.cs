@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         Instance = this;
-        GameDataManager.Instance.LoadAllData();
     }
 
     private void Start()
