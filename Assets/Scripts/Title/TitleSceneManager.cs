@@ -17,12 +17,29 @@ public class TitleSceneManager : MonoBehaviour
     public Button signupButton;
     public ToastMessage toastMessage;
     private bool ui_lock = false;
+    
+    [Header("Press Any Key → Login UI")]
+    public GameObject startPrompt;
+    public GameObject loginUIGroup;
+    private bool hasStarted = false;
 
     private async void Start()
     {
         loginButton.onClick.AddListener(() => StartCoroutine(Login()));
         signupButton.onClick.AddListener(() => StartCoroutine(Signup()));
+        startPrompt.SetActive(true);
+        loginUIGroup.SetActive(false);
         await WebSocketClient.Instance.TryConnect();
+    }
+    
+    private void Update()
+    {
+        if (!hasStarted && Input.anyKeyDown)
+        {
+            hasStarted = true;
+            startPrompt.SetActive(false);
+            loginUIGroup.SetActive(true);
+        }
     }
 
     void showMessage(string msg)
