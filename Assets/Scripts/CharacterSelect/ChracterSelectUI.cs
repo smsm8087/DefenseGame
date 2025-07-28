@@ -30,14 +30,17 @@ namespace CharacterSelect
 
             scrollView.UpdateData(characters);
             scrollView.SelectCell(0);
-            scrollView.OnSelectionChanged(UpdateCharacterText);
+            UpdateCharacter(0);
+            scrollView.OnSelectionChanged(UpdateCharacter);
         }
         
-        void UpdateCharacterText(int index)
+        void UpdateCharacter(int index)
         {
             JobNameText.text = TextManager.Instance != null
                 ? TextManager.Instance.GetText(characters[index].data.job_type)
                 : characters[index].data.job_type;
+            
+            CharacterSelectSceneManager.Instance.UpdatePlayerIcon(UserSession.UserId, characters[index].data);
         }
     }
 }

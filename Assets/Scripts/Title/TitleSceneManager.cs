@@ -23,7 +23,6 @@ public class TitleSceneManager : MonoBehaviour
         loginButton.onClick.AddListener(() => StartCoroutine(Login()));
         signupButton.onClick.AddListener(() => StartCoroutine(Signup()));
         await WebSocketClient.Instance.TryConnect();
-        GameDataManager.Instance.LoadAllData();
     }
 
     void showMessage(string msg)

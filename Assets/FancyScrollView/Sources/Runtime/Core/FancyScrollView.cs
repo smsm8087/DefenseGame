@@ -110,7 +110,6 @@ namespace FancyScrollView
 
         void UpdatePosition(float position, bool forceRefresh)
         {
-            Debug.Log("updatePosition");
             if (!initialized)
             {
                 Initialize();

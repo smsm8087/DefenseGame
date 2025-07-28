@@ -3,9 +3,22 @@ using System.Collections.Generic;
 using DataModels;
 using UnityEngine;
 
-public class GameDataManager
+public class GameDataManager : MonoBehaviour
 {
-    public static GameDataManager Instance { get; } = new GameDataManager();
+    public static GameDataManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        LoadAllData();
+    }
 
     private Dictionary<string, object> _tableDict = new();
 

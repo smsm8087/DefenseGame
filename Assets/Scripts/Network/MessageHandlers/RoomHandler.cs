@@ -1,10 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 
 public class StartGameHandler : INetworkMessageHandler
 {
+    private readonly Action callback;
     public string Type => "started_game";
+
+    public StartGameHandler(Action callback)
+    {
+        this.callback = callback;
+    }
     public void Handle(NetMsg msg)
     {
         SceneLoader.Instance.LoadScene("IngameScene", () =>
@@ -18,6 +26,7 @@ public class StartGameHandler : INetworkMessageHandler
             };
             string json = JsonConvert.SerializeObject(message);
             WebSocketClient.Instance.Send(json);
+            callback?.Invoke();
         });
     }
 }
@@ -41,5 +50,25 @@ public class JoinRoomHandler : INetworkMessageHandler
         {
             Debug.Log($"입장 성공! 코드: {RoomSession.RoomCode}");
         }); 
+    }
+}
+public class RoomInfoHandler : INetworkMessageHandler
+{
+    public string Type => "room_info";
+    private readonly Action callback; 
+    public RoomInfoHandler(Action callback)
+    {
+        this.callback = callback;
+    }
+
+    public void Handle(NetMsg msg)
+    {
+        List<RoomInfo> RoomInfos = msg.RoomInfos;
+        foreach (var roomInfo in RoomInfos)
+        {
+            if (RoomSession.RoomInfos.Contains(roomInfo)) continue;
+            RoomSession.AddUser(roomInfo.playerId, roomInfo.nickName);
+        }
+        callback?.Invoke();
     }
 }

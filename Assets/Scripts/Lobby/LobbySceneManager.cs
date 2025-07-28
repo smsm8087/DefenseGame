@@ -64,6 +64,7 @@ public class LobbySceneManager : MonoBehaviour
                     type = "create_room",
                     playerId = UserSession.UserId,
                     roomCode = parsed.roomCode,
+                    nickName = UserSession.Nickname,
                 };
                 string json = JsonConvert.SerializeObject(msg);
                 WebSocketClient.Instance.Send(json);
@@ -97,6 +98,7 @@ public class LobbySceneManager : MonoBehaviour
                     type = "join_room",
                     playerId = UserSession.UserId,
                     roomCode = parsed.roomCode,
+                    nickName = UserSession.Nickname,
                 };
                 string json = JsonConvert.SerializeObject(msg);
                 WebSocketClient.Instance.Send(json);

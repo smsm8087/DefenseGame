@@ -6,10 +6,12 @@ public class NetMsg
 {
     public string type;
     public string roomCode;
+    public List<RoomInfo> RoomInfos;
     public int wave;
     public int wave_id;
     
     public string playerId;
+    public string nickName;
     public string enemyId;
     public int enemyDataId;
     public List<PlayerInfo> players; // List<string> -> List<PlayerInfo>로 변경
@@ -104,7 +106,11 @@ public class PlayerInfo
     public List<int> cardIds { get; set; } = new List<int>();
     public PlayerData playerBaseData { get; set; }
 }
-
+public class RoomInfo
+{
+    public string playerId;
+    public string nickName;
+}
 public class PartyMemberInfo
 {
     public string id;
