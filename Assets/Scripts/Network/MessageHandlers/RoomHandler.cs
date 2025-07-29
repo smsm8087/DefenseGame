@@ -66,15 +66,16 @@ public class RoomInfoHandler : INetworkMessageHandler
         List<RoomInfo> RoomInfos = msg.RoomInfos;
         foreach (var roomInfo in RoomInfos)
         {
-            if (RoomSession.RoomInfos.Contains(roomInfo)) continue;
+            if (RoomSession.RoomInfos.Find(x=> x.playerId == roomInfo.playerId) != null) continue;
             RoomSession.AddUser(roomInfo.playerId, roomInfo.nickName);
         }
 
         if (RoomInfos.Count != RoomSession.RoomInfos.Count)
         {
             //추가를 했는데도 맞지않으면 룸인포에서 삭제해야함.
-            foreach (var roomInfo in RoomSession.RoomInfos)
+            for (int i = 0; i < RoomSession.RoomInfos.Count; i++)
             {
+                RoomInfo roomInfo = RoomSession.RoomInfos[i];
                 if (RoomInfos.Find(x => x.playerId == roomInfo.playerId) != null) continue;
                 //방을 나간 유저 룸인포에서 삭제
                 RoomSession.RemoveUser(roomInfo.playerId);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DataModels;
 using NativeWebSocket.Models;
 using Newtonsoft.Json;
@@ -92,11 +93,10 @@ public class CharacterSelectSceneManager : MonoBehaviour
 
         if (RoomSession.RoomInfos.Count != players.Count)
         {
-            //삭제된 유저 있음
-            foreach (var playerId in players.Keys)
+            // 삭제된 유저 정리
+            foreach (var playerId in players.Keys.ToList())
             {
-                RoomInfo roomInfo = RoomSession.RoomInfos.Find(x=> x.playerId == playerId);
-                if (roomInfo == null)
+                if (!RoomSession.RoomInfos.Any(x => x.playerId == playerId))
                 {
                     players.Remove(playerId);
                 }
