@@ -102,3 +102,14 @@ public class OutRoomHandler : INetworkMessageHandler
         }); 
     }
 }
+public class ChatRoomHandler : INetworkMessageHandler
+{
+    public string Type => "chat_room";
+    public void Handle(NetMsg msg)
+    {
+        
+        Debug.Log($"채팅창 전송 성공! 코드: {RoomSession.RoomCode}");
+        Debug.Log($"채팅창 메시지 : {msg.message}");
+        
+    }
+}

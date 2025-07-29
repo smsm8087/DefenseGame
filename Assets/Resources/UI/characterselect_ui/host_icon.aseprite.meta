@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream
 guid: 5332bafa2c854f247b159aec6f7fa7d4
+=======
+guid: b005699287f169643baf32e07525cd98
+>>>>>>> Stashed changes
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -135,7 +139,11 @@ ScriptedImporter:
       y: 4
       width: 42
       height: 34
+<<<<<<< Updated upstream
     spriteID: 7effd266851a34f45bb1a972f8d0915c
+=======
+    spriteID: 134bfa22451d4c14c86d2d51ea36a466
+>>>>>>> Stashed changes
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -166,7 +174,11 @@ ScriptedImporter:
         y: 3
         width: 42
         height: 34
+<<<<<<< Updated upstream
       spriteId: 7effd266851a34f45bb1a972f8d0915c
+=======
+      spriteId: 134bfa22451d4c14c86d2d51ea36a466
+>>>>>>> Stashed changes
     linkedCells: []
     parentIndex: -1
   platformSettings:

@@ -5,6 +5,7 @@ using System.Linq;
 using DataModels;
 using NativeWebSocket.Models;
 using Newtonsoft.Json;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,9 @@ public class CharacterSelectSceneManager : MonoBehaviour
     public static CharacterSelectSceneManager Instance  { get; private set; }
     [SerializeField] private Button OutButton;
 	[SerializeField] private Button ChattingButton;
-	[SerializeField] private GameObject ChattingObj;
+    [SerializeField] private Button ChattingSendButton;
+    [SerializeField] private GameObject ChattingObj;
+    [SerializeField] private TMP_InputField ChattingInput;
     [SerializeField] private Transform ChattingParent;
     [SerializeField] private Transform PlayerIconParent;
     [SerializeField] private GameObject PlayerIconPrefab;
@@ -31,6 +34,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         Instance = this;
         OutButton.onClick.AddListener(OnClickOut);
         ChattingButton.onClick.AddListener(OnClickChatting);
+        ChattingSendButton.onClick.AddListener(OnClickChattingSend);
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }
     private void Start()
@@ -72,6 +76,12 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 var handler = new OutRoomHandler();
                 handler.Handle(netMsg);
             }
+            break;
+            case "chat_room":
+            {
+                var handler = new ChatRoomHandler();
+                handler.Handle(netMsg);
+            } 
             break;
         }
     }
@@ -115,6 +125,23 @@ public class CharacterSelectSceneManager : MonoBehaviour
     private void OnClickChatting()
     {
         ChattingObj.SetActive(!ChattingObj.activeSelf);
+        ChattingInput.text = null;
+    }
+    
+    private void OnClickChattingSend()
+    {
+        ChattingInput.text = ChattingInput.text.Trim();
+        var message = new
+        {
+            type = "chat_room",
+            playerId = UserSession.UserId,
+            roomCode = RoomSession.RoomCode,
+            message = ChattingInput.text
+        };
+        string json = JsonConvert.SerializeObject(message);
+        WebSocketClient.Instance.Send(json);
+        
+        ChattingInput.text = null;
     }
 
     private void OnClickStart()
