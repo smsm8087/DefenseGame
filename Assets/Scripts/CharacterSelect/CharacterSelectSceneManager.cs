@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CharacterSelectSceneManager : MonoBehaviour
 {
     public static CharacterSelectSceneManager Instance  { get; private set; }
-    [SerializeField] private Button StartButton;
+    [SerializeField] private Button OutButton;
 	[SerializeField] private Button ChattingButton;
 	[SerializeField] private GameObject ChattingObj;
     [SerializeField] private Transform ChattingParent;
@@ -28,8 +28,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         }
 
         Instance = this;
-        
-        StartButton.onClick.AddListener(OnClickStart);
+        OutButton.onClick.AddListener(OnClickOut);
         ChattingButton.onClick.AddListener(OnClickChatting);
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }
@@ -67,6 +66,12 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 handler.Handle(netMsg);
             }
             break;
+            case "out_room":
+            {
+                var handler = new OutRoomHandler();
+                handler.Handle(netMsg);
+            }
+            break;
         }
     }
 
@@ -82,6 +87,19 @@ public class CharacterSelectSceneManager : MonoBehaviour
             {
                 icon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
                 players[RoomSession.RoomInfos[i].playerId] = icon;
+            }
+        }
+
+        if (RoomSession.RoomInfos.Count != players.Count)
+        {
+            //삭제된 유저 있음
+            foreach (var playerId in players.Keys)
+            {
+                RoomInfo roomInfo = RoomSession.RoomInfos.Find(x=> x.playerId == playerId);
+                if (roomInfo == null)
+                {
+                    players.Remove(playerId);
+                }
             }
         }
     }
@@ -131,6 +149,41 @@ public class CharacterSelectSceneManager : MonoBehaviour
             onError: (err) =>
             {
                 Debug.Log($"방 상태확인 실패: {err}");
+            }
+        );
+        ui_lock = false;
+    }
+    private void OnClickOut()
+    {
+        StartCoroutine(TryOutRoom());
+    }
+    IEnumerator TryOutRoom()
+    {
+        if (ui_lock) yield break;
+        ui_lock = true;
+        var data = new Dictionary<string, string>
+        {
+            { "userId", UserSession.UserId },
+            { "roomcode", RoomSession.RoomCode},
+        };
+
+        yield return ApiManager.Instance.Post(
+            "room/out",
+            data,
+            onSuccess: (res) =>
+            {
+                var message = new
+                {
+                    type = "out_room",
+                    playerId = UserSession.UserId,
+                    roomCode = RoomSession.RoomCode,
+                };
+                string json = JsonConvert.SerializeObject(message);
+                WebSocketClient.Instance.Send(json);
+            },
+            onError: (err) =>
+            {
+                Debug.Log($"방 나가기 실패: {err}");
             }
         );
         ui_lock = false;

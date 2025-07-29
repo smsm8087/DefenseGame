@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 8512059505422009382}
   - component: {fileID: 7625508134236158281}
   - component: {fileID: 7306758423541903660}
-  - component: {fileID: 4882099430087307939}
+  - component: {fileID: 5416788700734306862}
   m_Layer: 5
   m_Name: LoadingScreen
   m_TagString: Untagged
@@ -180,28 +180,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &4882099430087307939
-Animator:
-  serializedVersion: 7
+--- !u!114 &5416788700734306862
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3419958618328640086}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 7577023209040950975, guid: ec8e69b52cbc1c44a945be376d2f6422, type: 3}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3499a78f04a4f55a53feccf8a7d7138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetImage: {fileID: 7306758423541903660}
+  jobAnimationDataList:
+  - {fileID: 11400000, guid: 9120d1cdfd90e8e44829edbd0a00ac49, type: 2}
+  baseAnchoredPosition: {x: 0, y: 0}
 --- !u!1 &3896744035117565623
 GameObject:
   m_ObjectHideFlags: 0

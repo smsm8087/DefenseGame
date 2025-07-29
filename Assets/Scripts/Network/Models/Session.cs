@@ -16,6 +16,14 @@ public static class RoomSession
     {
         RoomInfos.Add(new RoomInfo { playerId = playerId, nickName = nickName });
     }
+    public static void RemoveUser(string playerId)
+    {
+        RoomInfo roomInfo = RoomInfos.Find(x => x.playerId == playerId);
+        if (roomInfo != null)
+        {
+            RoomInfos.Remove(roomInfo);
+        }
+    }
 }
 public class UserSession
 {

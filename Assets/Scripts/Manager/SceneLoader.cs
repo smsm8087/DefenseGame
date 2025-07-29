@@ -10,9 +10,11 @@ public class SceneLoader : MonoBehaviour
 
     [Header("로딩 화면 프리팹")]
     public GameObject loadingScreenPrefab;
-
+    
     private GameObject loadingScreenInstance;
     private Image progressBarImage;
+    private UICharacterAnimator characterAnimator;
+    
 
     private void Awake()
     {
@@ -31,6 +33,11 @@ public class SceneLoader : MonoBehaviour
             DontDestroyOnLoad(loadingScreenInstance);
             loadingScreenInstance.SetActive(false);
             progressBarImage =  loadingScreenInstance.transform.Find("LoadingScreen/progressBar").GetComponent<Image>();
+            characterAnimator =  loadingScreenInstance.transform.Find("LoadingScreen").GetComponent<UICharacterAnimator>();
+            if (characterAnimator != null)
+            {
+                characterAnimator.SetJob("loading", new Vector2(0.5f,0.5f));
+            }
         }
     }
 

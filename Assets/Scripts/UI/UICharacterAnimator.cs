@@ -19,11 +19,6 @@ public class UICharacterAnimator : MonoBehaviour
     
     [SerializeField] private Vector2 baseAnchoredPosition;
 
-    void Start()
-    {
-        // Sprite Pivot 기준에 맞게 RectTransform Pivot 설정
-        targetImage.rectTransform.pivot = new Vector2(0.5f, 0f);
-    }
     private void Update()
     {
         if (frames == null || frames.Count == 0 || targetImage == null) return;
@@ -56,6 +51,7 @@ public class UICharacterAnimator : MonoBehaviour
             frames = null;
             return;
         }
+        targetImage.rectTransform.pivot = new Vector2(0.5f, 0f);
 
         frames = data.idleFrames;
         currentIndex = 0;
@@ -63,5 +59,27 @@ public class UICharacterAnimator : MonoBehaviour
 
         if (frames.Count > 0 && targetImage != null)
             targetImage.sprite = frames[0].sprite;
+        
+    }
+    public void SetJob(string jobType, Vector2 forcePivotPos)
+    {
+        targetImage.sprite = null;
+        var data = jobAnimationDataList.FirstOrDefault(j => j.jobType.ToLower() == jobType.ToLower());
+
+        if (data == null)
+        {
+            Debug.LogWarning($"[SetJob] 해당 직업({jobType})의 애니메이션 데이터가 없습니다.");
+            frames = null;
+            return;
+        }
+        targetImage.rectTransform.pivot = forcePivotPos;
+
+        frames = data.idleFrames;
+        currentIndex = 0;
+        timer = 0f;
+
+        if (frames.Count > 0 && targetImage != null)
+            targetImage.sprite = frames[0].sprite;
+
     }
 }
