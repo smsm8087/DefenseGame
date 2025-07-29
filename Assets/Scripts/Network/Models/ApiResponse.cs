@@ -29,5 +29,10 @@ namespace NativeWebSocket.Models
         {
             public List<string> playerIds;
         }
+        [Serializable]
+        public class RoomOutResponse
+        {
+            public string hostId;
+        }
     }
 }

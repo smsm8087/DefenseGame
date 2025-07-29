@@ -63,6 +63,7 @@ public class RoomInfoHandler : INetworkMessageHandler
 
     public void Handle(NetMsg msg)
     {
+        RoomSession.Set(msg.roomCode, msg.hostId);
         List<RoomInfo> RoomInfos = msg.RoomInfos;
         foreach (var roomInfo in RoomInfos)
         {

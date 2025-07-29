@@ -23,6 +23,12 @@ public static class RoomSession
         {
             RoomInfos.Remove(roomInfo);
         }
+
+        if (RoomInfos.Count <= 0)
+        {
+            RoomCode = string.Empty;
+            HostId = string.Empty;
+        }
     }
 }
 public class UserSession
