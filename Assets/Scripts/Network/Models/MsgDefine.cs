@@ -7,6 +7,7 @@ public class NetMsg
     public string type;
     public string roomCode;
     public List<RoomInfo> RoomInfos;
+    public string hostId;
     public int wave;
     public int wave_id;
     

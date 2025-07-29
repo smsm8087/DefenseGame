@@ -108,6 +108,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
             {
                 if (!RoomSession.RoomInfos.Any(x => x.playerId == playerId))
                 {
+                    Destroy(players[playerId].gameObject);
                     players.Remove(playerId);
                 }
             }
@@ -207,11 +208,13 @@ public class CharacterSelectSceneManager : MonoBehaviour
             data,
             onSuccess: (res) =>
             {
+                var roomStatusResponse = JsonUtility.FromJson<ApiResponse.RoomOutResponse>(res);
                 var message = new
                 {
                     type = "out_room",
                     playerId = UserSession.UserId,
                     roomCode = RoomSession.RoomCode,
+                    hostId = roomStatusResponse.hostId ?? ""
                 };
                 string json = JsonConvert.SerializeObject(message);
                 WebSocketClient.Instance.Send(json);
