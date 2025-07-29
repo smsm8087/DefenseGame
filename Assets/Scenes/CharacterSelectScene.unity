@@ -2423,7 +2423,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OutButton: {fileID: 1487395699}
   ChattingButton: {fileID: 805739453}
+  ChattingSendButton: {fileID: 687924863}
   ChattingObj: {fileID: 1209504312}
+  ChattingInput: {fileID: 15990679}
   ChattingParent: {fileID: 1984869794}
   PlayerIconParent: {fileID: 560034020}
   PlayerIconPrefab: {fileID: 6196590374873185768, guid: 551d97fe860a73241a455bf682eb0d87, type: 3}

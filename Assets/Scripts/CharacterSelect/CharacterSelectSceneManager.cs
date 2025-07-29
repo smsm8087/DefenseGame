@@ -130,17 +130,25 @@ public class CharacterSelectSceneManager : MonoBehaviour
     private void OnClickChattingSend()
     {
         ChattingInput.text = ChattingInput.text.Trim();
-        var message = new
+        if (ChattingInput.text != null & ChattingInput.text.Length > 0)
         {
-            type = "chat_room",
-            playerId = UserSession.UserId,
-            roomCode = RoomSession.RoomCode,
-            message = ChattingInput.text
-        };
-        string json = JsonConvert.SerializeObject(message);
-        WebSocketClient.Instance.Send(json);
+            var message = new
+            {
+                type = "chat_room",
+                playerId = UserSession.UserId,
+                playerName = UserSession.Nickname,
+                roomCode = RoomSession.RoomCode,
+                message = ChattingInput.text
+            };
+            string json = JsonConvert.SerializeObject(message);
+            WebSocketClient.Instance.Send(json);
         
-        ChattingInput.text = null;
+            ChattingInput.text = null;
+        }
+        else
+        {
+            // 메시지를 스페이스바 혹은 공백으로 입력한 경우
+        }
     }
 
     private void OnClickStart()
