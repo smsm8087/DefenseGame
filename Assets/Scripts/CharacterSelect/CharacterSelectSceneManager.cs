@@ -13,6 +13,8 @@ public class CharacterSelectSceneManager : MonoBehaviour
 {
     public static CharacterSelectSceneManager Instance  { get; private set; }
     [SerializeField] private Button OutButton;
+    [SerializeField] private Button SelectButton;
+    [SerializeField] private Button DeSelectButton;
 	[SerializeField] private Button ChattingButton;
     [SerializeField] private Button ChattingSendButton;
     [SerializeField] private GameObject ChattingObj;
@@ -20,9 +22,14 @@ public class CharacterSelectSceneManager : MonoBehaviour
     [SerializeField] private Transform ChattingParent;
     [SerializeField] private Transform PlayerIconParent;
     [SerializeField] private GameObject PlayerIconPrefab;
+    [SerializeField] private GameObject AllReadyObject;
+    [SerializeField] private Transform AllReadyStartPos;
+    [SerializeField] private Transform AllReadyDestPos;
     
     private bool ui_lock = false;
     private Dictionary<string, PlayerIcon> players = new Dictionary<string, PlayerIcon>();
+    private Coroutine moveCoroutine;
+    private Vector3 startPos;
     void Awake()
     {
         if (Instance != null)
@@ -32,10 +39,13 @@ public class CharacterSelectSceneManager : MonoBehaviour
         }
 
         Instance = this;
+        DeSelectButton.onClick.AddListener(OnclickDeSelect);
+        SelectButton.onClick.AddListener(OnclickSelect);
         OutButton.onClick.AddListener(OnClickOut);
         ChattingButton.onClick.AddListener(OnClickChatting);
         ChattingSendButton.onClick.AddListener(OnClickChattingSend);
         WebSocketClient.Instance.OnMessageReceived += Handle;
+        startPos = AllReadyStartPos.localPosition;
     }
     private void Start()
     {
@@ -83,9 +93,25 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 handler.Handle(netMsg);
             } 
             break;
+            case "selected_character":
+            {
+                var handler = new SelectedCharacterHandler();
+                handler.Handle(netMsg);
+            } 
+            break;
+            case "deselected_character":
+            {
+                var handler = new DeSelectedCharacterHandler();
+                handler.Handle(netMsg);
+            } 
+            break;
         }
     }
 
+    public void setUiLock(bool locked)
+    {
+        ui_lock = locked;
+    }
     //입장시에 기본 플레이어 아이콘 생성
     private void SetUpPlayerIcon()
     {
@@ -122,6 +148,52 @@ public class CharacterSelectSceneManager : MonoBehaviour
             playerIcon.SetJobIcon(data.job_type);
         }
     }
+    public void UpdatePlayerIcon(string playerId, string job_type)
+    {
+        if (players.TryGetValue(playerId, out PlayerIcon playerIcon))
+        {
+            playerIcon.SetJobIcon(job_type);
+        }
+    }
+
+    public void StopMoveReadyTextCoroutine()
+    {
+        StopCoroutine(moveCoroutine);
+        AllReadyObject.SetActive(false);
+        AllReadyStartPos.localPosition = startPos;
+        if (ui_lock) ui_lock = false;
+    }
+    public void MoveReadyText()
+    {
+        moveCoroutine = StartCoroutine(MoveReadyTextCoroutine());
+    }
+    public IEnumerator MoveReadyTextCoroutine()
+    {
+        AllReadyObject.SetActive(true);
+        float duration = 3f;
+        float time = 0f;
+
+        Vector3 startPos = AllReadyStartPos.localPosition;
+        Vector3 to = AllReadyDestPos.localPosition;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            AllReadyStartPos.localPosition = Vector3.Lerp(startPos, to, time / duration);
+            yield return null;
+        }
+
+        AllReadyStartPos.localPosition = to;
+        AllReadyObject.SetActive(false);
+        yield return StartCoroutine(TryGameStartCoroutine());
+    }
+    public void SetReady(string playerId, bool isReady)
+    {
+        if (players.TryGetValue(playerId, out PlayerIcon playerIcon))
+        {
+            playerIcon.SetReady(isReady);
+        }
+    }
     private void OnClickChatting()
     {
         ChattingObj.SetActive(!ChattingObj.activeSelf);
@@ -152,15 +224,44 @@ public class CharacterSelectSceneManager : MonoBehaviour
         }
     }
 
-    private void OnClickStart()
+    private void OnclickDeSelect()
     {
-        //방장만 할수 있는 메서드.
-        StartCoroutine(TryGameStart());
-    }
-    IEnumerator TryGameStart()
-    {
-        if (ui_lock) yield break;
+        if (ui_lock) return;
         ui_lock = true;
+        var message = new
+        {
+            type = "deselect_character",
+            playerId = UserSession.UserId,
+            roomCode = RoomSession.RoomCode,
+        };
+        string json = JsonConvert.SerializeObject(message);
+        WebSocketClient.Instance.Send(json);
+        DeSelectButton.gameObject.SetActive(false);
+        SelectButton.gameObject.SetActive(true);
+    }
+    
+    private void OnclickSelect()
+    {
+        if (ui_lock) return;
+        ui_lock = true;
+        if (players.TryGetValue(UserSession.UserId, out PlayerIcon playerIcon))
+        {
+            var message = new
+            {
+                type = "select_character",
+                playerId = UserSession.UserId,
+                roomCode = RoomSession.RoomCode,
+                jobType = playerIcon.job_type,
+            };
+            string json = JsonConvert.SerializeObject(message);
+            WebSocketClient.Instance.Send(json);
+            DeSelectButton.gameObject.SetActive(true);
+            SelectButton.gameObject.SetActive(false);
+        }
+    }
+    
+    IEnumerator TryGameStartCoroutine()
+    {
         var data = new Dictionary<string, string>
         {
             { "roomcode", RoomSession.RoomCode},
@@ -191,12 +292,12 @@ public class CharacterSelectSceneManager : MonoBehaviour
     }
     private void OnClickOut()
     {
+        if(ui_lock) return;
+        ui_lock = true;
         StartCoroutine(TryOutRoom());
     }
     IEnumerator TryOutRoom()
     {
-        if (ui_lock) yield break;
-        ui_lock = true;
         var data = new Dictionary<string, string>
         {
             { "userId", UserSession.UserId },
@@ -224,6 +325,5 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 Debug.Log($"방 나가기 실패: {err}");
             }
         );
-        ui_lock = false;
     }
 }

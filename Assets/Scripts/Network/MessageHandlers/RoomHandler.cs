@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataModels;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -112,5 +113,32 @@ public class ChatRoomHandler : INetworkMessageHandler
         Debug.Log($"채팅창 유저 : {msg.playerId}");
         Debug.Log($"채팅창 메시지 : {msg.message}");
         
+    }
+}
+public class SelectedCharacterHandler : INetworkMessageHandler
+{
+    public string Type => "selected_character";
+    
+    public void Handle(NetMsg msg)
+    {
+        CharacterSelectSceneManager.Instance.UpdatePlayerIcon(msg.playerId, msg.jobType);
+        //캐릭터를 선택하면 준비가 된 것임
+        CharacterSelectSceneManager.Instance.SetReady(msg.playerId, true);
+        CharacterSelectSceneManager.Instance.setUiLock(false);
+        //다 준비되었을때 토스트메시지 띄워줌.
+        if (msg.isAllReady)
+        {
+            CharacterSelectSceneManager.Instance.MoveReadyText();
+        }
+    }
+}
+public class DeSelectedCharacterHandler : INetworkMessageHandler
+{
+    public string Type => "deselected_character";
+    
+    public void Handle(NetMsg msg)
+    {
+        CharacterSelectSceneManager.Instance.SetReady(msg.playerId, false);
+        CharacterSelectSceneManager.Instance.StopMoveReadyTextCoroutine();
     }
 }
