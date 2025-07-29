@@ -185,7 +185,10 @@ public class CharacterSelectSceneManager : MonoBehaviour
 
         AllReadyStartPos.localPosition = to;
         AllReadyObject.SetActive(false);
-        yield return StartCoroutine(TryGameStartCoroutine());
+        if (RoomSession.HostId == UserSession.UserId)
+        {
+            yield return StartCoroutine(TryGameStartCoroutine());
+        }
     }
     public void SetReady(string playerId, bool isReady)
     {
