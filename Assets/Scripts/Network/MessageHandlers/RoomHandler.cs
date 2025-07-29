@@ -106,13 +106,31 @@ public class OutRoomHandler : INetworkMessageHandler
 public class ChatRoomHandler : INetworkMessageHandler
 {
     public string Type => "chat_room";
+    
+    private ChatUIManager chatUI;
+
+    public ChatRoomHandler()
+    {
+        // ChatUIManager 싱글톤 또는 GameObject 찾기 방식
+        chatUI = GameObject.FindObjectOfType<ChatUIManager>();
+        if (chatUI == null)
+            Debug.LogError("ChatUIManager를 찾을 수 없습니다!");
+    }
+    
     public void Handle(NetMsg msg)
     {
         
         Debug.Log($"채팅창 전송 성공! 코드: {RoomSession.RoomCode}");
-        Debug.Log($"채팅창 유저 : {msg.playerId}");
+        Debug.Log($"채팅창 유저 ID : {msg.playerId}");
+        Debug.Log($"채팅창 유저 닉네임 : {msg.nickName}");
         Debug.Log($"채팅창 메시지 : {msg.message}");
+        Debug.Log($"채팅창 Array : {msg.chatData}");
         
+        // UI에 메시지 추가
+        if (chatUI != null)
+        {
+            chatUI.AddChatMessage(msg.nickName, msg.message);
+        }
     }
 }
 public class SelectedCharacterHandler : INetworkMessageHandler

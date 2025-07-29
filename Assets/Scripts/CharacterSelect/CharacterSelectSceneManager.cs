@@ -212,7 +212,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
             {
                 type = "chat_room",
                 playerId = UserSession.UserId,
-                playerName = UserSession.Nickname,
+                nickName = UserSession.Nickname,
                 roomCode = RoomSession.RoomCode,
                 message = ChattingInput.text
             };
