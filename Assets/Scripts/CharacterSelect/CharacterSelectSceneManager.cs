@@ -313,12 +313,13 @@ public class CharacterSelectSceneManager : MonoBehaviour
             onSuccess: (res) =>
             {
                 var roomStatusResponse = JsonUtility.FromJson<ApiResponse.RoomOutResponse>(res);
+                string hostId = roomStatusResponse != null ?  roomStatusResponse.hostId : null;
                 var message = new
                 {
                     type = "out_room",
                     playerId = UserSession.UserId,
                     roomCode = RoomSession.RoomCode,
-                    hostId = roomStatusResponse.hostId ?? ""
+                    hostId = hostId ?? ""
                 };
                 string json = JsonConvert.SerializeObject(message);
                 WebSocketClient.Instance.Send(json);
