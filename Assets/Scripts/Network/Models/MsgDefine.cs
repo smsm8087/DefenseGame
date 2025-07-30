@@ -18,9 +18,7 @@ public class NetMsg
     public int enemyDataId;
     public List<PlayerInfo> players; // List<string> -> List<PlayerInfo>로 변경
     public string jobType;
-
-    public List<ChatInfo> chatData;
-
+    
     public string animation;
     //player
     public float x;

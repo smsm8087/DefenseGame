@@ -109,6 +109,40 @@ public class ChatRoomHandler : INetworkMessageHandler
     
     private ChatUIManager chatUI;
 
+    public class ChatMessage
+    {
+        public string playerId;
+        public string nickName;
+        public string message;
+        public DateTime timestamp = DateTime.UtcNow;
+    }
+    
+    private static Dictionary<string, List<ChatMessage>> chatLog = new Dictionary<string, List<ChatMessage>>();
+
+    public static void Save(ChatMessage msg)
+    {
+        if (!chatLog.ContainsKey(RoomSession.RoomCode))
+        {
+            chatLog[RoomSession.RoomCode] = new List<ChatMessage>();
+        }
+
+        chatLog[RoomSession.RoomCode].Add(msg);
+
+        Debug.Log($"[채팅 저장됨] {msg.nickName} ({msg.playerId}): {msg.message} @ {msg.timestamp:HH:mm:ss}");
+    }
+
+    public static void PrintAllLogs()
+    {
+        foreach (var pair in chatLog)
+        {
+            Debug.Log($"▶ {pair.Key}방의 채팅 기록:");
+            foreach (var msg in pair.Value)
+            {
+                Debug.Log($"   [{msg.timestamp:HH:mm:ss}] {msg.nickName} ({msg.playerId}) : {msg.message}");
+            }
+        }
+    }
+    
     public ChatRoomHandler()
     {
         // ChatUIManager 싱글톤 또는 GameObject 찾기 방식
@@ -119,12 +153,18 @@ public class ChatRoomHandler : INetworkMessageHandler
     
     public void Handle(NetMsg msg)
     {
-        
         Debug.Log($"채팅창 전송 성공! 코드: {RoomSession.RoomCode}");
-        Debug.Log($"채팅창 유저 ID : {msg.playerId}");
-        Debug.Log($"채팅창 유저 닉네임 : {msg.nickName}");
-        Debug.Log($"채팅창 메시지 : {msg.message}");
-        Debug.Log($"채팅창 Array : {msg.chatData}");
+        
+        // ✅ 채팅 저장
+        var chatMessage = new ChatMessage
+        {
+            playerId = msg.playerId,
+            nickName = msg.nickName,
+            message = msg.message
+        };
+
+        ChatRoomHandler.Save(chatMessage);
+        ChatRoomHandler.PrintAllLogs();
         
         // UI에 메시지 추가
         if (chatUI != null)
