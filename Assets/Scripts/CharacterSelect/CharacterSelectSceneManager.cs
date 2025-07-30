@@ -229,6 +229,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         {
             // 메시지를 스페이스바 혹은 공백으로 입력한 경우
             ChattingInput.text = null;
+            ui_lock = false;
         }
     }
 
