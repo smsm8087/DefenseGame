@@ -158,10 +158,12 @@ public class CharacterSelectSceneManager : MonoBehaviour
 
     public void StopMoveReadyTextCoroutine()
     {
-        StopCoroutine(moveCoroutine);
-        AllReadyObject.SetActive(false);
-        AllReadyStartPos.localPosition = startPos;
-        if (ui_lock) ui_lock = false;
+        if (moveCoroutine != null)
+        {
+            StopCoroutine(moveCoroutine);
+            AllReadyObject.SetActive(false);
+            AllReadyStartPos.localPosition = startPos;
+        }
     }
     public void MoveReadyText()
     {
@@ -205,6 +207,8 @@ public class CharacterSelectSceneManager : MonoBehaviour
     
     private void OnClickChattingSend()
     {
+        if (ui_lock) return;
+        ui_lock = true;
         ChattingInput.text = ChattingInput.text.Trim();
         if (ChattingInput.text != null & ChattingInput.text.Length > 0)
         {

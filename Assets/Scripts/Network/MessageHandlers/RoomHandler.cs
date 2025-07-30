@@ -131,6 +131,7 @@ public class ChatRoomHandler : INetworkMessageHandler
         {
             chatUI.AddChatMessage(msg.nickName, msg.message);
         }
+        CharacterSelectSceneManager.Instance.setUiLock(false);
     }
 }
 public class SelectedCharacterHandler : INetworkMessageHandler
@@ -158,5 +159,6 @@ public class DeSelectedCharacterHandler : INetworkMessageHandler
     {
         CharacterSelectSceneManager.Instance.SetReady(msg.playerId, false);
         CharacterSelectSceneManager.Instance.StopMoveReadyTextCoroutine();
+        CharacterSelectSceneManager.Instance.setUiLock(false);
     }
 }
