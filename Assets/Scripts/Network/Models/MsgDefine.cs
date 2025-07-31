@@ -9,6 +9,8 @@ public class NetMsg
     public List<RoomInfo> RoomInfos;
     public int wave;
     public int wave_id;
+    public string requestId;
+    public bool approved;
     
     public string playerId;
     public string nickName;

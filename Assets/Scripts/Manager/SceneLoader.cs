@@ -54,7 +54,12 @@ public class SceneLoader : MonoBehaviour
     private IEnumerator LoadSceneRoutine(string sceneName, Action onSceneLoaded)
     {
         if (loadingScreenInstance != null)
+        {
             loadingScreenInstance.SetActive(true);
+            // 로딩 시작 알림
+            if (PopupManager.Instance != null)
+                PopupManager.Instance.SetLoading(true);
+        }
 
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
         async.allowSceneActivation = false;
@@ -77,7 +82,12 @@ public class SceneLoader : MonoBehaviour
             SceneManager.sceneLoaded -= OnSceneLoaded;
 
             if (loadingScreenInstance != null)
+            {
                 loadingScreenInstance.SetActive(false);
+                // 로딩 종료 알림
+                if (PopupManager.Instance != null)
+                    PopupManager.Instance.SetLoading(false);
+            }
 
             onSceneLoaded?.Invoke();
         }

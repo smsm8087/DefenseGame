@@ -2373,6 +2373,14 @@ PrefabInstance:
       propertyPath: popupRoot
       value: 
       objectReference: {fileID: 479342528}
+    - target: {fileID: 3834329834675639734, guid: 54b2b05ebddd1654aba164e4a098ac40, type: 3}
+      propertyPath: noticePrefab
+      value: 
+      objectReference: {fileID: 8057273125620475391, guid: e66f9ff80988db84f85e6d55dc2d1cc1, type: 3}
+    - target: {fileID: 3834329834675639734, guid: 54b2b05ebddd1654aba164e4a098ac40, type: 3}
+      propertyPath: confirmPrefab
+      value: 
+      objectReference: {fileID: 4266360508630893974, guid: 70ba25e48243d4341935d49c388ec24e, type: 3}
     - target: {fileID: 4015919906273417701, guid: 54b2b05ebddd1654aba164e4a098ac40, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.1375155
