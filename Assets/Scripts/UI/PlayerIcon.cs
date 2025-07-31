@@ -29,6 +29,7 @@ public class PlayerIcon : MonoBehaviour
     {
         this.playerId = playerId;
         nickNameText.text = nickName;
+        this.job_type = "tank";
         UpdateHostIcon();
     }
 
