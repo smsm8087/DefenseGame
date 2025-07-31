@@ -11,6 +11,8 @@ public class NetMsg
     public string hostId;
     public int wave;
     public int wave_id;
+    public string requestId;
+    public bool approved;
     
     public string playerId;
     public string nickName;

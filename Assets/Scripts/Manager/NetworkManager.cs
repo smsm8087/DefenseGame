@@ -42,6 +42,8 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+		DontDestroyOnLoad(gameObject);
         
         prefabMap = new Dictionary<string, GameObject>()
         {
@@ -197,6 +199,8 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RevivalCompletedHandler(players));
         AddHandler(new RevivalCancelledHandler(players));
         AddHandler(new InvulnerabilityEndedHandler(players));
+        AddHandler(new NoticePopupHandler());
+        AddHandler(new ConfirmPopupHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)
@@ -206,6 +210,8 @@ public class NetworkManager : MonoBehaviour
 
     public void HandleMessage(string msg)
     {
+        Debug.Log($"[2–NM] HandleMessage 진입 → raw: {msg}");
+
         NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(msg);
         if (handlers.TryGetValue(netMsg.type, out var handler))
         {
@@ -224,5 +230,16 @@ public class NetworkManager : MonoBehaviour
         
         string json = JsonConvert.SerializeObject(msg);
         WebSocketClient.Instance.Send(json);
+    }
+    
+    public void EnqueueOnMainThread(Action action)
+    {
+        StartCoroutine(RunNextFrame(action));
+    }
+
+    private IEnumerator RunNextFrame(Action action)
+    {
+        yield return null;
+        action();
     }
 }

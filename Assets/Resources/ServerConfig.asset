@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ServerConfig
   m_EditorClassIdentifier: 
   serverMode: 0
-  serverAPIMode: 0
+  serverAPIMode: 1
   TestLocalIp: 59.12.167.192
   renderServerIp: wss://defensegamewebsocketserver.onrender.com/ws
   port: 5215
