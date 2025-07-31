@@ -7,8 +7,8 @@ using NativeWebSocket.Models;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class CharacterSelectSceneManager : MonoBehaviour
 {
     public static CharacterSelectSceneManager Instance  { get; private set; }
@@ -19,6 +19,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
     [SerializeField] private Button ChattingSendButton;
     [SerializeField] private GameObject ChattingObj;
     [SerializeField] private TMP_InputField ChattingInput;
+    [SerializeField] private GameObject ChatUI;
     [SerializeField] private Transform ChattingParent;
     [SerializeField] private Transform PlayerIconParent;
     [SerializeField] private GameObject PlayerIconPrefab;
@@ -27,7 +28,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
     [SerializeField] private Transform AllReadyDestPos;
     
     private bool ui_lock = false;
-    private Dictionary<string, PlayerIcon> players = new Dictionary<string, PlayerIcon>();
+    private Dictionary<string, PlayerIcon> players;
     private Coroutine moveCoroutine;
     private Vector3 startPos;
     void Awake()
@@ -46,6 +47,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         ChattingSendButton.onClick.AddListener(OnClickChattingSend);
         WebSocketClient.Instance.OnMessageReceived += Handle;
         startPos = AllReadyStartPos.localPosition;
+        players = new Dictionary<string, PlayerIcon>();
     }
     private void Start()
     {
@@ -59,7 +61,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
         string json = JsonConvert.SerializeObject(message);
         WebSocketClient.Instance.Send(json);
     }
-
     void DeleteHandler()
     {
         WebSocketClient.Instance.OnMessageReceived -=  Handle;
@@ -83,13 +84,13 @@ public class CharacterSelectSceneManager : MonoBehaviour
             break;
             case "out_room":
             {
-                var handler = new OutRoomHandler();
+                var handler = new OutRoomHandler(() => { players.Clear();});
                 handler.Handle(netMsg);
             }
             break;
             case "chat_room":
             {
-                var handler = new ChatRoomHandler();
+                var handler = new ChatRoomHandler(ChatUI, ChattingParent);
                 handler.Handle(netMsg);
             } 
             break;
@@ -106,11 +107,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
             } 
             break;
         }
-    }
-
-    public void setUiLock(bool locked)
-    {
-        ui_lock = locked;
     }
     //입장시에 기본 플레이어 아이콘 생성
     private void SetUpPlayerIcon()
@@ -136,6 +132,28 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 {
                     Destroy(players[playerId].gameObject);
                     players.Remove(playerId);
+                }
+            }
+        }
+        //호스트가 맨처음으로 오게 정렬
+        players.OrderBy(x => x.Value.playerId == RoomSession.HostId);
+        
+        for (int i = 0; i < RoomSession.RoomInfos.Count; i++)
+        {
+            if (!players.ContainsKey(RoomSession.RoomInfos[i].playerId)) continue;
+            PlayerIcon icon = players[RoomSession.RoomInfos[i].playerId].GetComponent<PlayerIcon>();
+            if (icon != null)
+            {
+                //update
+                icon.UpdateHostIcon();
+                if (UserSession.UserId == RoomSession.HostId && RoomSession.RoomInfos[i].playerId != UserSession.UserId)
+                {
+                    //내가 호스트이고 다른 플레이어들의 아이콘이면 킥버튼을 켜줌
+                    icon.SetKickButtonActive(true);
+                }
+                else
+                {
+                    icon.SetKickButtonActive(false);
                 }
             }
         }
@@ -229,8 +247,8 @@ public class CharacterSelectSceneManager : MonoBehaviour
         {
             // 메시지를 스페이스바 혹은 공백으로 입력한 경우
             ChattingInput.text = null;
-            ui_lock = false;
         }
+        ui_lock = false;
     }
 
     private void OnclickDeSelect()
@@ -247,6 +265,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         WebSocketClient.Instance.Send(json);
         DeSelectButton.gameObject.SetActive(false);
         SelectButton.gameObject.SetActive(true);
+        ui_lock = false;
     }
     
     private void OnclickSelect()
@@ -267,6 +286,8 @@ public class CharacterSelectSceneManager : MonoBehaviour
             DeSelectButton.gameObject.SetActive(true);
             SelectButton.gameObject.SetActive(false);
         }
+
+        ui_lock = false;
     }
     
     IEnumerator TryGameStartCoroutine()
@@ -304,6 +325,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         if(ui_lock) return;
         ui_lock = true;
         StartCoroutine(TryOutRoom());
+        ui_lock = false;
     }
     IEnumerator TryOutRoom()
     {

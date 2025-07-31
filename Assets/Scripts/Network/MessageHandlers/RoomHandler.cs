@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DataModels;
 using Newtonsoft.Json;
+using TMPro;
 using UnityEngine;
 
 
@@ -89,89 +90,48 @@ public class RoomInfoHandler : INetworkMessageHandler
 public class OutRoomHandler : INetworkMessageHandler
 {
     public string Type => "out_room";
+    private Action callback;
+
+    public OutRoomHandler(Action callback)
+    {
+        this.callback =  callback;
+    }
     public void Handle(NetMsg msg)
     {
-        var roomInfo = RoomSession.RoomInfos.Find(x => x.playerId == msg.playerId);
-        if (roomInfo != null)
-        {
-            Debug.Log($"이전에 룸인포에서 삭제가 안된모양임. 확인 필요");
-            RoomSession.RoomInfos.Remove(roomInfo);
-        }
         SceneLoader.Instance.LoadScene("LobbyScene", () =>
         {
             Debug.Log($"방 나가기 성공!");
+            RoomSession.Init();
+            callback?.Invoke();
         }); 
     }
 }
 public class ChatRoomHandler : INetworkMessageHandler
 {
     public string Type => "chat_room";
-    
-    private ChatUIManager chatUI;
 
-    public class ChatMessage
+    private GameObject ChatUI;
+    private Transform ChatParent;
+
+    public ChatRoomHandler(GameObject ChatUI, Transform ChatParent)
     {
-        public string playerId;
-        public string nickName;
-        public string message;
-        public DateTime timestamp = DateTime.UtcNow;
-    }
-    
-    private static Dictionary<string, List<ChatMessage>> chatLog = new Dictionary<string, List<ChatMessage>>();
-
-    public static void Save(ChatMessage msg)
-    {
-        if (!chatLog.ContainsKey(RoomSession.RoomCode))
-        {
-            chatLog[RoomSession.RoomCode] = new List<ChatMessage>();
-        }
-
-        chatLog[RoomSession.RoomCode].Add(msg);
-
-        Debug.Log($"[채팅 저장됨] {msg.nickName} ({msg.playerId}): {msg.message} @ {msg.timestamp:HH:mm:ss}");
-    }
-
-    public static void PrintAllLogs()
-    {
-        foreach (var pair in chatLog)
-        {
-            Debug.Log($"▶ {pair.Key}방의 채팅 기록:");
-            foreach (var msg in pair.Value)
-            {
-                Debug.Log($"   [{msg.timestamp:HH:mm:ss}] {msg.nickName} ({msg.playerId}) : {msg.message}");
-            }
-        }
-    }
-    
-    public ChatRoomHandler()
-    {
-        // ChatUIManager 싱글톤 또는 GameObject 찾기 방식
-        chatUI = GameObject.FindObjectOfType<ChatUIManager>();
-        if (chatUI == null)
-            Debug.LogError("ChatUIManager를 찾을 수 없습니다!");
+        this.ChatUI = ChatUI;
+        this.ChatParent = ChatParent;
     }
     
     public void Handle(NetMsg msg)
     {
-        Debug.Log($"채팅창 전송 성공! 코드: {RoomSession.RoomCode}");
-        
-        // ✅ 채팅 저장
-        var chatMessage = new ChatMessage
-        {
-            playerId = msg.playerId,
-            nickName = msg.nickName,
-            message = msg.message
-        };
+        AddChatMessage(msg.nickName, msg.message);
+    }
+    public void AddChatMessage(string nickname, string message)
+    {
+        GameObject newChat = GameObject.Instantiate(ChatUI, ChatParent);
 
-        ChatRoomHandler.Save(chatMessage);
-        ChatRoomHandler.PrintAllLogs();
-        
-        // UI에 메시지 추가
-        if (chatUI != null)
-        {
-            chatUI.AddChatMessage(msg.nickName, msg.message);
-        }
-        CharacterSelectSceneManager.Instance.setUiLock(false);
+        TextMeshProUGUI nicknameText = newChat.transform.Find("NickName").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI messageText = newChat.transform.Find("Text").GetComponent<TextMeshProUGUI>();
+
+        nicknameText.text = nickname;
+        messageText.text = message;
     }
 }
 public class SelectedCharacterHandler : INetworkMessageHandler
@@ -183,7 +143,6 @@ public class SelectedCharacterHandler : INetworkMessageHandler
         CharacterSelectSceneManager.Instance.UpdatePlayerIcon(msg.playerId, msg.jobType);
         //캐릭터를 선택하면 준비가 된 것임
         CharacterSelectSceneManager.Instance.SetReady(msg.playerId, true);
-        CharacterSelectSceneManager.Instance.setUiLock(false);
         //다 준비되었을때 토스트메시지 띄워줌.
         if (msg.isAllReady)
         {
@@ -199,6 +158,6 @@ public class DeSelectedCharacterHandler : INetworkMessageHandler
     {
         CharacterSelectSceneManager.Instance.SetReady(msg.playerId, false);
         CharacterSelectSceneManager.Instance.StopMoveReadyTextCoroutine();
-        CharacterSelectSceneManager.Instance.setUiLock(false);
     }
 }
+

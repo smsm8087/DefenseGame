@@ -98,6 +98,7 @@ public class NetMsg
 public class PlayerInfo
 {
     public string id { get; set; }
+    public string nickName { get; set; }
     public string job_type { get; set; }
     public int currentHp { get; set; }
     public float currentUlt { get; set; }

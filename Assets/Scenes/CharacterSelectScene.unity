@@ -701,7 +701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -113.8}
+  m_AnchoredPosition: {x: 0, y: -152.6}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &560034021
@@ -1443,7 +1443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10, y: -61}
+  m_AnchoredPosition: {x: -10, y: -30}
   m_SizeDelta: {x: 1500, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &773306090
@@ -2387,7 +2387,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1176870494}
   - component: {fileID: 1176870495}
-  - component: {fileID: 1176870496}
   m_Layer: 0
   m_Name: CharacterSelectSceneManager
   m_TagString: Untagged
@@ -2429,26 +2428,13 @@ MonoBehaviour:
   ChattingSendButton: {fileID: 687924863}
   ChattingObj: {fileID: 1209504312}
   ChattingInput: {fileID: 15990679}
+  ChatUI: {fileID: 5878303963660730295, guid: c1d665aceaf735249b49f57711b20007, type: 3}
   ChattingParent: {fileID: 1984869794}
   PlayerIconParent: {fileID: 560034020}
   PlayerIconPrefab: {fileID: 6196590374873185768, guid: 551d97fe860a73241a455bf682eb0d87, type: 3}
   AllReadyObject: {fileID: 1905565905}
   AllReadyStartPos: {fileID: 1465180141}
   AllReadyDestPos: {fileID: 564201342}
---- !u!114 &1176870496
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176870493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ada2b983ac645cba11d1e9b9c232609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatPrefab: {fileID: 5878303963660730295, guid: c1d665aceaf735249b49f57711b20007, type: 3}
-  chatContentParent: {fileID: 1984869794}
 --- !u!1 &1209504312
 GameObject:
   m_ObjectHideFlags: 0

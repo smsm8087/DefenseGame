@@ -6,6 +6,12 @@ public static class RoomSession
     public static string HostId { get; private set; }
     public static List<RoomInfo> RoomInfos { get; private set; } = new List<RoomInfo>();
 
+    public static void Init()
+    {
+        RoomCode = string.Empty;
+        HostId = string.Empty;
+        RoomInfos.Clear();
+    }
     public static void Set(string code, string  hostId)
     {
         RoomCode = code;

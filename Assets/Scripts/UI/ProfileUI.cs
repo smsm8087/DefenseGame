@@ -10,11 +10,6 @@ using System.Linq;
 public class ProfileUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    [SerializeField] private Image iconBG;
-    [SerializeField] private Slider hpSlider;
-    [SerializeField] private Image hpBG;
-    [SerializeField] private Slider ultSlider;
-    [SerializeField] private Image ultBG;
     [SerializeField] private TextMeshProUGUI nicknameText;
 
     [Header("StatUI")]
@@ -31,9 +26,7 @@ public class ProfileUI : MonoBehaviour
     private void Start()
     {
         hpImage = transform.Find("HPBAR/hp").GetComponent<Image>();
-        //hpText = transform.Find("HPBAR/hpBG/hp").GetComponent<TextMeshProUGUI>();
         ultImage =  transform.Find("ULTBAR/ult").GetComponent<Image>();
-        //ultText = transform.Find("ULTBAR/ult").GetComponent<TextMeshProUGUI>();
     }
 
     public void InitializeProfile(PlayerInfo playerinfo, GameObject player)
@@ -47,6 +40,7 @@ public class ProfileUI : MonoBehaviour
         {
             SetPlayerIcon(null, playerinfo.job_type);
         }
+        SetNickname(playerinfo.nickName);
 
         statUIButton?.onClick.AddListener(() => OnShowStatPopup(this.playerinfo));
     }
@@ -65,10 +59,6 @@ public class ProfileUI : MonoBehaviour
     {
         float hpPct = Mathf.Clamp01((float)currentHp / (float)maxHp);
         StartCoroutine(LerpGaugeBar(hpPct, hpImage));
-        // if (hpText != null)
-        // {
-        //     hpText.text = $"{currentHp}/{maxHp}";
-        // }
     }
     public IEnumerator LerpGaugeBar(float targetPercent, Image targetImg)
     {
@@ -92,15 +82,11 @@ public class ProfileUI : MonoBehaviour
     {
         float ultPct = Mathf.Clamp01((float)currentUlt / (float)maxUlt);
         StartCoroutine(LerpGaugeBar(ultPct, ultImage));
-        // if (ultText != null)
-        // {
-        //     ultText.text = $"{currentUlt:F0}/{maxUlt:F0}";
-        // }
     }
 
     public void SetNickname(string nickname)
     {
-        // 닉네임 기능은 나중에 구현 예정
+        nicknameText.text = nickname;
     }
 
     public bool IsUltReady()

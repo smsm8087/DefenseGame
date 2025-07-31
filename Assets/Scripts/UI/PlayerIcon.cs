@@ -1,3 +1,8 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using NativeWebSocket.Models;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +14,80 @@ public class PlayerIcon : MonoBehaviour
     [SerializeField] private Image baseIcon;
     [SerializeField] private GameObject baseGameObject;
     [SerializeField] private TextMeshProUGUI nickNameText;
+    [SerializeField] private Image HostIcon;
+    [SerializeField] private Button KickButton;
     public string playerId;
     public string job_type;
+    private bool ui_lock = false;
+
+    private void Awake()
+    {
+        KickButton.onClick.AddListener(OnclickKickButton);
+    }
+
     public void SetInfo(string playerId, string nickName)
     {
         this.playerId = playerId;
-        this.nickNameText.text = nickName;
+        nickNameText.text = nickName;
+        UpdateHostIcon();
     }
 
+    public void UpdateHostIcon()
+    {
+        HostIcon.gameObject.SetActive(playerId == RoomSession.HostId);
+    }
+
+    public void SetKickButtonActive(bool active)
+    {
+        KickButton.gameObject.SetActive(active);
+    }
+
+    public void OnclickKickButton()
+    {
+        if (ui_lock) return;
+        ui_lock = true;
+        //내가 호스트가 아니면
+        //자기자신을 강퇴하려고 하면
+        if (UserSession.UserId != RoomSession.HostId || UserSession.UserId == playerId)
+        {
+            ui_lock = false;
+            return;
+        }
+        StartCoroutine(TryKickButtonCoroutine());
+    }
+    IEnumerator TryKickButtonCoroutine()
+    {
+        var data = new Dictionary<string, string>
+        {
+            { "userId", UserSession.UserId},
+            { "roomcode", RoomSession.RoomCode},
+            { "targetUserID", playerId}
+        };
+
+        yield return ApiManager.Instance.Post(
+            "room/kick",
+            data,
+            onSuccess: (res) =>
+            {
+                //웹소켓에서도 타겟유저id 제거
+                var message = new
+                {
+                    type = "kick_user",
+                    playerId = UserSession.UserId,
+                    roomCode = RoomSession.RoomCode,
+                    targetUserId = playerId,
+                };
+                string json = JsonConvert.SerializeObject(message);
+                WebSocketClient.Instance.Send(json);
+            },
+            onError: (err) =>
+            {
+                Debug.Log($"강퇴를 하지 못했음.{playerId}");
+            }
+        );
+        ui_lock = false;
+    }
+    
     public void SetReady(bool ready)
     {
         readyGameObject.SetActive(ready);

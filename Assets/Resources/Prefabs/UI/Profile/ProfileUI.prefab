@@ -773,12 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71b1de3b0d2a43539bb3ff8af6f9a70f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconBG: {fileID: 0}
-  hpSlider: {fileID: 0}
-  hpBG: {fileID: 0}
-  ultSlider: {fileID: 0}
-  ultBG: {fileID: 0}
-  nicknameText: {fileID: 0}
+  nicknameText: {fileID: 5027598981332188372}
   statUIButton: {fileID: 5306893785284371108}
 --- !u!1 &6967626658722145766
 GameObject:
