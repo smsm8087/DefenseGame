@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DataModels;
 
@@ -7,6 +8,7 @@ public class NetMsg
     public string type;
     public string roomCode;
     public List<RoomInfo> RoomInfos;
+    public string hostId;
     public int wave;
     public int wave_id;
     public string requestId;
@@ -18,7 +20,7 @@ public class NetMsg
     public int enemyDataId;
     public List<PlayerInfo> players; // List<string> -> List<PlayerInfo>로 변경
     public string jobType;
-
+    
     public string animation;
     //player
     public float x;
@@ -89,6 +91,9 @@ public class NetMsg
     public bool isBeingRevived;
     public bool isInvulnerable;
     public string revivedBy;
+    
+    //room
+    public bool isAllReady;
 }
 
 [System.Serializable]
@@ -112,6 +117,12 @@ public class RoomInfo
 {
     public string playerId;
     public string nickName;
+}
+
+public class ChatInfo
+{
+    public string playerId;
+    public string message;
 }
 public class PartyMemberInfo
 {

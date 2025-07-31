@@ -5,17 +5,26 @@ using UnityEngine.UI;
 public class PlayerIcon : MonoBehaviour
 {
     [SerializeField] private Image readyIcon;
+    [SerializeField] private GameObject readyGameObject;
     [SerializeField] private Image baseIcon;
+    [SerializeField] private GameObject baseGameObject;
     [SerializeField] private TextMeshProUGUI nickNameText;
     public string playerId;
+    public string job_type;
     public void SetInfo(string playerId, string nickName)
     {
         this.playerId = playerId;
         this.nickNameText.text = nickName;
     }
 
+    public void SetReady(bool ready)
+    {
+        readyGameObject.SetActive(ready);
+        baseGameObject.SetActive(!ready);
+    }
     public void SetJobIcon(string job_tpye)
     {
+        this.job_type = job_tpye;
         string capitalJob = FirstCharToUpper(job_tpye);
         string spritePath = $"Character/{capitalJob}/PROFILE_{capitalJob}";
 
@@ -24,10 +33,13 @@ public class PlayerIcon : MonoBehaviour
         {
             baseIcon.enabled = true;
             baseIcon.sprite = overrideSprite;
+            readyIcon.enabled = true;
+            readyIcon.sprite = overrideSprite;
         }
         else
         {
             baseIcon.enabled = false;
+            readyIcon.enabled = false;
         }
     }
     private string FirstCharToUpper(string input)

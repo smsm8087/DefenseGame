@@ -2387,6 +2387,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1176870494}
   - component: {fileID: 1176870495}
+  - component: {fileID: 1176870496}
   m_Layer: 0
   m_Name: CharacterSelectSceneManager
   m_TagString: Untagged
@@ -2422,11 +2423,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OutButton: {fileID: 1487395699}
+  SelectButton: {fileID: 827907228}
+  DeSelectButton: {fileID: 481417517}
   ChattingButton: {fileID: 805739453}
+  ChattingSendButton: {fileID: 687924863}
   ChattingObj: {fileID: 1209504312}
+  ChattingInput: {fileID: 15990679}
   ChattingParent: {fileID: 1984869794}
   PlayerIconParent: {fileID: 560034020}
   PlayerIconPrefab: {fileID: 6196590374873185768, guid: 551d97fe860a73241a455bf682eb0d87, type: 3}
+  AllReadyObject: {fileID: 1905565905}
+  AllReadyStartPos: {fileID: 1465180141}
+  AllReadyDestPos: {fileID: 564201342}
+--- !u!114 &1176870496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1176870493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ada2b983ac645cba11d1e9b9c232609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatPrefab: {fileID: 5878303963660730295, guid: c1d665aceaf735249b49f57711b20007, type: 3}
+  chatContentParent: {fileID: 1984869794}
 --- !u!1 &1209504312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,7 +2758,7 @@ GameObject:
   - component: {fileID: 1465180143}
   - component: {fileID: 1465180142}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3706,7 +3728,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 7
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
@@ -3714,7 +3736,7 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 1
+  m_ReverseArrangement: 0
 --- !u!114 &1984869796
 MonoBehaviour:
   m_ObjectHideFlags: 0
