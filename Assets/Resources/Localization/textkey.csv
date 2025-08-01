@@ -1,33 +1,61 @@
-﻿id,value
-add_cri_pct_title_normal,치명타확률증가
-add_cri_pct_title_rare,치명타확률증가
-add_cri_pct_title_legend,치명타확률증가
-add_attack_title_normal,공격력증가
-add_attack_title_rare,공격력증가
-add_attack_title_legend,공격력증가
-add_movespeed_title_normal,이동속도증가
-add_movespeed_title_rare,이동속도증가
-add_movespeed_title_legend,이동속도증가
-add_cri_damage_title_normal,치명타피해증가
-add_cri_damage_title_rare,치명타피해증가
-add_cri_damage_title_legend,치명타피해증가
-add_ultgauge_title_normal,궁극기증가량
-add_ultgauge_title_rare,궁극기증가량
-add_ultgauge_title_legend,궁극기증가량
-add_hp_title_normal,체력증가
-add_hp_title_rare,체력증가
-add_hp_title_legend,체력증가
-btn_select,선택
-popup_title_select_card,카드를 선택해주세요
-tank,백수
-programmer,프로그래머
-popup_title_selected_cards,선택한 스킬 카드
-attack_power,공격력
-hp,체력
-move_speed,이동속도
-ultgauge,궁극기 증가량
-cri_pct,치명타확률
-cri_dmg,치명타데미지
-empty_selected_card,선택된 카드가 없습니다
-sniper,스나이퍼
-maid,메이드
+﻿id,value,,,
+add_cri_pct_title_normal,치명타확률증가,,,
+add_cri_pct_title_rare,치명타확률증가,,,
+add_cri_pct_title_legend,치명타확률증가,,,
+add_cri_pct_pct_title_normal,치명타확률증가,,,
+add_cri_pct_pct_title_rare,치명타확률증가,,,
+add_cri_pct_pct_title_legend,치명타확률증가,,,
+add_attack_title_normal,공격력증가,,,
+add_attack_title_rare,공격력증가,,,
+add_attack_title_legend,공격력증가,,,
+add_attack_pct_title_normal,공격력증가,,,
+add_attack_pct_title_rare,공격력증가,,,
+add_attack_pct_title_legend,공격력증가,,,
+add_attackspeed_title_normal,공격속도증가,,,
+add_attackspeed_title_rare,공격속도증가,,,
+add_attackspeed_title_legend,공격속도증가,,,
+add_attackspeed_pct_title_normal,공격속도증가,,,
+add_attackspeed_pct_title_rare,공격속도증가,,,
+add_attackspeed_pct_title_legend,공격속도증가,,,
+add_movespeed_title_normal,이동속도증가,,,
+add_movespeed_title_rare,이동속도증가,,,
+add_movespeed_title_legend,이동속도증가,,,
+add_movespeed_pct_title_normal,이동속도증가,,,
+add_movespeed_pct_title_rare,이동속도증가,,,
+add_movespeed_pct_title_legend,이동속도증가,,,
+add_cri_damage_title_normal,치명타피해증가,,,
+add_cri_damage_title_rare,치명타피해증가,,,
+add_cri_damage_title_legend,치명타피해증가,,,
+add_cri_damage_pct_title_normal,치명타피해증가,,,
+add_cri_damage_pct_title_rare,치명타피해증가,,,
+add_cri_damage_pct_title_legend,치명타피해증가,,,
+add_ultgauge_title_normal,궁극기증가량,,,
+add_ultgauge_title_rare,궁극기증가량,,,
+add_ultgauge_title_legend,궁극기증가량,,,
+add_ultgauge_pct_title_normal,궁극기증가량,,,
+add_ultgauge_pct_title_rare,궁극기증가량,,,
+add_ultgauge_pct_title_legend,궁극기증가량,,,
+add_hp_title_normal,체력증가,,,
+add_hp_title_rare,체력증가,,,
+add_hp_title_legend,체력증가,,,
+add_hp_pct_title_normal,체력증가,,,
+add_hp_pct_title_rare,체력증가,,,
+add_hp_pct_title_legend,체력증가,,,
+,,,,
+tank,백수,,,
+programmer,프로그래머,,,
+sniper,스나이퍼,,,
+maid,메이드,,,
+,,,,
+btn_select,선택,,,
+popup_title_select_card,카드를 선택해주세요,,,
+popup_title_selected_cards,선택한 스킬 카드,,,
+empty_selected_card,선택된 카드가 없습니다,,,
+,,,,
+attack_power,공격력,,,
+attack_speed,공격속도,,,
+hp,체력,,,
+move_speed,이동속도,,,
+ultgauge,궁극기 증가량,,,
+cri_pct,치명타확률,,,
+cri_dmg,치명타데미지,,,
