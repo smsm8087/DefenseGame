@@ -111,18 +111,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
     //입장시에 기본 플레이어 아이콘 생성
     private void SetUpPlayerIcon()
     {
-        for (int i = 0; i < RoomSession.RoomInfos.Count; i++)
-        {
-            if (players.ContainsKey(RoomSession.RoomInfos[i].playerId)) continue;
-            GameObject playerIconObj = Instantiate(PlayerIconPrefab, PlayerIconParent);
-            PlayerIcon icon = playerIconObj.GetComponent<PlayerIcon>();
-            if (icon != null)
-            {
-                icon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
-                players[RoomSession.RoomInfos[i].playerId] = icon;
-            }
-        }
-
         if (RoomSession.RoomInfos.Count != players.Count)
         {
             // 삭제된 유저 정리
@@ -137,24 +125,27 @@ public class CharacterSelectSceneManager : MonoBehaviour
         }
         //호스트가 맨처음으로 오게 정렬
         players.OrderBy(x => x.Value.playerId == RoomSession.HostId);
-        
+
         for (int i = 0; i < RoomSession.RoomInfos.Count; i++)
         {
-            if (!players.ContainsKey(RoomSession.RoomInfos[i].playerId)) continue;
-            PlayerIcon icon = players[RoomSession.RoomInfos[i].playerId].GetComponent<PlayerIcon>();
+            //업데이트
+            if (players.ContainsKey(RoomSession.RoomInfos[i].playerId))
+            {
+                PlayerIcon playerIcon = players[RoomSession.RoomInfos[i].playerId];
+                if (playerIcon != null)
+                {
+                    //이미 있는 플레이어 아이콘이면 업데이트
+                    playerIcon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
+                    continue;
+                }
+            }
+            //신규 플레이어 아이콘 생성
+            GameObject playerIconObj = Instantiate(PlayerIconPrefab, PlayerIconParent);
+            PlayerIcon icon = playerIconObj.GetComponent<PlayerIcon>();
             if (icon != null)
             {
-                //update
-                icon.UpdateHostIcon();
-                if (UserSession.UserId == RoomSession.HostId && RoomSession.RoomInfos[i].playerId != UserSession.UserId)
-                {
-                    //내가 호스트이고 다른 플레이어들의 아이콘이면 킥버튼을 켜줌
-                    icon.SetKickButtonActive(true);
-                }
-                else
-                {
-                    icon.SetKickButtonActive(false);
-                }
+                icon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
+                players[RoomSession.RoomInfos[i].playerId] = icon;
             }
         }
     }

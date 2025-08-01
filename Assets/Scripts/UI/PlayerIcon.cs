@@ -36,6 +36,16 @@ public class PlayerIcon : MonoBehaviour
     public void UpdateHostIcon()
     {
         HostIcon.gameObject.SetActive(playerId == RoomSession.HostId);
+
+        if (UserSession.UserId == RoomSession.HostId &&  UserSession.UserId != playerId)
+        {
+            //내가 호스트이고 다른 플레이어들의 아이콘이면 킥버튼을 켜줌
+            SetKickButtonActive(true);
+        }
+        else
+        {
+            SetKickButtonActive(false);
+        }
     }
 
     public void SetKickButtonActive(bool active)
