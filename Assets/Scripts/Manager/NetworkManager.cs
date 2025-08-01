@@ -210,8 +210,6 @@ public class NetworkManager : MonoBehaviour
 
     public void HandleMessage(string msg)
     {
-        Debug.Log($"[2–NM] HandleMessage 진입 → raw: {msg}");
-
         NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(msg);
         if (handlers.TryGetValue(netMsg.type, out var handler))
         {

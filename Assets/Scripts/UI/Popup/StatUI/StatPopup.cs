@@ -25,6 +25,7 @@ public class StatPopup : BasePopup
     public void Init(PlayerInfo playerinfo)
     {
         this.playerinfo = playerinfo;
+        nickText.text = playerinfo.nickName;
         setJobText();
         setCards();
         setStats();
