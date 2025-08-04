@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CharacterSelect;
 using DataModels;
 using NativeWebSocket.Models;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ using UnityEngine.UI;
 public class CharacterSelectSceneManager : MonoBehaviour
 {
     public static CharacterSelectSceneManager Instance  { get; private set; }
+    [SerializeField] private CharacterSelectUI characterSelectUI;
     [SerializeField] private Button OutButton;
     [SerializeField] private Button SelectButton;
     [SerializeField] private Button DeSelectButton;
@@ -242,6 +244,11 @@ public class CharacterSelectSceneManager : MonoBehaviour
         ui_lock = false;
     }
 
+    private void SetLockState(bool locked)
+    {
+        characterSelectUI.SetInteractable(!locked);
+    }
+    
     private void OnclickDeSelect()
     {
         if (ui_lock) return;
@@ -257,6 +264,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         DeSelectButton.gameObject.SetActive(false);
         SelectButton.gameObject.SetActive(true);
         ui_lock = false;
+        SetLockState(false);
     }
     
     private void OnclickSelect()
@@ -279,6 +287,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
         }
 
         ui_lock = false;
+        SetLockState(true);
     }
     
     IEnumerator TryGameStartCoroutine()

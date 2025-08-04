@@ -9,6 +9,8 @@ public class CharacterScrollView : FancyScrollView<CharacterData, Context>
 {
     [SerializeField] Scroller scroller = default;
     [SerializeField] GameObject cellPrefab = default;
+    
+    public bool IsLocked { get; set; } = false;
 
     Action<int> onSelectionChanged;
 
@@ -18,13 +20,20 @@ public class CharacterScrollView : FancyScrollView<CharacterData, Context>
     {
         base.Initialize();
 
-        Context.OnCellClicked = SelectCell;
+        Context.OnCellClicked = index =>
+        {
+            if (!IsLocked)
+            {
+                SelectCell(index);
+            }
+        };
         scroller.OnValueChanged(UpdatePosition);
         scroller.OnSelectionChanged(UpdateSelection);
     }
 
     void UpdateSelection(int index)
     {
+        if (IsLocked) return;
         if (Context.SelectedIndex == index)
         {
             return;
@@ -59,6 +68,7 @@ public class CharacterScrollView : FancyScrollView<CharacterData, Context>
 
     public void SelectCell(int index)
     {
+        if (IsLocked) return;
         if (index < 0 || index >= ItemsSource.Count || index == Context.SelectedIndex)
         {
             return;
@@ -66,6 +76,11 @@ public class CharacterScrollView : FancyScrollView<CharacterData, Context>
 
         UpdateSelection(index);
         scroller.ScrollTo(index, 0.35f, Ease.OutCubic);
+    }
+    
+    public void SetScrollDragEnabled(bool enabled)
+    {
+        scroller.enabled = enabled; 
     }
 }
 

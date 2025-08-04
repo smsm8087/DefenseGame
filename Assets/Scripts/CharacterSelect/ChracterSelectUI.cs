@@ -42,5 +42,14 @@ namespace CharacterSelect
             
             CharacterSelectSceneManager.Instance.UpdatePlayerIcon(UserSession.UserId, characters[index].data);
         }
+        
+        public void SetInteractable(bool enable)
+        {
+            scrollView.IsLocked = !enable;
+            scrollView.SetScrollDragEnabled(enable);
+
+            leftButton.interactable  = enable;
+            rightButton.interactable = enable;
+        }
     }
 }
