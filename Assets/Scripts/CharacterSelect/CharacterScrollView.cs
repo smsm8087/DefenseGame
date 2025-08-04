@@ -58,12 +58,14 @@ public class CharacterScrollView : FancyScrollView<CharacterData, Context>
 
     public void SelectNextCell()
     {
-        SelectCell(Context.SelectedIndex + 1);
+        var next = (Context.SelectedIndex + 1) % ItemsSource.Count;
+        SelectCell(next);
     }
 
     public void SelectPrevCell()
     {
-        SelectCell(Context.SelectedIndex - 1);
+        var prev = (Context.SelectedIndex - 1 + ItemsSource.Count) % ItemsSource.Count;
+        SelectCell(prev);
     }
 
     public void SelectCell(int index)
