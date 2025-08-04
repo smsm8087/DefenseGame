@@ -1,22 +1,35 @@
-using System;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
-using System.Collections;
-using System.Collections.Generic;
 using NativeWebSocket.Models;
 using Newtonsoft.Json;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Sockets;
+using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LobbySceneManager : MonoBehaviour
 {
-    public Button createRoomButton;
-    public TMP_InputField roomCodeInput;
-    public Button joinRoomButton;
+    [SerializeField] private Button createRoomButton;
+    [SerializeField] private Button joinRoomButton;
+    [SerializeField] private TMP_InputField roomCodeInput;
+
+    [SerializeField] private Button CustomPlayButton;
+    [SerializeField] private Button QuickMatchButton;
+    [SerializeField] private GameObject SelectMode;
+    [SerializeField] private GameObject CustomPlay;
     private bool ui_lock = false;
 
     private void Start()
     {
+        SelectMode.SetActive(true);
+        CustomPlay.SetActive(false);
+        CustomPlayButton.onClick.AddListener(() =>
+        {
+            SelectMode.SetActive(false);
+            CustomPlay.SetActive(true);
+        });
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
         WebSocketClient.Instance.OnMessageReceived += Handle;

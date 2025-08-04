@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 30
   m_Viewport: {fileID: 597418551}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 2103566466}
@@ -2421,6 +2421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f37a14f1030f2634faec3bc73f3fb682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterSelectUI: {fileID: 773306092}
   OutButton: {fileID: 1487395699}
   SelectButton: {fileID: 827907228}
   DeSelectButton: {fileID: 481417517}
@@ -2643,7 +2644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 26.6025, y: -0.5}
+  m_AnchoredPosition: {x: 26.602478, y: -0.5}
   m_SizeDelta: {x: -73.205, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229646353
