@@ -8,7 +8,6 @@ using NativeWebSocket.Models;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class CharacterSelectSceneManager : MonoBehaviour
 {
@@ -25,34 +24,36 @@ public class CharacterSelectSceneManager : MonoBehaviour
     [SerializeField] private Transform ChattingParent;
     [SerializeField] private Transform PlayerIconParent;
     [SerializeField] private GameObject PlayerIconPrefab;
-    [SerializeField] private GameObject AllReadyObject;
-    [SerializeField] private Transform AllReadyStartPos;
-    [SerializeField] private Transform AllReadyDestPos;
-    
+    [SerializeField] private GameObject StartObj;
+    [SerializeField] private Button StartButton;
+
     private bool ui_lock = false;
     private Dictionary<string, PlayerIcon> players;
-    private Coroutine moveCoroutine;
-    private Vector3 startPos;
     void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            Destroy(Instance.gameObject);
         }
 
         Instance = this;
+    }
+    public void Initialize()
+    {
         DeSelectButton.onClick.AddListener(OnclickDeSelect);
         SelectButton.onClick.AddListener(OnclickSelect);
         OutButton.onClick.AddListener(OnClickOut);
         ChattingButton.onClick.AddListener(OnClickChatting);
         ChattingSendButton.onClick.AddListener(OnClickChattingSend);
-        WebSocketClient.Instance.OnMessageReceived += Handle;
-        startPos = AllReadyStartPos.localPosition;
+        StartButton.onClick.AddListener(() =>
+        {
+            if (ui_lock) return;
+            ui_lock = true;
+            TryGameStart();
+        });
         players = new Dictionary<string, PlayerIcon>();
-    }
-    private void Start()
-    {
+        WebSocketClient.Instance.OnMessageReceived += Handle;
+
         //room info 가져오기
         var message = new
         {
@@ -63,9 +64,10 @@ public class CharacterSelectSceneManager : MonoBehaviour
         string json = JsonConvert.SerializeObject(message);
         WebSocketClient.Instance.Send(json);
     }
-    void DeleteHandler()
+    void OnDisable()
     {
-        WebSocketClient.Instance.OnMessageReceived -=  Handle;
+        if (WebSocketClient.Instance != null)
+            WebSocketClient.Instance.OnMessageReceived -= Handle;
     }
     void Handle(string message)
     {
@@ -74,7 +76,10 @@ public class CharacterSelectSceneManager : MonoBehaviour
         {
             case "started_game":
             {
-                var handler = new StartGameHandler(DeleteHandler);
+                var handler = new StartGameHandler(()=>
+                {
+                    StartCoroutine(TryGameStartCoroutine());
+                });
                 handler.Handle(netMsg);
             }
             break;
@@ -109,10 +114,14 @@ public class CharacterSelectSceneManager : MonoBehaviour
             } 
             break;
         }
+        ui_lock = false;
     }
     //입장시에 기본 플레이어 아이콘 생성
     private void SetUpPlayerIcon()
     {
+        //startObj 활성화
+        StartObj.SetActive(UserSession.UserId == RoomSession.HostId);
+
         if (RoomSession.RoomInfos.Count != players.Count)
         {
             // 삭제된 유저 정리
@@ -164,43 +173,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
         if (players.TryGetValue(playerId, out PlayerIcon playerIcon))
         {
             playerIcon.SetJobIcon(job_type);
-        }
-    }
-
-    public void StopMoveReadyTextCoroutine()
-    {
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);
-            AllReadyObject.SetActive(false);
-            AllReadyStartPos.localPosition = startPos;
-        }
-    }
-    public void MoveReadyText()
-    {
-        moveCoroutine = StartCoroutine(MoveReadyTextCoroutine());
-    }
-    public IEnumerator MoveReadyTextCoroutine()
-    {
-        AllReadyObject.SetActive(true);
-        float duration = 3f;
-        float time = 0f;
-
-        Vector3 startPos = AllReadyStartPos.localPosition;
-        Vector3 to = AllReadyDestPos.localPosition;
-
-        while (time < duration)
-        {
-            time += Time.deltaTime;
-            AllReadyStartPos.localPosition = Vector3.Lerp(startPos, to, time / duration);
-            yield return null;
-        }
-
-        AllReadyStartPos.localPosition = to;
-        AllReadyObject.SetActive(false);
-        if (RoomSession.HostId == UserSession.UserId)
-        {
-            yield return StartCoroutine(TryGameStartCoroutine());
         }
     }
     public void SetReady(string playerId, bool isReady)
@@ -289,7 +261,17 @@ public class CharacterSelectSceneManager : MonoBehaviour
         ui_lock = false;
         SetLockState(true);
     }
-    
+    void TryGameStart()
+    {
+        var message = new
+        {
+            type = "start_game",
+            playerId = UserSession.UserId,
+            roomCode = RoomSession.RoomCode,
+        };
+        string json = JsonConvert.SerializeObject(message);
+        WebSocketClient.Instance.Send(json);
+    }
     IEnumerator TryGameStartCoroutine()
     {
         var data = new Dictionary<string, string>
@@ -302,16 +284,6 @@ public class CharacterSelectSceneManager : MonoBehaviour
             data,
             onSuccess: (res) =>
             {
-                var roomStatusResponse = JsonUtility.FromJson<ApiResponse.RoomStatusResponse>(res);
-                var message = new
-                {
-                    type = "start_game",
-                    playerId = UserSession.UserId,
-                    players = roomStatusResponse.playerIds,
-                    roomCode = RoomSession.RoomCode,
-                };
-                string json = JsonConvert.SerializeObject(message);
-                WebSocketClient.Instance.Send(json);
             },
             onError: (err) =>
             {

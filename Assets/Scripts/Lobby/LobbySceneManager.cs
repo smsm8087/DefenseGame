@@ -34,7 +34,11 @@ public class LobbySceneManager : MonoBehaviour
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }
-
+    void OnDisable()
+    {
+        if (WebSocketClient.Instance != null)
+            WebSocketClient.Instance.OnMessageReceived -= Handle;
+    }
     void Handle(string msg)
     {
         NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(msg);
@@ -44,14 +48,12 @@ public class LobbySceneManager : MonoBehaviour
             {
                 var handler = new CreateRoomHandler();
                 handler.Handle(netMsg);
-                WebSocketClient.Instance.OnMessageReceived -= Handle;
             }
             break;
             case "room_joined":
             {
                 var handler = new JoinRoomHandler();
                 handler.Handle(netMsg);
-                WebSocketClient.Instance.OnMessageReceived -= Handle;
             }
             break;
         }

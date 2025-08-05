@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CharacterSelect;
 using DataModels;
 using Newtonsoft.Json;
 using TMPro;
@@ -17,6 +18,8 @@ public class StartGameHandler : INetworkMessageHandler
     }
     public void Handle(NetMsg msg)
     {
+        callback?.Invoke();
+
         SceneLoader.Instance.LoadScene("IngameScene", () =>
         {
             //IngameScene이 로드 되었으므로
@@ -28,7 +31,6 @@ public class StartGameHandler : INetworkMessageHandler
             };
             string json = JsonConvert.SerializeObject(message);
             WebSocketClient.Instance.Send(json);
-            callback?.Invoke();
         });
     }
 }
@@ -40,6 +42,7 @@ public class CreateRoomHandler : INetworkMessageHandler
         SceneLoader.Instance.LoadScene("CharacterSelectScene", () =>
         {
             Debug.Log($"방 생성 성공! 코드: {RoomSession.RoomCode}");
+            CharacterSelectSceneManager.Instance.Initialize();
         }); 
     }
 }
@@ -51,6 +54,7 @@ public class JoinRoomHandler : INetworkMessageHandler
         SceneLoader.Instance.LoadScene("CharacterSelectScene", () =>
         {
             Debug.Log($"입장 성공! 코드: {RoomSession.RoomCode}");
+            CharacterSelectSceneManager.Instance.Initialize();
         }); 
     }
 }
@@ -143,11 +147,6 @@ public class SelectedCharacterHandler : INetworkMessageHandler
         CharacterSelectSceneManager.Instance.UpdatePlayerIcon(msg.playerId, msg.jobType);
         //캐릭터를 선택하면 준비가 된 것임
         CharacterSelectSceneManager.Instance.SetReady(msg.playerId, true);
-        //다 준비되었을때 토스트메시지 띄워줌.
-        if (msg.isAllReady)
-        {
-            CharacterSelectSceneManager.Instance.MoveReadyText();
-        }
     }
 }
 public class DeSelectedCharacterHandler : INetworkMessageHandler
@@ -157,7 +156,6 @@ public class DeSelectedCharacterHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         CharacterSelectSceneManager.Instance.SetReady(msg.playerId, false);
-        CharacterSelectSceneManager.Instance.StopMoveReadyTextCoroutine();
     }
 }
 

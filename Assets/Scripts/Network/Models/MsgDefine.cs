@@ -91,9 +91,6 @@ public class NetMsg
     public bool isBeingRevived;
     public bool isInvulnerable;
     public string revivedBy;
-    
-    //room
-    public bool isAllReady;
 }
 
 [System.Serializable]
