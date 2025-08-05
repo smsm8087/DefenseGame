@@ -44,6 +44,18 @@ public class LobbySceneManager : MonoBehaviour
         NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(msg);
         switch (netMsg.type)
         {
+            case "confirm":
+            {
+                var handler = new ConfirmPopupHandler();
+                handler.Handle(netMsg);
+            }
+            break;
+            case "notice":
+            {
+                var handler = new NoticePopupHandler();
+                handler.Handle(netMsg);
+            }
+            break;
             case "room_created":
             {
                 var handler = new CreateRoomHandler();

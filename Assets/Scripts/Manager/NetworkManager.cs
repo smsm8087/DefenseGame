@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using NativeWebSocket;
 using NativeWebSocket.MessageHandlers;
-using UnityEngine;
 using Newtonsoft.Json;
-using UI;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -42,8 +38,6 @@ public class NetworkManager : MonoBehaviour
             return;
         }
         Instance = this;
-
-		DontDestroyOnLoad(gameObject);
         
         prefabMap = new Dictionary<string, GameObject>()
         {
@@ -54,6 +48,11 @@ public class NetworkManager : MonoBehaviour
         };
         
         RegisterHandlers();
+    }
+    void OnDisable()
+    {
+        if (WebSocketClient.Instance != null)
+            WebSocketClient.Instance.OnMessageReceived -= HandleMessage;
     }
 
     public void Reset()
@@ -199,8 +198,6 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RevivalCompletedHandler(players));
         AddHandler(new RevivalCancelledHandler(players));
         AddHandler(new InvulnerabilityEndedHandler(players));
-        AddHandler(new NoticePopupHandler());
-        AddHandler(new ConfirmPopupHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)
@@ -228,16 +225,5 @@ public class NetworkManager : MonoBehaviour
         
         string json = JsonConvert.SerializeObject(msg);
         WebSocketClient.Instance.Send(json);
-    }
-    
-    public void EnqueueOnMainThread(Action action)
-    {
-        StartCoroutine(RunNextFrame(action));
-    }
-
-    private IEnumerator RunNextFrame(Action action)
-    {
-        yield return null;
-        action();
     }
 }

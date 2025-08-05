@@ -74,6 +74,18 @@ public class CharacterSelectSceneManager : MonoBehaviour
         NetMsg netMsg = JsonConvert.DeserializeObject<NetMsg>(message);
         switch (netMsg.type)
         {
+            case "confirm":
+            {
+                var handler = new ConfirmPopupHandler();
+                handler.Handle(netMsg);
+            }
+            break;
+            case "notice":
+            {
+                var handler = new NoticePopupHandler();
+                handler.Handle(netMsg);
+            }
+            break;
             case "started_game":
             {
                 var handler = new StartGameHandler(()=>

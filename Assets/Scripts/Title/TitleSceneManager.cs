@@ -1,12 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using NativeWebSocket.Models;
 using UI;
-using UnityEngine.SceneManagement;
 
 public class TitleSceneManager : MonoBehaviour
 {
