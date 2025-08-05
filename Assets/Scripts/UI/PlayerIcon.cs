@@ -25,11 +25,13 @@ public class PlayerIcon : MonoBehaviour
         KickButton.onClick.AddListener(OnclickKickButton);
     }
 
-    public void SetInfo(string playerId, string nickName)
+    public void SetInfo(RoomInfo roomInfo)
     {
-        this.playerId = playerId;
-        nickNameText.text = nickName;
-        this.job_type = "tank";
+        playerId = roomInfo.playerId;
+        nickNameText.text = roomInfo.nickName;
+        job_type = roomInfo.jobType ?? "tank";
+        SetJobIcon(job_type);
+        SetReady(roomInfo.isReady);
         UpdateHostIcon();
     }
 

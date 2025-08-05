@@ -146,28 +146,17 @@ public class CharacterSelectSceneManager : MonoBehaviour
                 }
             }
         }
-        //호스트가 맨처음으로 오게 정렬
-        players.OrderBy(x => x.Value.playerId == RoomSession.HostId);
-
         for (int i = 0; i < RoomSession.RoomInfos.Count; i++)
         {
             //업데이트
-            if (players.ContainsKey(RoomSession.RoomInfos[i].playerId))
-            {
-                PlayerIcon playerIcon = players[RoomSession.RoomInfos[i].playerId];
-                if (playerIcon != null)
-                {
-                    //이미 있는 플레이어 아이콘이면 업데이트
-                    playerIcon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
-                    continue;
-                }
-            }
+            if (players.ContainsKey(RoomSession.RoomInfos[i].playerId)) continue;
+           
             //신규 플레이어 아이콘 생성
             GameObject playerIconObj = Instantiate(PlayerIconPrefab, PlayerIconParent);
             PlayerIcon icon = playerIconObj.GetComponent<PlayerIcon>();
             if (icon != null)
             {
-                icon.SetInfo(RoomSession.RoomInfos[i].playerId, RoomSession.RoomInfos[i].nickName);
+                icon.SetInfo(RoomSession.RoomInfos[i]);
                 players[RoomSession.RoomInfos[i].playerId] = icon;
             }
         }

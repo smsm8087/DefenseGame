@@ -115,6 +115,8 @@ public class RoomInfo
 {
     public string playerId;
     public string nickName;
+    public string jobType;
+    public bool isReady = false;
 }
 
 public class ChatInfo

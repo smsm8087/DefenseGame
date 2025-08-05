@@ -74,7 +74,7 @@ public class RoomInfoHandler : INetworkMessageHandler
         foreach (var roomInfo in RoomInfos)
         {
             if (RoomSession.RoomInfos.Find(x=> x.playerId == roomInfo.playerId) != null) continue;
-            RoomSession.AddUser(roomInfo.playerId, roomInfo.nickName);
+            RoomSession.AddUser(roomInfo);
         }
 
         if (RoomInfos.Count != RoomSession.RoomInfos.Count)

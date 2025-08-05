@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public static class RoomSession
 {
@@ -18,9 +19,11 @@ public static class RoomSession
         HostId = hostId;
     }
 
-    public static void AddUser(string playerId, string nickName)
+    public static void AddUser(RoomInfo roomInfo)
     {
-        RoomInfos.Add(new RoomInfo { playerId = playerId, nickName = nickName });
+        RoomInfos.Add(roomInfo);
+        RoomInfos = RoomInfos.OrderByDescending(x => x.playerId == RoomSession.HostId).ToList();
+
     }
     public static void RemoveUser(string playerId)
     {
@@ -35,6 +38,7 @@ public static class RoomSession
             RoomCode = string.Empty;
             HostId = string.Empty;
         }
+        RoomInfos = RoomInfos.OrderByDescending(x => x.playerId == RoomSession.HostId).ToList();
     }
 }
 public class UserSession
