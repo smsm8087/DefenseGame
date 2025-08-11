@@ -13,7 +13,6 @@ public class TitleSceneManager : MonoBehaviour
     public TMP_InputField nicknameInput; // 회원가입 전용
     public Button loginButton;
     public Button signupButton;
-    public ToastMessage toastMessage;
     private bool ui_lock = false;
     
     [Header("Press Any Key → Login UI")]
@@ -39,12 +38,6 @@ public class TitleSceneManager : MonoBehaviour
             loginUIGroup.SetActive(true);
         }
     }
-
-    void showMessage(string msg)
-    {
-        toastMessage.HideToast();
-        toastMessage.ShowToast(msg);
-    }
     
     IEnumerator Login()
     {
@@ -67,7 +60,6 @@ public class TitleSceneManager : MonoBehaviour
             },
             onError: (err) =>
             {
-                showMessage($"로그인 실패: {err}");
             }
         );
         ui_lock = false;
@@ -95,7 +87,6 @@ public class TitleSceneManager : MonoBehaviour
             },
             onError: (err) =>
             {
-                showMessage( $"회원가입 실패: {err}");
             }
         );
         ui_lock = false;

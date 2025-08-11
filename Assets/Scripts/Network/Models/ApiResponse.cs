@@ -6,6 +6,12 @@ namespace NativeWebSocket.Models
     public class ApiResponse
     {
         [Serializable]
+        public class ErrorRes
+        {
+            public string message;
+        }
+
+        [Serializable]
         public class LoginResponse
         {
             public string userId;
