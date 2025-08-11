@@ -19,6 +19,8 @@ public class LobbySceneManager : MonoBehaviour
     [SerializeField] private Button QuickMatchButton;
     [SerializeField] private GameObject SelectMode;
     [SerializeField] private GameObject CustomPlay;
+
+    [SerializeField] private TopMenuManager topMenuManager;
     private bool ui_lock = false;
 
     private void Start()
@@ -29,7 +31,14 @@ public class LobbySceneManager : MonoBehaviour
         {
             SelectMode.SetActive(false);
             CustomPlay.SetActive(true);
+            topMenuManager.SetBackButtonListener(() =>
+            {
+                SelectMode.SetActive(true);
+                CustomPlay.SetActive(false);
+                topMenuManager.SetBackButtonListener(null);
+            });
         });
+        
         createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
         WebSocketClient.Instance.OnMessageReceived += Handle;
