@@ -40,6 +40,7 @@ public class CharacterSelectSceneManager : MonoBehaviour
     }
     public void Initialize()
     {
+        SoundManager.Instance.PlayBGM("characterSelect");
         DeSelectButton.onClick.AddListener(OnclickDeSelect);
         SelectButton.onClick.AddListener(OnclickSelect);
         OutButton.onClick.AddListener(OnClickOut);

@@ -25,6 +25,7 @@ public class LobbySceneManager : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM("lobby");
         SelectMode.SetActive(true);
         CustomPlay.SetActive(false);
         CustomPlayButton.onClick.AddListener(() =>

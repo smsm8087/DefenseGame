@@ -38,6 +38,7 @@ public class BossController : MonoBehaviour
     }
     public void PlayDustSummon()
     {
+        SoundManager.Instance.PlaySFX("dustqueen_summon", 0.7f);
         animator.Play("BOSS_summon");
         StartCoroutine(WaitForAnimationThenIdle("BOSS_summon", "BOSS_idle"));
     }

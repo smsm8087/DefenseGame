@@ -23,5 +23,6 @@ public class BossDeadHandler : INetworkMessageHandler
         }
         GameObject.Destroy(boss.gameObject);
         bossDict.Remove("boss");
+        SoundManager.Instance.PlaySFX("ingame");
     }
 }

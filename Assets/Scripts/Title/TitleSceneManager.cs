@@ -22,6 +22,8 @@ public class TitleSceneManager : MonoBehaviour
 
     private async void Start()
     {
+        //sound
+        SoundManager.Instance.PlayBGM("title");
         loginButton.onClick.AddListener(() => StartCoroutine(Login()));
         signupButton.onClick.AddListener(() => StartCoroutine(Signup()));
         startPrompt.SetActive(true);
@@ -33,6 +35,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         if (!hasStarted && Input.anyKeyDown)
         {
+            SoundManager.Instance.PlaySFX("ui_click");
             hasStarted = true;
             startPrompt.SetActive(false);
             loginUIGroup.SetActive(true);
