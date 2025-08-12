@@ -20,6 +20,10 @@ public class LobbySceneManager : MonoBehaviour
     [SerializeField] private GameObject SelectMode;
     [SerializeField] private GameObject CustomPlay;
 
+    [SerializeField] private GameObject CreateRoomPopup;
+    [SerializeField] private Button CreateRoomPopupCreateButton;
+    [SerializeField] private Button CreateRoomPopupCloseButton;
+
     [SerializeField] private TopMenuManager topMenuManager;
     private bool ui_lock = false;
 
@@ -36,11 +40,25 @@ public class LobbySceneManager : MonoBehaviour
             {
                 SelectMode.SetActive(true);
                 CustomPlay.SetActive(false);
+                CreateRoomPopup.SetActive(false);
                 topMenuManager.SetBackButtonListener(null);
             });
         });
         
-        createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
+        createRoomButton.onClick.AddListener(() => {
+            CreateRoomPopup.SetActive(true);
+        });
+
+        CreateRoomPopupCreateButton.onClick.AddListener(() =>
+        {
+            CreateRoomPopup.SetActive(false);
+            StartCoroutine(CreateRoom());
+        });
+        CreateRoomPopupCloseButton.onClick.AddListener(() =>
+        {
+            CreateRoomPopup.SetActive(false);
+        });
+
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }
