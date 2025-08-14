@@ -95,5 +95,6 @@ public class GameManager : MonoBehaviour
 
         hpImg.sprite = Resources.Load<Sprite>(waveData.hp_icon);
         bossHpImg.sprite = Resources.Load<Sprite>(waveData.boss_icon);
+        SoundManager.Instance.PlayBGM("ingame");
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using static NativeWebSocket.Models.ApiResponse;
 
 public class ApiManager : MonoBehaviour
 {
@@ -57,6 +58,8 @@ public class ApiManager : MonoBehaviour
         if (www.result != UnityWebRequest.Result.Success)
         {
             onError?.Invoke(www.error);
+            var err = JsonUtility.FromJson<ErrorRes>(www.downloadHandler.text);
+            PopupManager.Instance.ShowNoticePopup(err?.message ?? $"HTTP {www.responseCode}");
         }
         else
         {

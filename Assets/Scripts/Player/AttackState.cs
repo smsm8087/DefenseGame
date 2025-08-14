@@ -9,6 +9,9 @@ public class AttackState : PlayerState
 
     public override void Enter()
     {
+        //sound
+        SoundManager.Instance.PlaySFX($"{player.job_type}_hit");
+        
         // 공격속도에 따라 애니메이션 속도 조절 (이제 모든 직업 기본 1.0)
         player._animator.speed = player.attackSpeed;
       

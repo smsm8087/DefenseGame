@@ -19,18 +19,46 @@ public class LobbySceneManager : MonoBehaviour
     [SerializeField] private Button QuickMatchButton;
     [SerializeField] private GameObject SelectMode;
     [SerializeField] private GameObject CustomPlay;
+
+    [SerializeField] private GameObject CreateRoomPopup;
+    [SerializeField] private Button CreateRoomPopupCreateButton;
+    [SerializeField] private Button CreateRoomPopupCloseButton;
+
+    [SerializeField] private TopMenuManager topMenuManager;
     private bool ui_lock = false;
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM("lobby");
         SelectMode.SetActive(true);
         CustomPlay.SetActive(false);
         CustomPlayButton.onClick.AddListener(() =>
         {
             SelectMode.SetActive(false);
             CustomPlay.SetActive(true);
+            topMenuManager.SetBackButtonListener(() =>
+            {
+                SelectMode.SetActive(true);
+                CustomPlay.SetActive(false);
+                CreateRoomPopup.SetActive(false);
+                topMenuManager.SetBackButtonListener(null);
+            });
         });
-        createRoomButton.onClick.AddListener(() => StartCoroutine(CreateRoom()));
+        
+        createRoomButton.onClick.AddListener(() => {
+            CreateRoomPopup.SetActive(true);
+        });
+
+        CreateRoomPopupCreateButton.onClick.AddListener(() =>
+        {
+            CreateRoomPopup.SetActive(false);
+            StartCoroutine(CreateRoom());
+        });
+        CreateRoomPopupCloseButton.onClick.AddListener(() =>
+        {
+            CreateRoomPopup.SetActive(false);
+        });
+
         joinRoomButton.onClick.AddListener(() => StartCoroutine(JoinRoom()));
         WebSocketClient.Instance.OnMessageReceived += Handle;
     }

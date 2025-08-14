@@ -24,8 +24,6 @@ public class EnemyDamagedHandler : INetworkMessageHandler
             var pid = damagedEnemy.enemyId;
             if (Enemies.TryGetValue(pid, out var enemyObj))
             {
-                Debug.Log($"Found enemy: {enemyObj.name}");
-            
                 //몬스터 아웃라인 셰이더 적용
                 var enemyController = enemyObj.GetComponent<EnemyController>();
                 if (enemyController != null)

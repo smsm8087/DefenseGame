@@ -25,6 +25,7 @@ public class EnemyDieHandler : INetworkMessageHandler
             if(!enemyController) return;
             enemyController.setKilledPlayerId(msg.playerId);
             enemyController.ChangeStateByEnum(EnemyState.Dead);
+            SoundManager.Instance.PlaySFX("ememy_dead", 0.7f);
         }
     }
 }

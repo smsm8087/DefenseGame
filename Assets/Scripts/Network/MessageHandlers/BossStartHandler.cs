@@ -16,6 +16,7 @@ public class BossStartHandler : INetworkMessageHandler
     public void Handle(NetMsg msg)
     {
         if (bossDict.ContainsKey("boss")) return;
+        SoundManager.Instance.PlayBGM("boss");
         var bossObj = GameObject.Instantiate(bossPrefab, new Vector3(msg.x, msg.y, 0), Quaternion.identity);
         bossDict["boss"] = bossObj;
         bossObj.GetComponent<BossController>().PlayIntroCoroutine(msg.maxHp);

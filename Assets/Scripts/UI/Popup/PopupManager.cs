@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -104,5 +105,64 @@ public class PopupManager : MonoBehaviour
         var popup = obj.GetComponent<T>();
         popup.Open();
         return popup;
+    }
+    private IEnumerator ShowNoticePopupCoroutine(string msg)
+    {
+        yield return null;
+        Action createAndInit = () =>
+        {
+            var popup = ShowPopup<NoticePopup>(noticePrefab);
+            if (popup == null)
+                return;  // 로딩 중이라면 일단 무시
+            popup.Init(msg,onOk: () => { });
+        };
+
+        if (IsLoading) EnqueueDeferred(createAndInit);
+        else createAndInit();
+    }
+
+    public void ShowNoticePopup(string msg)
+    {
+        MainThreadUtil.Run(ShowNoticePopupCoroutine(msg));
+    }
+
+    private IEnumerator ShowConfirmPopupCoroutine(string msg, string requestId)
+    {
+        yield return null;
+        Action createAndInit = () =>
+        {
+            var popup = ShowPopup<ConfirmPopup>(confirmPrefab);
+            if (popup == null)
+                return;  // 로딩 중이라면 일단 무시
+
+            popup.Init(
+                msg,
+                onYes: () =>
+                {
+                    NetworkManager.Instance.SendMsg(new NetMsg
+                    {
+                        type = "confirm_response",
+                        requestId = requestId,
+                        approved = true
+                    });
+                },
+                onNo: () =>
+                {
+                    NetworkManager.Instance.SendMsg(new NetMsg
+                    {
+                        type = "confirm_response",
+                        requestId = requestId,
+                        approved = false
+                    });
+                }
+            );
+        };
+
+        if (IsLoading) EnqueueDeferred(createAndInit);
+        else createAndInit();
+    }
+    public void ShowConfirmPopup(string msg, string requestId)
+    {
+        MainThreadUtil.Run(ShowConfirmPopupCoroutine(msg, requestId));
     }
 }
