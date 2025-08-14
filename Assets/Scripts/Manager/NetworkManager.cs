@@ -198,6 +198,7 @@ public class NetworkManager : MonoBehaviour
         AddHandler(new RevivalCompletedHandler(players));
         AddHandler(new RevivalCancelledHandler(players));
         AddHandler(new InvulnerabilityEndedHandler(players));
+        AddHandler(new SkillUsedHandler());
     }
 
     private void AddHandler(INetworkMessageHandler handler)

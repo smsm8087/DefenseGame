@@ -91,6 +91,11 @@ public class NetMsg
     public bool isBeingRevived;
     public bool isInvulnerable;
     public string revivedBy;
+    
+    //skill
+    public int skillId;
+    public float dirX;
+    public float dirY;
 }
 
 [System.Serializable]

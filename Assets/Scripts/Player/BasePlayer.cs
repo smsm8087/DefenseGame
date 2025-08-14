@@ -50,12 +50,15 @@ public abstract class BasePlayer : MonoBehaviour
     public string revivedBy = "";
     public Vector3 deathPosition;
     
+    public bool ActionLocked { get; set; } = false;
+
     private float revivalStartTime = 0f;
     private bool isCurrentlyReviving = false;
     private string currentRevivalTarget = "";
     
     private Coroutine invulnerabilityCoroutine;
     private SpriteRenderer spriteRenderer;  
+    
 
     // FSM
     protected PlayerState currentState;
@@ -101,10 +104,28 @@ public abstract class BasePlayer : MonoBehaviour
         if (!IsMyPlayer) return;
 
         SendMoveToServer();
+        
+        if (ActionLocked) return;
+        
         currentState?.Update();
         
         // 부활 입력 체크
         CheckRevivalInput();
+    }
+    
+    protected void SendUseSkill(int skillId, Vector2 dir)
+    {
+        var msg = new NetMsg
+        {
+            type = "use_skill",
+            playerId = NetworkManager.Instance.MyUserId,
+            skillId = skillId,
+            dirX = dir.x,
+            dirY = dir.y,
+            x = transform.position.x,
+            y = transform.position.y
+        };
+        NetworkManager.Instance.SendMsg(msg);
     }
 
     public virtual void ChangeState(PlayerState newState)
