@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using DataModels;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TankPlayer : BasePlayer
+public class TankPlayer : BasePlayer, ISkillUser 
 {
     private SkillData _taunt;
     private SkillData _dash;
@@ -14,6 +15,8 @@ public class TankPlayer : BasePlayer
     private Coroutine _dashCo;
     
     private readonly Dictionary<int, float> _lastUseTime = new();
+    
+    public event Action<int> OnSkillUsed;
 
 
     protected override void Start()
@@ -131,5 +134,33 @@ public class TankPlayer : BasePlayer
     private void MarkUsed(SkillData s)
     {
         _lastUseTime[s.id] = Time.time;
+        OnSkillUsed?.Invoke(s.id);
+    }
+    
+    public IEnumerable<SkillData> GetEquippedSkills()
+    {
+        if (_taunt != null) yield return _taunt;
+        if (_dash  != null) yield return _dash;
+    }
+
+    public float GetCooldownRemaining(int skillId)
+    {
+        SkillData s = null;
+        if (_taunt != null && _taunt.id == skillId) s = _taunt;
+        else if (_dash != null && _dash.id == skillId) s = _dash;
+
+        if (s == null) return 0f;
+        if (!_lastUseTime.TryGetValue(skillId, out var last)) return 0f;
+
+        float total = Mathf.Max(0f, s.cooldown);
+        float elapsed = Time.time - last;
+        return Mathf.Max(0f, total - elapsed);
+    }
+
+    public float GetCooldownTotal(int skillId)
+    {
+        if (_taunt != null && _taunt.id == skillId) return Mathf.Max(0f, _taunt.cooldown);
+        if (_dash  != null && _dash.id  == skillId) return Mathf.Max(0f, _dash.cooldown);
+        return 0f;
     }
 }
