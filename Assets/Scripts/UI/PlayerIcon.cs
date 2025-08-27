@@ -37,6 +37,13 @@ public class PlayerIcon : MonoBehaviour
 
     public void UpdateHostIcon()
     {
+        if (RoomSession.IsMatchmakingRoom)
+        {
+            if (HostIcon != null) HostIcon.gameObject.SetActive(false);
+            SetKickButtonActive(false);
+            return;
+        }
+
         HostIcon.gameObject.SetActive(playerId == RoomSession.HostId);
 
         if (UserSession.UserId == RoomSession.HostId &&  UserSession.UserId != playerId)
@@ -58,7 +65,11 @@ public class PlayerIcon : MonoBehaviour
     public void OnclickKickButton()
     {
         if (ui_lock) return;
-        ui_lock = true;
+
+        // 빠른매칭 방에선 강퇴 기능 없음
+        if (RoomSession.IsMatchmakingRoom)
+            return;
+
         //내가 호스트가 아니면
         //자기자신을 강퇴하려고 하면
         if (UserSession.UserId != RoomSession.HostId || UserSession.UserId == playerId)
@@ -66,8 +77,11 @@ public class PlayerIcon : MonoBehaviour
             ui_lock = false;
             return;
         }
+
+        ui_lock = true;
         StartCoroutine(TryKickButtonCoroutine());
     }
+
     IEnumerator TryKickButtonCoroutine()
     {
         var data = new Dictionary<string, string>

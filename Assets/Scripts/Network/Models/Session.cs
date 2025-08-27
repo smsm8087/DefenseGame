@@ -6,17 +6,24 @@ public static class RoomSession
     public static string RoomCode { get; private set; }
     public static string HostId { get; private set; }
     public static List<RoomInfo> RoomInfos { get; private set; } = new List<RoomInfo>();
+    public static bool IsMatchmakingRoom { get; private set; } = false;
 
     public static void Init()
     {
         RoomCode = string.Empty;
         HostId = string.Empty;
+        IsMatchmakingRoom = false;
         RoomInfos.Clear();
     }
     public static void Set(string code, string  hostId)
     {
         RoomCode = code;
         HostId = hostId;
+    }
+    
+    public static void SetMatchmaking(bool value)
+    {
+        IsMatchmakingRoom = value;
     }
 
     public static void AddUser(RoomInfo roomInfo)
@@ -37,6 +44,7 @@ public static class RoomSession
         {
             RoomCode = string.Empty;
             HostId = string.Empty;
+            IsMatchmakingRoom = false;
         }
         RoomInfos = RoomInfos.OrderByDescending(x => x.playerId == RoomSession.HostId).ToList();
     }

@@ -26,6 +26,9 @@ public class LobbySceneManager : MonoBehaviour
 
     [SerializeField] private TopMenuManager topMenuManager;
     private bool ui_lock = false;
+    
+    [SerializeField] private QuickMatchUI quickMatchUI;
+    [SerializeField] private MatchFoundUI matchFoundUI;
 
     private void Start()
     {
@@ -43,6 +46,12 @@ public class LobbySceneManager : MonoBehaviour
                 CreateRoomPopup.SetActive(false);
                 topMenuManager.SetBackButtonListener(null);
             });
+        });
+        
+        QuickMatchButton.onClick.AddListener(() =>
+        {
+            quickMatchUI?.Show();
+            MatchmakingClient.Instance.SendJoinQuickMatch();
         });
         
         createRoomButton.onClick.AddListener(() => {
@@ -114,6 +123,7 @@ public class LobbySceneManager : MonoBehaviour
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.CreateRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode, parsed.hostId);
+                RoomSession.SetMatchmaking(false);
                 var msg = new NetMsg
                 {
                     type = "create_room",
@@ -148,6 +158,7 @@ public class LobbySceneManager : MonoBehaviour
             {
                 var parsed = JsonUtility.FromJson<ApiResponse.JoinRoomResponse>(res);
                 RoomSession.Set(parsed.roomCode, parsed.hostId);
+                RoomSession.SetMatchmaking(false);
                 var msg = new NetMsg
                 {
                     type = "join_room",
