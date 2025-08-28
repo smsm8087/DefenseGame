@@ -1820,7 +1820,7 @@ MonoBehaviour:
   - skill_type: TAUNT
     icon: {fileID: 7839395559139896427, guid: 332747e23d70d72448e2a71922614abe, type: 3}
   - skill_type: DASH_ATTACK
-    icon: {fileID: -813232576093476168, guid: 8c76be4ad77aa0046806872223105107, type: 3}
+    icon: {fileID: -7277402574732931621, guid: 4ac9d6cbc4b4cc541aab06339ad75858, type: 3}
 --- !u!114 &1670899451
 MonoBehaviour:
   m_ObjectHideFlags: 0
